@@ -1,0 +1,24 @@
+
+<label for="label">Seleccionar Deporte:</label>
+<select [(ngModel)]="selectedDeporte" class="form-control" id="exampleFormControlSelect1" (ngModelChange)="selectDeporte($event)">
+	<option *ngFor="let deporte of deportes" [ngValue]="deporte">{{deporte.nombre}}</option>
+</select>
+
+
+
+
+<div *ngIf="selectedDeporte">
+
+	<label for="label">Seleccionar Un escenario:</label>
+	<div *ngIf="escenarios">
+	<select [(ngModel)]="selectedEspacio"  class="form-control" id="selectEscenarioDe"  >
+		<option *ngFor="let espaciodeportivo of escenarios" [ngValue]="espaciodeportivo">{{espaciodeportivo.nombre}}</option>
+	</select>
+
+		<div *ngIf="selectedEspacio">
+			<br>
+			<app-calendar [selectEspacio]="selectedEspacio" ></app-calendar>	
+		</div>
+	</div>
+</div>
+

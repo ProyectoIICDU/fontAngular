@@ -1,0 +1,82 @@
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" >Reservar</button>-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div [hidden]="submitted">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edicion Reserva</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+            <!--<div class="form-group">-->
+              <input type="radio" name="tipo" value="fija" checked> Fija
+              <input type="radio" name="tipo" value="diaria"> Diaria<br>
+            <!--</div>
+            <div class="form-group">-->
+                <label for="nombre" class="col-form-label">Nombre: </label>
+                <input type="text" class="form-control" id="nombre"/> 
+            <!--</div>
+            <div class="form-group">-->
+                <label for="codigo" class="col-form-label"> Codigo: </label>
+                <input type="text" class="form-control" id="codigo">
+            <!--</div>
+            <div class="form-group">-->
+              <label for="desc" class="col-form-label">Descripcion:</label>
+              <input type="text" class="form-control" id="desc">
+            <!--</div>
+            <div class="form-group">-->
+              <label for="horaInicio" class="col-form-label">Hora Inicio: {{HoraI}}</label>
+
+            <!--<select class="form-control" id="exampleFormControlSelect1">
+              <option *ngFor="let deporte of deportes" [value]="deporte.idDeporte">{{deporte.nombre}}</option>
+            </select>-->
+
+            <!--</div>
+            <div class="form-group">-->
+              <br><label for="horaFin" class="col-form-label">Hora Final: {{HoraF}}</label>
+              
+            <!--</div>
+            <div class="form-group">-->
+              <br><label for="fechaInicio" class="col-form-label">Inicio:</label>
+              
+            <!--</div>
+            <div class="form-group">-->
+              <br><label for="fechaFin" class="col-form-label">Hasta:</label>
+              
+            <!--</div>-->
+            <br><br><button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
+            <button type="submit" class="btn btn-success">Guardar</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
+          <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Guardar</button>
+          <button type="submit" class="btn btn-primary" (click)="confirm(nombre)">Guardar</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div class="modal-dialog" role="document">
+    <div [hidden]="!submitted">
+        <h2>Se ha guardado lo siguiente:</h2>
+        <div class="row">
+          <div class="col-xs-3">Nombre: </div>
+          <div class="col-xs-9  pull-left">{{ model.nombre }}</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-3">Codigo: </div>
+          <div class="col-xs-9 pull-left">{{ model.codigo }}</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-3">Descripcion: </div>
+          <div class="col-xs-9 pull-left">{{ model.descripcion }}</div>
+        </div>
+        <br>
+        <!--<button class="btn btn-primary" (click)="submitted=false">Edit</button>
+      </div>
+  </div>-->
+</div>

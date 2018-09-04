@@ -1,0 +1,225 @@
+<div class="row text-center">
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+        Anterior
+      </div>
+      <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+        Hoy
+      </div>
+      <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+        Siguiente
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-4">
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' }}</h3>
+  </div>
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div class="btn btn-primary" (click)="view = 'month'" [class.active]="view === 'month'">
+        Mes
+      </div>
+      <div class="btn btn-primary" (click)="view = 'week'" [class.active]="view === 'week'">
+        Semana
+      </div>
+      <div class="btn btn-primary" (click)="view = 'day'" [class.active]="view === 'day'">
+        Día
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+
+<div class="alert alert-info">
+  <div [ngSwitch]="view">
+    <span *ngSwitchCase="'month'">Click on a month label to change the view to that month.</span>
+    <span *ngSwitchCase="'week'">Click on a day header to change the view to that day.</span>
+    <span *ngSwitchCase="'day'">There is no other view to navigate to.</span>
+  </div>
+</div>
+
+<div [ngSwitch]="view">
+  <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" [locale]="locale" (dayClicked)="viewDate = $event.day.date; view = 'day'">
+  </mwl-calendar-month-view>
+  <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events"[refresh]="refresh"  [locale]="locale" (dayHeaderClicked)="viewDate = $event.day.date; view = 'day'" >
+  </mwl-calendar-week-view>
+  <!--<mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [locale]="locale">
+  </mwl-calendar-day-view>-->
+  <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-day-view>
+</div>
+
+
+<br>
+<br>
+<div class="row">
+  <div class="col-md-8">
+    
+  </div>
+  <div class="col-md-4">
+   
+    <button class="btn btn-primary float-right" (click)="addReserva($event)" type="submit" data-toggle="modal"
+      data-target="#modalCrearReserva">
+      Añadir Nueva Reserva
+    </button>
+  </div>
+
+</div>
+<br>
+
+
+
+<div class="modal fade" id="modalCrearReserva" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Reserva Espacio</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="eventAct">
+          
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Tipo de Reserva</label>
+            <div class="col-sm-9">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio"  (change)="onFilteroption1($event.target.checked)" name="inlineRadioOptions"
+                    id="inlineRadio1" value="option1" >Fija
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" (change)="onFilteroption2($event.target.checked)" name="inlineRadioOptions"
+                    id="inlineRadio2" value="option2">Diaria
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <form id="frmReservaEspac" [formGroup]="formReserva"  class="form-label-left form-horizontal" #FormReserva="ngForm" >
+            <fieldset>
+              <legend>Informacion de la Reserva</legend>
+              <br>
+
+              <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">Nombre</label>
+                <div class="col-10">
+                  <input class="form-control" id="nombre" type="text" formControlName="nombre"  name="nombre" required
+                    id="nombre-text-input" #nombre>
+                  <div *ngIf="formReserva.controls['nombre'].invalid && (formReserva.controls['nombre'].dirty || formReserva.controls['nombre'].touched)" class="alert alert-danger">
+                    <div *ngIf="formReserva.controls['nombre'].errors.required">El nombre es requerido.</div>
+                    <div *ngIf="formReserva.controls['nombre'].errors.maxlength">El nombre supera la longitud maxima de caracteres (maximo 20 caracteres).</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">Descripcion</label>
+                <div class="col-10">
+                  <textarea id="descripcion"  name="descripcion" maxlength="500" formControlName="descripcion" class="form-control"></textarea>
+                  <div *ngIf="formReserva.controls['descripcion'].invalid && (formReserva.controls['descripcion'].dirty || formReserva.controls['descripcion'].touched)" class="alert alert-danger">
+                    <div *ngIf="formReserva.controls['descripcion'].errors.maxlength">La Descripcion supera la longitud maxima de caracteres (maximo 500 caracteres).</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">Tipo</label>
+                <div class="col-sm-10">
+                  <select id="tipo" name="tipo" formControlName="tipo"  class="form-control" [required]="true" #tipo>
+                    <option value="">Seleccione...</option>
+                    <option *ngFor="let opcion of tipoSelect" [value]="opcion.value">{{opcion.text}}</option>
+                  </select>
+                  <div *ngIf="formReserva.controls['tipo'].invalid && (formReserva.controls['tipo'].dirty || formReserva.controls['tipo'].touched)" class="alert alert-danger">
+                    <div *ngIf="formReserva.controls['tipo'].errors.required">El tipo de Reserva es requerido.</div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div *ngIf="option1">
+                <div class="form-group row">
+                  <label for="example-text-input" class="col-2 col-form-label">Inicio</label>
+                  <div class="col-sm-10">
+                    <mwl-demo-utils-date-time-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="eventAct.start" (ngModelChange)="refresh.next()" placeholder="Not set">
+                    </mwl-demo-utils-date-time-picker>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="example-text-input" class="col-2 col-form-label">Final</label>
+                  <div class="col-sm-10">
+                    <mwl-demo-utils-date-time-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="eventAct.end"  (ngModelChange)="refresh.next()" placeholder="Not set">
+                    </mwl-demo-utils-date-time-picker>
+                  </div>
+                </div>
+              </div>
+  
+              <div *ngIf="option2">
+                <div class="form-group row">
+                  <label for="example-text-input" class="col-2 col-form-label">Inicio</label>
+                  <div class="col-sm-10">
+                    <ngb-timepicker [(ngModel)]="inicioDiarioStruct"  [ngModelOptions]="{standalone: true}" (ngModelChange)="updateTimeInicio()" [meridian]="true">
+                    </ngb-timepicker>
+                  </div>
+  
+                </div>
+                <div class="form-group row">
+                  <label for="example-text-input" class="col-2 col-form-label">Final</label>
+                  <div class="col-sm-10">
+                    <ngb-timepicker [(ngModel)]="finalDiarioStruct" [ngModelOptions]="{standalone: true}" (ngModelChange)="updateTimeFinal()" [meridian]="true">
+                    </ngb-timepicker>
+                  </div>
+  
+                </div>
+              </div>
+  
+            </fieldset>
+
+            <hr>
+            <div class="form-group row">
+              <div class="col-sm-2"></div>
+              <div class="col-sm-10">
+                <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" value="Cerrar">
+                  <i class="fa fa-times"></i> Cerrar</button>
+                <button type="submit" name="btnEnviar" class="btn btn-success" [disabled]="formReserva.invalid"  data-dismiss="modal" (click)="guardarReserva($event)" >Reservar Escenario</button>
+
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+ 
+      <ng-template #modalContent let-close="close" *ngIf="!ok">
+          <div class="modal-header">
+            <h5 class="modal-title">Eliminar Reserva</h5>
+            <button type="button" class="close" (click)="close()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>
+                <div class="form-group row">
+                  <!--<label for="example-text-input" class="col-1 col-form-label">Desea Eliminar Reserva de {{ modalData?.event.title }}</label>-->
+                  <legend>Desea Eliminar Reserva de {{ modalData?.event.title }} ?</legend>
+                </div>        
+            </div>
+          </div>
+          <div class="modal-footer">
+            <!--<button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>-->
+            <button type="submit" name="btnEliminar" (click)="eliminarReserva($event)" data-dismiss="modal" class="btn btn-success"><i class="fa fa-times-circle"></i>Eliminar</button>
+            
+          </div>
+        </ng-template>
+  
+ 

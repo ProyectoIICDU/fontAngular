@@ -1,0 +1,147 @@
+<!-- INICIA LA CABECERA DE LA PAGINA -->
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top " style="background: linear-gradient(to right, #003366 30%, #0099cc 100%)">
+  <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- LOGO DE LA UNIVERSIDAD-->
+
+  <a class="navbar-brand">
+    <img src="../assets/img/logo.png" width="205" height="100" alt="">
+  </a>
+
+  <!-- Barra separadora-->
+  <a class="navbar-brand">
+    <img src="../assets/img/barra.png" width="2" height="50" alt="">
+  </a>
+  <!-- NOMBRE DE LA APLICACIÓN-->
+
+  <a class="navbar-brand" href="/">
+    <img src="../assets/img/reservas.png" width="205" height="30" alt="">
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <!-- BARRA HORIZONTAL DE CABECERA -->
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Principal
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Mis Reservas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/horariofijo">Realizar Reserva</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Cancelar Reserva</a>
+      </li>
+    </ul>
+    <form class="form-inline mt-2 mt-md-0">
+      <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
+      <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cerrar Sesión</button>-->
+      <a class="btn btn-outline-warning" data-toggle="modal" data-target="#modalCerrarSesion">
+        <img src="../assets/img/apagar.svg" width="30" height="30" alt="">
+      </a>
+      <!--<button class="btn btn-outline-warning" type="button" data-toggle="modal" data-target="#modalCerrarSesion">Cerrar Sesión</button>-->
+    </form>
+  </div>
+</nav>
+<!-- FIN DE LA CABECERA DE LA PAGINA -->
+
+<br>
+<br>
+<br>
+
+<!-- MENSAJE DE BIENVENIDA -->
+<div class="alert alert-success text-center" style= "margin-top: 50px ">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>¡Bienvenido!</strong> Puedes Dirigirte a realizar cualquier acción
+</div>
+<!-- FIN MENSAJE DE BIENVENIDA -->
+
+
+<!-- CUADRO DE DIALOGO CONFIRMAR CERRAR SESIÓN -->
+<div class="modal fade" id="modalCerrarSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Advertencia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        ¿Realmente desea salir del Sistema?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <a type="button" class="btn btn-primary" href="/login">Si, Cerrar Sesión</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FIN CUADRO DE DIALOGO -->
+
+
+<!-- MENU LATERAL VERTICAL -->
+<div class="container-fluid" style= "margin-top: 70px ">
+  <div class="row">
+    <nav class="col-sm-3 col-md-2.5 hidden-xs-down bg-faded sidebar">
+
+      <!-- GESTION DE ESPACIOS DEPORTIVOS-->
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" style="background-color: #6cb8df" href="#" data-toggle="collapse" data-target="#espacios" >Gestión de Escenarios Deportivos
+            <!-- ICONO -->
+            <img src="../assets/img/escenarios.svg" width="30" height="30" alt="">
+          </a>
+
+          <ul id="espacios" class="collapse">
+            <a class="nav-link" href="/espaciodeportivos">
+              <img src="../assets/img/listar.svg" width="30" height="30" alt=""> Listar Escenarios
+            </a>
+            <a class="nav-link" href="/espaciodeportivos">
+              <img src="../assets/img/anadir.svg" width="30" height="30" alt=""> Agregar Escenarios
+            </a>
+          </ul>
+
+        </li>
+      </ul>
+      <br>
+      <!-- FIN GESTION DE ESPACIOS DEPORTIVOS-->
+
+      <!-- GESTION DE ELEMENTOS DEPORTIVOS-->
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a class="nav-link active"  style="background-color: #6cb8df" href="#" data-toggle="collapse" data-target="#elementos">Gestión de Elementos Deportivos
+            <!-- ICONO -->
+            <img src="../assets/img/balon.svg" width="30" height="30" alt="">
+            <span class="sr-only">(current)</span>
+          </a>
+          <ul id="elementos" class="collapse">
+            <a class="nav-link" href="#">
+              <img src="../assets/img/listar.svg" width="30" height="30" alt=""> Listar Elemento
+            </a>
+            <a class="nav-link" href="#">
+              <img src="../assets/img/anadir.svg" width="30" height="30" alt=""> Agregar Elemento
+            </a>
+          </ul>
+        </li>
+      </ul>
+      <br>
+      <!-- FIN GESTION DE ESPACIOS DEPORTIVOS-->
+
+    </nav>
+    <!-- CIERRA NAV-->
+    <div class="col-sm-9">
+      <alert></alert>
+      <router-outlet></router-outlet>
+      <app-messages></app-messages>
+    </div>
+  </div>
+  <!-- CIERRA DIV -->
+</div>
+<!-- CIERRA DIV SUPERIOR -->
