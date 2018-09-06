@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: 'mostrarfoto', component: MostrarFotoComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
+  { path: }
 
 ];
 

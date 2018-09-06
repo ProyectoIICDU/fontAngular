@@ -31,6 +31,7 @@ import { JwtInterceptor } from './helpers/index';
 import { AlertService, UsuarioService, AutenticacionService} from './servicios/index';
 import { AlertComponent } from './alertas/index';
 import { ValidarusuariosComponent } from './validarusuarios/validarusuarios.component';
+import { EspaciosReservadosComponent } from './espacios-reservados/espacios-reservados.component';
 
 
 
@@ -51,7 +52,8 @@ registerLocaleData(localeEs);
     LoginComponent,
     RegistroComponent,
     AlertComponent,
-    ValidarusuariosComponent
+    ValidarusuariosComponent,
+    EspaciosReservadosComponent
   ],
   imports: [
     BrowserModule,
