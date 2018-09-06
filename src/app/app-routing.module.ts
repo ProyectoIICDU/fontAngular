@@ -10,6 +10,7 @@ import { Autenticacion } from './autenticacion/index';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/index';
 import { ValidarusuariosComponent } from './validarusuarios/validarusuarios.component';
+import { EspaciosReservadosComponent } from './espacios-reservados/espacios-reservados.component';
 
 
 
@@ -22,7 +23,7 @@ const routes: Routes = [
   { path: 'mostrarfoto', component: MostrarFotoComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
-  { path: }
+  { path: 'espaciosreservados', component: EspaciosReservadosComponent },
 
 ];
 

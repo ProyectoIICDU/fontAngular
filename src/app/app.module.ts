@@ -35,7 +35,6 @@ import { EspaciosReservadosComponent } from './espacios-reservados/espacios-rese
 
 
 
-
 registerLocaleData(localeEs);
 
 @NgModule({
