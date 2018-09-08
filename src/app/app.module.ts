@@ -1,4 +1,4 @@
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData, CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -32,7 +32,7 @@ import { AlertService, UsuarioService, AutenticacionService} from './servicios/i
 import { AlertComponent } from './alertas/index';
 import { ValidarusuariosComponent } from './validarusuarios/validarusuarios.component';
 import { EspaciosReservadosComponent } from './espacios-reservados/espacios-reservados.component';
-
+import { EspaciosreservadosService } from './servicios/espaciosreservados.service';
 
 
 registerLocaleData(localeEs);
@@ -52,6 +52,7 @@ registerLocaleData(localeEs);
     RegistroComponent,
     AlertComponent,
     ValidarusuariosComponent,
+    EspaciosReservadosComponent,
     EspaciosReservadosComponent
   ],
   imports: [
@@ -62,12 +63,14 @@ registerLocaleData(localeEs);
     AppRoutingModule,
     NgbModule.forRoot(),
     CalendarModule.forRoot(),
-    DemoUtilsModule
+    DemoUtilsModule,
+    CommonModule
   ],
   providers: [MessageService,EspaciodeportivoService,
     Autenticacion,
     AutenticacionService,
     AlertService,
+    EspaciosreservadosService,
     UsuarioService,
     {
         provide: HTTP_INTERCEPTORS,
