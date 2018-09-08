@@ -1,4 +1,5 @@
 
+
 <label for="label">Seleccionar Deporte:</label>
 <select [(ngModel)]="selectedDeporte" class="form-control" id="exampleFormControlSelect1" (ngModelChange)="selectDeporte($event)">
 	<option *ngFor="let deporte of deportes" [ngValue]="deporte">{{deporte.nombre}}</option>
@@ -7,7 +8,7 @@
 
 
 
-<div *ngIf="selectedDeporte">
+<div *ngIf="selectedDeporte" id="listaDep"> 
 
 	<label for="label">Seleccionar Un escenario:</label>
 	<div *ngIf="escenarios">
