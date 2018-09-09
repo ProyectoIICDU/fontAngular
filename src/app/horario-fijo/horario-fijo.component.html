@@ -1,11 +1,12 @@
 
 <div class="allbody1">
-
+<div id="izquierda">
 <label for="label">Seleccionar Deporte:</label>
 <select  [(ngModel)]="selectedDeporte" class="form-control" id="exampleFormControlSelect1" (ngModelChange)="selectDeporte($event)">
 	<option *ngFor="let deporte of deportes" [ngValue]="deporte">{{deporte.nombre}}</option>
 </select>
-
+</div>
+<div id="derecha">
 <div *ngIf="selectedDeporte" > 
 
 	<label id="seleccionaresc" for="label">Seleccionar Un escenario:</label>
@@ -19,5 +20,6 @@
 			<app-calendar [selectEspacio]="selectedEspacio" ></app-calendar>	
 		</div>
 	</div>
+</div>
 </div>
 </div>
