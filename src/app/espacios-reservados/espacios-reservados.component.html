@@ -1,43 +1,33 @@
 <div class="container">
-	<h2>Ejemplo Funcionalidad Presentar Estado Escenarios</h2>
-
-
-	<div>
-		<ul *ngFor="let dato of datos">
-		  <li>{{dato.espacioDeportivo}}</li>
-		  <li>{{dato.usuario}}</li>
-		  <li>{{dato.fecha}}</li>
-		  <li>{{dato.horaInicio}}</li>
-		  <li>{{dato.horaFin}}</li>
-		</ul>
-	</div>
-
-	<!--
+	<h2>Reservar de Escenarios Deportivos</h2>
+	<hr>
 	<div class="panel-group" id="accordion">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4 class="panel-title">
-					<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Cancha del Diamante</a>
+					<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Espacios del CDU</a>
 				</h4>
 			</div>
 			<div id="collapse1" class="panel-collapse collapse in">
-				<div class="panel-body" *ngFor="let d of data">
+				<div class="panel-body">
 					<table class="table table-striped" >
 							<tr>
+								<th>Espacio Deportivo</th>
 								<th>Usuario</th>
 								<th>Fecha</th>
 								<th>Hora Inicio</th>
 								<th>Hora Fin</th>
 							</tr>
-							<tr>
-								<td>{{d.usuario}}</td>
-								<td>{{d.fecha}}/td>
-								<td>{{d.horaInicio}}</td>
-								<td>{{d.horaFin}}</td>
+							<tr *ngFor="let dato of datos">
+								<td>{{dato.espacioDeportivo}}</td>
+								<td>{{dato.usuario}}</td>
+								<td>{{dato.fecha}}</td>
+								<td>{{dato.horaInicio}}</td>
+								<td>{{dato.horaFin}}</td>
 							</tr>
 					</table>
 				</div>
 			</div>
 		</div>
-	</div>-->
+	</div>
 </div>
