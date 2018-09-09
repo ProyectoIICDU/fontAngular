@@ -1,8 +1,18 @@
-<app-espacios-reservados></app-espacios-reservados>
-
 <div class="container">
 	<h2>Ejemplo Funcionalidad Presentar Estado Escenarios</h2>
 
+
+	<div>
+		<ul *ngFor="let dato of datos">
+		  <li>{{dato.espacioDeportivo}}</li>
+		  <li>{{dato.usuario}}</li>
+		  <li>{{dato.fecha}}</li>
+		  <li>{{dato.horaInicio}}</li>
+		  <li>{{dato.horaFin}}</li>
+		</ul>
+	</div>
+
+	<!--
 	<div class="panel-group" id="accordion">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -29,5 +39,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>-->
 </div>

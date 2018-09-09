@@ -52,7 +52,6 @@ registerLocaleData(localeEs);
     RegistroComponent,
     AlertComponent,
     ValidarusuariosComponent,
-    EspaciosReservadosComponent,
     EspaciosReservadosComponent
   ],
   imports: [
@@ -66,7 +65,9 @@ registerLocaleData(localeEs);
     DemoUtilsModule,
     CommonModule
   ],
-  providers: [MessageService,EspaciodeportivoService,
+  providers: [
+    MessageService,
+    EspaciodeportivoService,
     Autenticacion,
     AutenticacionService,
     AlertService,
