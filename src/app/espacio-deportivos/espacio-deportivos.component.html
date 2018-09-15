@@ -1,14 +1,21 @@
+<div class="wrapper">
+   
+	<div class="container1">
+        <main>
+        <hr>
+        <button type="button" (click)="setNuevo()" data-toggle="modal" data-target="#modalEspacioDeportivo" class="btn btn-success"><i class="fa fa-plus"></i> Registrar Escenario</button>
+        <hr>
+    </main>
+    </div>	
+</div>
+<h2>Escenarios Deportivos</h2>
 <div class="container">
-    <h2>Escenarios</h2>
-    <hr>
-    <button type="button" (click)="setNuevo()" data-toggle="modal" data-target="#modalEspacioDeportivo" class="btn btn-success"><i class="fa fa-plus"></i> Registrar Escenario</button>
-    <hr>
     <table id="tblEspaciosdeportivos" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
         <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Descripcion</th>
-                <th></th>
+                <th>Opciones</th>
             </tr>
         </thead>
         <tbody>

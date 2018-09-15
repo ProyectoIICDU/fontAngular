@@ -1,25 +1,46 @@
-
-<div class="allbody1">
-<div id="izquierda">
-<label for="label">Seleccionar Deporte:</label>
-<select  [(ngModel)]="selectedDeporte" class="form-control" id="exampleFormControlSelect1" (ngModelChange)="selectDeporte($event)">
-	<option *ngFor="let deporte of deportes" [ngValue]="deporte">{{deporte.nombre}}</option>
-</select>
-</div>
-<div id="derecha">
-<div *ngIf="selectedDeporte" > 
-
-	<label id="seleccionaresc" for="label">Seleccionar Un escenario:</label>
-	<div *ngIf="escenarios">
-	<select class="col-md-2" [(ngModel)]="selectedEspacio"  class="form-control" id="selectEscenarioDe"  >
-		<option *ngFor="let espaciodeportivo of escenarios" [ngValue]="espaciodeportivo">{{espaciodeportivo.nombre}}</option>
-	</select>
-
-		<div *ngIf="selectedEspacio">
-			<br>
-			<app-calendar [selectEspacio]="selectedEspacio" ></app-calendar>	
-		</div>
+<div class="wrapper">
+   
+	<div class="container">
+		<!-- Header -->
+	
+		
+			
+				<div id="izquierda">
+				<label for="label">Seleccionar Deporte:</label>
+				<select  [(ngModel)]="selectedDeporte" class="form-control" id="exampleFormControlSelect1" (ngModelChange)="selectDeporte($event)">
+					<option *ngFor="let deporte of deportes" [ngValue]="deporte">{{deporte.nombre}}</option>
+				</select>
+				</div>
+				
+				
+				<div id="derecha">
+				<div *ngIf="selectedDeporte" > 
+				
+					<label id="seleccionaresc" for="label">Seleccionar Escenario:</label>
+					<div *ngIf="escenarios">
+					<select class="col-md-2" [(ngModel)]="selectedEspacio"  class="form-control" id="selectEscenarioDe"  >
+						<option *ngFor="let espaciodeportivo of escenarios" [ngValue]="espaciodeportivo">{{espaciodeportivo.nombre}}</option>
+					</select>
+				
+						<div *ngIf="selectedEspacio">
+							<br>
+							<app-calendar [selectEspacio]="selectedEspacio" ></app-calendar>	
+						</div>
+					</div>
+				</div>
+				</div>
+	
+		
 	</div>
+	
 </div>
-</div>
-</div>
+
+
+
+
+
+
+
+
+
+

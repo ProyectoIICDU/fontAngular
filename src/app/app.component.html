@@ -25,7 +25,7 @@
     <ul class="navbar-nav mr-auto">
       <!-- BARRA HORIZONTAL DE CABECERA -->
       <li class="nav-item active">
-        <a class="nav-link" href="/">Principal
+        <a class="nav-link" href="/">Escenarios
           <span class="sr-only">(current)</span>
         </a>
       </li>
@@ -35,9 +35,7 @@
       <li class="nav-item">
         <a class="nav-link" href="/horariofijo">Realizar Reserva</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Cancelar Reserva</a>
-      </li>
+      
     </ul>
     <form class="form-inline mt-2 mt-md-0">
       <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
@@ -55,12 +53,6 @@
 <br>
 <br>
 
-<!-- MENSAJE DE BIENVENIDA -->
-<div class="alert alert-success text-center" style= "margin-top: 50px ">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>¡Bienvenido!</strong> Puedes Dirigirte a realizar cualquier acción
-</div>
-<!-- FIN MENSAJE DE BIENVENIDA -->
 
 
 <!-- CUADRO DE DIALOGO CONFIRMAR CERRAR SESIÓN -->
@@ -83,65 +75,6 @@
     </div>
   </div>
 </div>
-<!-- FIN CUADRO DE DIALOGO -->
-
-
-<!-- MENU LATERAL VERTICAL -->
-<div class="container-fluid" style= "margin-top: 70px ">
-  <div class="row">
-    <nav class="col-sm-3 col-md-2.5 hidden-xs-down bg-faded sidebar">
-
-      <!-- GESTION DE ESPACIOS DEPORTIVOS-->
-      <ul class="nav nav-pills flex-column">
-        <li class="nav-item">
-          <a class="nav-link active" style="background-color: #6cb8df" href="#" data-toggle="collapse" data-target="#espacios" >Gestión de Escenarios Deportivos
-            <!-- ICONO -->
-            <img src="../assets/img/escenarios.svg" width="30" height="30" alt="">
-          </a>
-
-          <ul id="espacios" class="collapse">
-            <a class="nav-link" href="/espaciodeportivos">
-              <img src="../assets/img/listar.svg" width="30" height="30" alt=""> Listar Escenarios
-            </a>
-            <a class="nav-link" href="/espaciodeportivos">
-              <img src="../assets/img/anadir.svg" width="30" height="30" alt=""> Agregar Escenarios
-            </a>
-          </ul>
-
-        </li>
-      </ul>
-      <br>
-      <!-- FIN GESTION DE ESPACIOS DEPORTIVOS-->
-
-      <!-- GESTION DE ELEMENTOS DEPORTIVOS-->
-      <ul class="nav nav-pills flex-column">
-        <li class="nav-item">
-          <a class="nav-link active"  style="background-color: #6cb8df" href="#" data-toggle="collapse" data-target="#elementos">Gestión de Elementos Deportivos
-            <!-- ICONO -->
-            <img src="../assets/img/balon.svg" width="30" height="30" alt="">
-            <span class="sr-only">(current)</span>
-          </a>
-          <ul id="elementos" class="collapse">
-            <a class="nav-link" href="#">
-              <img src="../assets/img/listar.svg" width="30" height="30" alt=""> Listar Elemento
-            </a>
-            <a class="nav-link" href="#">
-              <img src="../assets/img/anadir.svg" width="30" height="30" alt=""> Agregar Elemento
-            </a>
-          </ul>
-        </li>
-      </ul>
-      <br>
-      <!-- FIN GESTION DE ESPACIOS DEPORTIVOS-->
-
-    </nav>
-    <!-- CIERRA NAV-->
-    <div class="col-sm-9">
-      <alert></alert>
-      <router-outlet></router-outlet>
-      <app-messages></app-messages>
-    </div>
-  </div>
-  <!-- CIERRA DIV -->
-</div>
-<!-- CIERRA DIV SUPERIOR -->
+<router-outlet></router-outlet>
+<app-messages></app-messages>
+  

@@ -1,25 +1,15 @@
 
-<br>
-<br>
-<div class="row">
-  <div class="col-md-8">
-    
-  </div>
-  <div class="col-md-4">
-   
+<div clas="AnadirReserva">
+
     <button class="btn btn-primary float-right" id="anadir" (click)="addReserva($event)" type="submit" data-toggle="modal"
       data-target="#modalCrearReserva">
       Añadir Nueva Reserva
     </button>
-  </div>
-
 </div>
-<br>
-
-
+<div class="bodyCalendar">
   <label class="horarioD">HORARIO DISPONIBLE</label>
-<div class="row text-center">
-  <div class="col-md-4">
+<div class="row text-center" id="BotonesCalendario">
+  <div >
     <div class="btn-group">
       <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
         Anterior
@@ -50,7 +40,8 @@
     </div>
   </div>
 </div>
-<br>
+
+<!--
 
 
 <div class="alert alert-info">
@@ -60,7 +51,7 @@
     <span *ngSwitchCase="'day'">There is no other view to navigate to.</span>
   </div>
 </div>
-
+-->
 <div [ngSwitch]="view">
   <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" [locale]="locale" (dayClicked)="viewDate = $event.day.date; view = 'day'">
   </mwl-calendar-month-view>
@@ -110,7 +101,7 @@
           <form id="frmReservaEspac" [formGroup]="formReserva"  class="form-label-left form-horizontal" #FormReserva="ngForm" >
             <fieldset>
               <legend>Informacion de la Reserva</legend>
-              <br>
+            
 
               <div class="form-group row">
                 <label for="example-text-input" class="col-2 col-form-label">Nombre</label>
@@ -228,5 +219,4 @@
         </ng-template>
   
       </div>
-    
-    
+    </div>
