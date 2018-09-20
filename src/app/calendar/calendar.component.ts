@@ -96,6 +96,8 @@ import { EspaciodeportivoService } from '../espaciodeportivo.service';
 */
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+/** Importacion para la presentacion de alertas al usuario */
+import { AlertService } from '../servicios/index';
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -216,6 +218,7 @@ export class CalendarComponent implements OnInit {
   
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
+  
 
 
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -224,7 +227,7 @@ export class CalendarComponent implements OnInit {
   * Constructor de la clase
   *
   */
-  constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService, private cdr: ChangeDetectorRef) {
+  constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService, private cdr: ChangeDetectorRef,  private alertService: AlertService) {
     this.inicioDiarioStruct = {
       hour: 2,
       minute: 23,
@@ -450,11 +453,15 @@ export class CalendarComponent implements OnInit {
           inicio.setDate(inicio.getDate() + 7);
         }
 
+        console.log("Reserva adicionada correctamente");
+        this.alertService.success("Ok! La reserva ha sido almacenada.");
+
       } else {
         //la reserva no puede ser fija
+        this.alertService.error("Error! La fecha de finalizacion no puede ser menor que la de inicio.");
         console.log("Error, la fecha de fin es menor o igual que la fecha de inicio.");
       }
-
+      
       this.refresh.next();
 
     }
