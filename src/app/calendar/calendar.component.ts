@@ -409,7 +409,7 @@ export class CalendarComponent implements OnInit {
       console.log("inicio2:" + final);
       //inicio.setDate(inicio.getDate()+7);
       console.log("inicio" + inicio);
-      if (final >= inicio) {
+      if (final > inicio) {
         console.log("Entro en el if");
         while (inicio <= final) {
           console.log("Entro en el bucle");
@@ -452,7 +452,7 @@ export class CalendarComponent implements OnInit {
 
       } else {
         //la reserva no puede ser fija
-
+        console.log("Error, la fecha de fin es menor o igual que la fecha de inicio.");
       }
 
       this.refresh.next();
