@@ -13,17 +13,15 @@
 					<table class="table table-striped" >
 							<tr>
 								<th>Espacio Deportivo</th>
-								<th>Usuario</th>
-								<th>Fecha</th>
-								<th>Hora Inicio</th>
-								<th>Hora Fin</th>
+								<th>fecha inicio</th>
+								<th>Descripcion</th>
+								
 							</tr>
-							<tr *ngFor="let dato of datos">
-								<td>{{dato.espacioDeportivo}}</td>
-								<td>{{dato.usuario}}</td>
-								<td>{{dato.fecha}}</td>
-								<td>{{dato.horaInicio}}</td>
-								<td>{{dato.horaFin}}</td>
+							<tr *ngFor="let reservaespacio of reservados">
+								<td>{{reservaespacio.nombre}}</td>
+								<td>{{reservaespacio.fechaini}}</td>
+								<td>{{reservaespacio.descripcion}}</td>
+								
 							</tr>
 					</table>
 				</div>
