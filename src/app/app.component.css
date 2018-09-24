@@ -10,9 +10,10 @@ h2, h3 {
 }
 body {
   margin: 2em;
+  background-image: url(fondo.jpg); 
 }
 body, input[text], button {
-  color: #888;
+  background-image: url(fondo.jpg); 
   font-family: Cambria, Georgia;
 }
 /* everywhere else */
