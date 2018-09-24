@@ -405,7 +405,7 @@ body.left.no-transform:before {
   float: left;
   display: flex;
   min-height: 85vh;
-  background-color: #10182b;
+  background-color: #092a47;
   opacity: 2;
    }
 
@@ -577,9 +577,6 @@ Responsive
 select {
 
     width: 100%;
-    
-    
-    
 }
 label{
     width: 110%;
@@ -604,13 +601,12 @@ h1 {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: lighter;
   }
-  body {
-    margin: 2em;
+  .body {
+   background-image: url(fondo.jpg); 
+    margin: 0em;
+    
   }
-  body, input[text], button {
-    color: #888;
-    font-family: Cambria, Georgia;
-  }
+  
   /* everywhere else */
   * {
     font-family: Arial, Helvetica, sans-serif;
