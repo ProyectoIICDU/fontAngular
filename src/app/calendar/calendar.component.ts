@@ -412,7 +412,17 @@ export class CalendarComponent implements OnInit {
       console.log("inicio2:" + final);
       //inicio.setDate(inicio.getDate()+7);
       console.log("inicio" + inicio);
-      if (final > inicio) {
+
+      const fechaAct = new Date(); //Fecha actual
+      console.log("Es "+ inicio + "<" + fechaAct+"?");
+      
+      //Revision que no sea menor que la fecha actual
+      if(inicio < fechaAct){
+        this.alertService.error("Error! La fecha de inicio no puede ser menor que la fecha actual.");
+        console.log("Error! La fecha de inicio no puede ser menor que la fecha actual.");
+      }
+      //Revision que sea menor la fecha fin que la fecha de inicio
+      else if (final > inicio) {
         console.log("Entro en el if");
         while (inicio <= final) {
           console.log("Entro en el bucle");

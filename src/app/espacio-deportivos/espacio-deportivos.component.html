@@ -136,7 +136,7 @@
                         <div class="col-sm-2"></div>
                         <div class="col-sm-10">
                             <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" value="Cerrar"><i class="fa fa-times"></i> Cerrar</button>
-                            <button *ngIf="accion != 'Detalle'" type="submit" name="btnEnviar"  class="btn btn-success" [disabled]="!espacioDeportivoForm.form.valid"><i class="{{iconBtnSubmit}}"></i> {{accion}}</button>
+                            <button *ngIf="accion != 'Detalle'" type="submit" name="btnEnviar" data-dismiss="modal" class="btn btn-success" [disabled]="!espacioDeportivoForm.form.valid"><i class="{{iconBtnSubmit}}"></i> {{accion}}</button>
                         </div>
                     </div>
                 </form>

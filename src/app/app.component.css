@@ -20,3 +20,17 @@ body, input[text], button {
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.img-res {
+	display: block;
+    width: 225px;
+    height: auto;
+}
+
+@media screen and (min-width: 480px) {
+    .img-res {
+    	display: block;
+        width: 450px;
+    	  height: auto;
+    }
+}
