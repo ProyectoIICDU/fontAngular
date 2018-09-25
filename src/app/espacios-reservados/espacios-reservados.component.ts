@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReservaEspacio } from '../reservaespacio';
+import { ReservaUsuario } from '../reservausuario';
 import { EspaciosreservadosService} from '../espaciosreservados.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { EspaciosreservadosService} from '../espaciosreservados.service';
 
 export class EspaciosReservadosComponent implements OnInit {
 
-  reservados: ReservaEspacio[];
+  reservados: ReservaUsuario[];
 
   constructor(private espacioReservas:EspaciosreservadosService) { }
 

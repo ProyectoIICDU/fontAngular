@@ -4,7 +4,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { ReservaUsuario } from './reservausuario';
+import { ReservaEspacio } from './reservaespacio';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -16,13 +16,13 @@ const httpOptions = {
 
 export class EspaciosreservadosService {
 
-private reservasUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario/EspaciosReservados';
+private reservasUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario/Reserva';
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
   
-  cargarEspaciosReservados(): Observable<ReservaUsuario[]>{
+  cargarEspaciosReservados(): Observable<ReservaEspacio[]>{
 
-        return this.http.get<ReservaUsuario[]>(this.reservasUrl).pipe(tap(reservas => this.log(`fetched heroes`)), catchError(this.handleError('getEspacioreservado', [])));   
+        return this.http.get<ReservaEspacio[]>(this.reservasUrl).pipe(tap(reservas => this.log(`fetched heroes`)), catchError(this.handleError('getEspacioreservado', [])));   
 
   }
 
