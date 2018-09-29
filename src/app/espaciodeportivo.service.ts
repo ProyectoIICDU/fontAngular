@@ -16,8 +16,8 @@ const httpOptions = {
 
 @Injectable()
 export class EspaciodeportivoService {
-    private espaciosUrl = 'http://localhost:8086/CRUD_Escenarios/proyectoCDU/Escenario';
-    private deportesUrl = 'http://localhost:8086/CRUD_Escenarios/proyectoCDU/Escenario/deportes';
+    private espaciosUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario';
+    private deportesUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario/deportes';
 
     //------------------------------------------------------------------------------
 
