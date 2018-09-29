@@ -5,7 +5,7 @@ export class ReservaUsuario {
         public usuario:String,
         public espacioDeportivo:String,
         public fecha:Date,
-        public horaIni:Date,
+        public horaInicio:Date,
         public horaFin:Date,
         
     ){
