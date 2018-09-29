@@ -16,7 +16,7 @@ const httpOptions = {
 
 export class EspaciosreservadosService {
 
-private reservasUrl = 'http://localhost:8086/CRUD_Escenarios/proyectoCDU/Escenario/EspaciosReservados';
+private reservasUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario/EspaciosReservados';
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
   
