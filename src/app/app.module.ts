@@ -32,7 +32,7 @@ import { AlertService, UsuarioService, AutenticacionService} from './servicios/i
 import { AlertComponent } from './alertas/index';
 import { ValidarusuariosComponent } from './validarusuarios/validarusuarios.component';
 import { EspaciosReservadosComponent } from './espacios-reservados/espacios-reservados.component';
-import { EspaciosreservadosService } from './servicios/espaciosreservados.service';
+import { EspaciosreservadosService } from './espaciosreservados.service';
 
 
 registerLocaleData(localeEs);

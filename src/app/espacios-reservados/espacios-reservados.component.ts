@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EspaciosreservadosService, DatosReservas } from '../servicios/espaciosreservados.service';
-;
+import { ReservaUsuario } from '../reservausuario';
+import { EspaciosreservadosService} from '../espaciosreservados.service';
 
 @Component({
   selector: 'app-espacios-reservados',
@@ -10,14 +10,19 @@ import { EspaciosreservadosService, DatosReservas } from '../servicios/espaciosr
 
 export class EspaciosReservadosComponent implements OnInit {
 
-  datos: DatosReservas[] = [];
+  reservados: ReservaUsuario[];
 
-  constructor(service: EspaciosreservadosService) {
-    service.cargarEspaciosReservados()
-      .subscribe(x=> this.datos = x);
+  constructor(private espacioReservas:EspaciosreservadosService) { }
+
+ ngOnInit(): void {
+  this.getEspaciosReservados();
+
   }
 
-  ngOnInit(): void {
-  }
+    getEspaciosReservados() {
+        this.espacioReservas.cargarEspaciosReservados().subscribe(reservados => this.reservados = reservados);       
+    }
 
+
+ 
 }

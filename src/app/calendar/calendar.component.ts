@@ -207,6 +207,7 @@ export class CalendarComponent implements OnInit {
   modalData: {
     action: string;
     event: CalendarEvent;
+    
   };
 
 

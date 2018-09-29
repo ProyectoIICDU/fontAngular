@@ -198,8 +198,8 @@
 
  
       <ng-template #modalContent let-close="close" *ngIf="!ok">
-          <div class="modal-header">
-            <h5 class="modal-title">Eliminar Reserva</h5>
+          <div  class="modal-header">
+            <h5  class="modal-title">Informacion Reserva</h5>
             <button type="button" class="close" (click)="close()">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -208,12 +208,20 @@
             <div>
                 <div class="form-group row">
                   <!--<label for="example-text-input" class="col-1 col-form-label">Desea Eliminar Reserva de {{ modalData?.event.title }}</label>-->
-                  <legend>Desea Eliminar Reserva de {{ modalData?.event.title }} ?</legend>
+                  <legend *ngFor="let reservaespacio of reservasActuales">
+                    <div  *ngIf="reservaespacio.nombre == modalData?.event.title">
+                      <legend >Usuario: {{reservaespacio.nombre}}</legend>
+                      <legend >Descripcion: {{reservaespacio.descripcion}}</legend>
+                      <legend >Finalidad : {{reservaespacio.tipo}}</legend>
+                      </div>
+                  </legend>
+                 
+                
                 </div>        
             </div>
           </div>
           <div class="modal-footer">
-            <!--<button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>-->
+            <button type="button" name="btnSalir" class="btn btn-success" (click)="close()">Salir</button>
             <button type="submit" name="btnEliminar" (click)="eliminarReserva($event)" data-dismiss="modal" class="btn btn-success"><i class="fa fa-times-circle"></i>Eliminar</button>
             
           </div>
