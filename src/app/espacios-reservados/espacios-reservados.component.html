@@ -1,30 +1,35 @@
-<div class="container">
-	<h2>Reservar de Escenarios Deportivos</h2>
-	<hr>
-	<div class="panel-group" id="accordion">
-		<div class="panel panel-default">
-			<div  class="panel-group" >
-				<div class="panel-body">
-					<table class="table table-striped" >
-							<tr>
-								<th>Usuario</th>
-								<th>Espacio deportivo</th>
-								<th>fecha</th>
-								<th>hora inicio</th>
-								<th>hora fin</th>
-								
+<div class="wrapper">
+   
+	<div class="container1">
+		<div class="container">
+			<h2>Reservas De Escenarios Deportivos</h2>
+			
+			<div class="panel-group" id="accordion">
+				<div class="panel panel-default">
+					<div  class="panel-group" >
+						<div class="panel-body">
+							<table class="table table-striped" >
+									<tr>
+										<th>Usuario</th>
+										<th>Espacio deportivo</th>
+										<th>fecha</th>
+										<th>hora inicio</th>
+										<th>hora fin</th>
+										
 
-	
-							</tr>
-							<tr *ngFor="let reservaespacio of reservados">
-								<td>{{reservaespacio.usuario}}</td>
-								<td>{{reservaespacio.espacioDeportivo}}</td>
-								<td>{{reservaespacio.fecha}}</td>
-								<td>{{reservaespacio.horaInicio}}</td>
-								<td>{{reservaespacio.horaFin}}</td>
-								
-							</tr>
-					</table>
+			
+									</tr>
+									<tr *ngFor="let reservaespacio of reservados">
+										<td>{{reservaespacio.usuario}}</td>
+										<td>{{reservaespacio.espacioDeportivo}}</td>
+										<td>{{reservaespacio.fecha}}</td>
+										<td>{{reservaespacio.horaInicio}}</td>
+										<td>{{reservaespacio.horaFin}}</td>
+										
+									</tr>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

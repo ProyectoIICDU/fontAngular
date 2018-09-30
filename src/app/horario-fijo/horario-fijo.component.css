@@ -403,7 +403,8 @@ body.left.no-transform:before {
   float: left;
   display: flex;
   min-height: 85vh;
-  background-color: #092a47;
+  
+  background-image: linear-gradient(#020d16, #3b94e2);
   opacity: 2;
    }
 
