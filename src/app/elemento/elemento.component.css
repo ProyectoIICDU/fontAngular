@@ -1,0 +1,63 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700);
+aside{
+    position: absolute;
+    width: 350px;
+    height: 550px;
+    float: left;
+    display: flex;
+    min-height: 85vh;
+    background-image: linear-gradient(#020d16, #3b94e2);
+    opacity: 2;
+   }
+
+aside button{
+    position: relative;
+    top: 30%;
+    width: 60%;
+    height:50px;
+    border: 3px solid #73AD21;
+    background:  #507bf0;
+    border-radius: 5px;
+    color: #fff;
+}
+
+input[type="color"]{
+  width: 50px;
+  height: 35px;
+}
+
+
+/**
+Responsive
+**/
+@media screen and (max-width: 1400px) {
+  .wrapper {
+    width: 25%; } }
+@media screen and (max-width: 1200px) {
+  .wrapper {
+    width: 20%; } }
+@media screen and (max-width: 1000px) {
+  .wrapper {
+    width: 15%; } }
+@media screen and (max-width: 850px) {
+  .wrapper {
+    float: none;
+    width: auto; }
+
+  .container {
+    border-radius: 0 !important; } }
+@media screen and (max-width: 700px) {
+  body {
+    font-size: 0.9em; }
+
+  header h1 {
+    font-size: 2.25rem;
+    letter-spacing: -0.1rem;
+    line-height: 2.25rem; }
+
+  .container {
+    padding: 2rem; }
+
+  a.button.button-large {
+    padding: 9px 20px; } }
+

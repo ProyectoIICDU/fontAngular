@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EspacioDeportivosComponent } from './espacio-deportivos/espacio-deportivos.component';
 import { AgregarescenarioComponent } from './escenario/agregarescenario/agregarescenario.component';
 import { HorarioFijoComponent } from './horario-fijo/horario-fijo.component';
+import { ElementoComponent } from './elemento/elemento.component';
 import { MostrarFotoComponent } from './mostrar-foto/mostrar-foto.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Autenticacion } from './autenticacion/index';
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'espaciodeportivos', component: EspacioDeportivosComponent, canActivate: [Autenticacion]  },
   { path: 'agregarescenario', component: AgregarescenarioComponent },
   { path: 'horariofijo', component: HorarioFijoComponent , canActivate: [Autenticacion]},
+  { path: 'elemento', component: ElementoComponent , canActivate: [Autenticacion]},
   { path: 'validarusuarios', component: ValidarusuariosComponent , canActivate: [Autenticacion]},
   { path: 'mostrarfoto', component: MostrarFotoComponent },
   { path: 'login', component: LoginComponent },
