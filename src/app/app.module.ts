@@ -33,6 +33,7 @@ import { AlertComponent } from './alertas/index';
 import { ValidarusuariosComponent } from './validarusuarios/validarusuarios.component';
 import { EspaciosReservadosComponent } from './espacios-reservados/espacios-reservados.component';
 import { EspaciosreservadosService } from './espaciosreservados.service';
+import { ElementoComponent } from './elemento/elemento.component';
 
 
 registerLocaleData(localeEs);
@@ -52,7 +53,8 @@ registerLocaleData(localeEs);
     RegistroComponent,
     AlertComponent,
     ValidarusuariosComponent,
-    EspaciosReservadosComponent
+    EspaciosReservadosComponent,
+    ElementoComponent
   ],
   imports: [
     BrowserModule,
