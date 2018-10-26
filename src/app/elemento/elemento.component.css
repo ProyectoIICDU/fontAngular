@@ -31,16 +31,16 @@ input[type="color"]{
 Responsive
 **/
 @media screen and (max-width: 1400px) {
-  .wrapper {
-    width: 25%; } }
+  .aside {
+    width: 350px; } }
 @media screen and (max-width: 1200px) {
-  .wrapper {
-    width: 20%; } }
+  .aside {
+    width: 300px; } }
 @media screen and (max-width: 1000px) {
-  .wrapper {
-    width: 15%; } }
-@media screen and (max-width: 850px) {
-  .wrapper {
+  .aside {
+    width: 250px; } }
+@media screen and (max-width: 80px) {
+  .aside {
     float: none;
     width: auto; }
 

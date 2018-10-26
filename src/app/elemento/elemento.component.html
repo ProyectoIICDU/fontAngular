@@ -25,10 +25,11 @@
 
      </section>
 
-     <aside> 
-      <hr>
-      <button id="buttonana" type="button" (click)="setNuevo()" data-toggle="modal" data-target="#modalEspacioDeportivo" ><i ></i>Nuevo</button>
-      <hr>
+     <aside class="visible-lg"> 
+        <hr>
+        <button type="button" (click)="setNuevo()" data-toggle="modal" data-target="#modalElementoDeportivo" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo</button>
+        <hr>
+
      </aside>
 
 
@@ -36,7 +37,7 @@
  
    <!--VENTANA MODAL PARA AGREGAR UN NUEVO ELEMENTO-->
    
-<div class="modal fade" id="modalEspacioDeportivo" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="modalElementoDeportivo" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -51,7 +52,7 @@
                   <div class="form-check form-check-inline">
                     <label class="form-check-label">
                       <input class="form-check-input" type="radio"  (change)="onFilteroption1($event.target.checked)" name="inlineRadioOptions"
-                        id="inlineRadio1" value="option1" >Normal
+                        id="inlineRadio1" value="option1" checked>Normal
                     </label>
                   </div>
                   <div class="form-check form-check-inline">
@@ -71,19 +72,16 @@
             <div class="modal-body">
                 <form id="frmEspaciodeportivo" (ngSubmit)="enviarFormulario()" class="form-label-left form-horizontal" #espacioDeportivoForm="ngForm">
                     <fieldset>
-                        <legend>Informacion del Espacio Deportivo</legend>
+                        <legend>Informacion del Elemento Deportivo</legend>
                         <hr>
-                        <div class="form-group row">
+                        <div *ngIf="accion == 'Registrar' || accion == 'Actualizar'" class="form-group row">
                             <label class="col-sm-2 col-form-label" for="deporte">Deporte</label>
                             <div class="col-sm-10">
-                                <select id="deporte" name="deporte" [(ngModel)]="espacioSelected.deporte" class="form-control" [required]="required" [disabled]="!required" #deporte="ngModel">
-                                    <option value="">Seleccione...</option>
-                                    <option *ngFor="let opcion of deporteSelect" [value]="opcion.value">{{opcion.text}}</option>
+                                <select id="deporte" name="deporte" [(ngModel)]="deporteSelected" class="form-control" [required]="required" [disabled]="!required">
+                                    <option *ngFor="let opcion of deportesSelect" [ngValue]="opcion">{{opcion.nombre}}</option>
                                 </select>
-                                <div *ngIf="deporte.invalid && (deporte.dirty || deporte.touched)" class="alert alert-danger">
-                                    <div *ngIf="deporte.errors.required">El deporte es requerida.</div>
-                                </div>
-                            </div>
+                                
+                            </div> 
                         </div>
                         
                         <div class="form-group row">
@@ -91,7 +89,7 @@
                             <label class="col-sm-2 col-form-label" for="descripcion">Descripcion</label>
       
                         <div class="col-sm-10">
-                            <textarea id="descripcion" name="descripcion" [(ngModel)]="espacioSelected.descripcion" class="form-control" [readonly]="!required" #descripcion="ngModel">{{espacioSelected.descripcion}}</textarea>
+                            <textarea id="descripcion" name="descripcion" [(ngModel)]="elementoSelected.descripcion" class="form-control"  #descripcion="ngModel">{{elementoSelected.descripcion}}</textarea>
                         </div>
                         </div>
                         <!--INFO ESPECIFICA DE UN ELEMENTO NORMAL-->
@@ -99,9 +97,9 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="marca">Marca</label>
                             <div class="col-sm-10">
-                                <input type="text" id="marca" name="marca" [(ngModel)]="espacioSelected.marca" maxlength="30" class="form-control" [required]="required" [readonly]="!required" #marca="ngModel">
+                                <input type="text" id="marca" name="marca" [(ngModel)]="elementoSelected.marca" maxlength="30" class="form-control" [required]="required" [readonly]="!required" #marca="ngModel">
                                 <div *ngIf="marca.invalid && (marca.dirty || marca.touched)" class="alert alert-danger">
-                                    <div *ngIf="marca.errors.required">La marca es requerido.</div>
+                                    <div *ngIf="marca.errors.required">La marca es requerida.</div>
                                     <div *ngIf="marca.errors.maxlength">La marca supera la longitud maxima de caracteres (maximo 30 caracteres).</div>
                                 </div>
                             </div>
@@ -109,7 +107,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="referencia">Referencia</label>
                             <div class="col-sm-10">
-                                <input type="text" id="referencia" name="referencia" [(ngModel)]="espacioSelected.referencia" maxlength="3" class="form-control" [required]="required" [readonly]="!required" #referencia="ngModel">
+                                <input type="text" id="referencia" name="referencia" [(ngModel)]="elementoSelected.referencia" maxlength="30" class="form-control" [required]="required" [readonly]="!required" #referencia="ngModel">
                                 <div *ngIf="referencia.invalid && (referencia.dirty || referencia.touched)" class="alert alert-danger">
                                     <div *ngIf="referencia.errors.required">La referencia es requerido.</div>
                                     <div *ngIf="referencia.errors.maxlength">La referencia supera la longitud maxima de caracteres (maximo 30 caracteres).</div>
@@ -123,7 +121,7 @@
                           <div class="form-group row">
                               <label class="col-sm-2 col-form-label" for="marca">Marca</label>
                               <div class="col-sm-10">
-                                  <input type="text" id="marca" name="marca" [(ngModel)]="espacioSelected.marca" maxlength="30" class="form-control" [required]="required" [readonly]="!required" #marca="ngModel">
+                                  <input type="text" id="marca" name="marca" [(ngModel)]="elementoSelected.marca" maxlength="30" class="form-control" [required]="required" [readonly]="!required" #marca="ngModel">
                                   <div *ngIf="marca.invalid && (marca.dirty || marca.touched)" class="alert alert-danger">
                                       <div *ngIf="marca.errors.required">La marca es requerido.</div>
                                       <div *ngIf="marca.errors.maxlength">La marca supera la longitud maxima de caracteres (maximo 30 caracteres).</div>
@@ -133,7 +131,7 @@
                           <div class="form-group row">
                               <label class="col-sm-2 col-form-label" for="referencia">Referencia</label>
                               <div class="col-sm-10">
-                                  <input type="text" id="referencia" name="referencia" [(ngModel)]="espacioSelected.referencia" maxlength="3" class="form-control" [required]="required" [readonly]="!required" #referencia="ngModel">
+                                  <input type="text" id="referencia" name="referencia" [(ngModel)]="elementoSelected.referencia" maxlength="3" class="form-control" [required]="required" [readonly]="!required" #referencia="ngModel">
                                   <div *ngIf="referencia.invalid && (referencia.dirty || referencia.touched)" class="alert alert-danger">
                                       <div *ngIf="referencia.errors.required">La referencia es requerido.</div>
                                       <div *ngIf="referencia.errors.maxlength">La referencia supera la longitud maxima de caracteres (maximo 30 caracteres).</div>
@@ -143,7 +141,7 @@
                           <div class="form-group row">
                               <label class="col-sm-2 col-form-label" for="peso">Peso</label>
                               <div class="col-sm-10">
-                                  <input type="number" id="peso" name="peso" min="1" [(ngModel)]="espacioSelected.peso" maxlength="3" class="form-control" [required]="required" [readonly]="!required" #peso="ngModel">
+                                  <input type="number" id="peso" name="peso" min="1" [(ngModel)]="elementoSelected.peso" maxlength="3" class="form-control" [required]="required" [readonly]="!required" #peso="ngModel">
                                   <div *ngIf="peso.invalid && (peso.dirty || peso.touched)" class="alert alert-danger">
                                       <div *ngIf="peso.errors.required">La peso es requerido.</div>
                                       <div *ngIf="peso.errors.min">La peso debe ser mayo a 1.</div>
@@ -157,7 +155,7 @@
                           <div class="form-group row">
                               <label class="col-sm-2 col-form-label" for="primario">Color Primario</label>
                               <div class="col-sm-10">
-                                  <input type="color" id="primario" name="primario" [(ngModel)]="espacioSelected.primario" value="#ff0000" class="form-control" [required]="required" [readonly]="!required" #primario="ngModel">
+                                  <input type="color" id="primario" name="primario" [(ngModel)]="elementoSelected.primario" value="#ff0000" class="form-control" [required]="required" [readonly]="!required" #primario="ngModel">
                                   <div *ngIf="primario.invalid && (primario.dirty || primario.touched)" class="alert alert-danger">
                                       <div *ngIf="primario.errors.required">El color primario es requerido.</div>
                                       
@@ -168,7 +166,7 @@
                           <div class="form-group row">
                               <label class="col-sm-2 col-form-label" for="secundario">Color Secundario</label>
                               <div class="col-sm-10">
-                                  <input type="color" id="secundario" name="secundario" [(ngModel)]="espacioSelected.secundario" value="#ff0000" class="form-control" [required]="required" [readonly]="!required" #secundario="ngModel">
+                                  <input type="color" id="secundario" name="secundario" [(ngModel)]="elementoSelected.secundario" value="#ff0000" class="form-control" [required]="required" [readonly]="!required" #secundario="ngModel">
                                   <div *ngIf="secundario.invalid && (secundario.dirty || secundario.touched)" class="alert alert-danger">
                                       <div *ngIf="secundario.errors.required">El color secundario es requerido.</div>
                                       
@@ -180,7 +178,7 @@
                       <div class="form-group row">
                           <label class="col-sm-2 col-form-label" for="cantidad">Cantidad</label>
                           <div class="col-sm-10">
-                              <input type="number" id="cantidad" name="cantidad" min="1" [(ngModel)]="espacioSelected.cantidad" maxlength="3" class="form-control" [required]="required" [readonly]="!required" #cantidad="ngModel">
+                              <input type="number" id="cantidad" name="cantidad" min="1" [(ngModel)]="elementoSelected.cantidad" maxlength="3" class="form-control" [required]="required" [readonly]="!required" #cantidad="ngModel">
                               <div *ngIf="cantidad.invalid && (cantidad.dirty || cantidad.touched)" class="alert alert-danger">
                                   <div *ngIf="cantidad.errors.required">La cantidad es requerido.</div>
                                   <div *ngIf="cantidad.errors.min">La cantidad debe ser mayo a 1.</div>
@@ -195,7 +193,7 @@
                         <div class="col-sm-2"></div>
                         <div class="col-sm-10">
                             <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" value="Cerrar"><i class="fa fa-times"></i> Cerrar</button>
-                            <button *ngIf="accion != 'Detalle'" type="submit" name="btnEnviar" data-dismiss="modal" class="btn btn-success" [disabled]="!espacioDeportivoForm.form.valid"><i class="{{iconBtnSubmit}}"></i> {{accion}}</button>
+                            <button *ngIf="accion != 'Detalle'" type="submit" name="btnEnviar"  class="btn btn-success" [disabled]="!espacioDeportivoForm.form.valid"><i class="{{iconBtnSubmit}}"></i> {{accion}}</button>
                         </div>
                     </div>
                 </form>

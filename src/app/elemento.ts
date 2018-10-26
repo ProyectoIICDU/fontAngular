@@ -3,13 +3,17 @@ import { ReservaEspacio } from './reservaespacio';
 export class Elemento {
     constructor(
     public idEspacio: number,
-    public nombre: string,
-    public estado: string,
-    public ubicacion: string,
-    public deporteList: Deporte[],
-    public reservaEspacioList:ReservaEspacio[],
+    public deporte: string,
+    public marca: string,
+    public referencia: string,
+    public peso: number,
+    public primario: string,
+    public secundario: string,
+    public cantidad: number,
+    public tipo: string,
     public descripcion?: string,
 
     ) {  }
+    
 
 }

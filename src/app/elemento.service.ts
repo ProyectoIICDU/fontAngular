@@ -25,9 +25,6 @@ export class ElementoService {
 
     //------------------------------------------------------------------------------
 
-    getEspaciosDeportivos(): Observable<Elemento[]> {
-        return this.http.get<Elemento[]>(this.espaciosUrl).pipe(tap(espacios => this.log(`fetched heroes`)), catchError(this.handleError('getEspaciodeportivos', [])));
-    }
 
     //------------------------------------------------------------------------------
 
@@ -39,7 +36,7 @@ export class ElementoService {
 
     //------------------------------------------------------------------------------
 
-    guardarEspacioDeportivo(newEspacio: Elemento): Observable<Elemento> {
+    guardarElementoDeportivo(newEspacio: Elemento): Observable<Elemento> {
         //        let json = JSON.stringify(newEspacio);
         console.log(newEspacio);
         //        const url= '${this.espaciosUrl}/Agregar';

@@ -34,6 +34,7 @@ import { ValidarusuariosComponent } from './validarusuarios/validarusuarios.comp
 import { EspaciosReservadosComponent } from './espacios-reservados/espacios-reservados.component';
 import { EspaciosreservadosService } from './espaciosreservados.service';
 import { ElementoComponent } from './elemento/elemento.component';
+import { ElementoService } from './elemento.service';
 
 
 registerLocaleData(localeEs);
@@ -74,6 +75,7 @@ registerLocaleData(localeEs);
     AutenticacionService,
     AlertService,
     EspaciosreservadosService,
+    ElementoService,
     UsuarioService,
     {
         provide: HTTP_INTERCEPTORS,
