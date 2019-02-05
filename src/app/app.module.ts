@@ -34,6 +34,9 @@ import { ValidarusuariosComponent } from './validarusuarios/validarusuarios.comp
 import { EspaciosReservadosComponent } from './espacios-reservados/espacios-reservados.component';
 import { EspaciosreservadosService } from './espaciosreservados.service';
 import { ElementoComponent } from './elemento/elemento.component';
+import { ElementoService } from './elemento.service';
+import { ReservaElementoComponent } from './reserva-elemento/reserva-elemento.component';
+
 
 
 registerLocaleData(localeEs);
@@ -54,7 +57,9 @@ registerLocaleData(localeEs);
     AlertComponent,
     ValidarusuariosComponent,
     EspaciosReservadosComponent,
-    ElementoComponent
+    ElementoComponent,
+    ReservaElementoComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -64,6 +69,7 @@ registerLocaleData(localeEs);
     AppRoutingModule,
     NgbModule.forRoot(),
     CalendarModule.forRoot(),
+    
     DemoUtilsModule,
     CommonModule
   ],
@@ -74,6 +80,7 @@ registerLocaleData(localeEs);
     AutenticacionService,
     AlertService,
     EspaciosreservadosService,
+    ElementoService,
     UsuarioService,
     {
         provide: HTTP_INTERCEPTORS,

@@ -3,7 +3,7 @@
 
     <button class="btn btn-primary float-right" id="anadir" (click)="addReserva($event)" type="submit" data-toggle="modal"
       data-target="#modalCrearReserva">
-      Añadir Nueva Reserva
+      Reservar
     </button>
 </div>
 <div class="bodyCalendar">
@@ -42,33 +42,17 @@
   </div>
 </div>
 
-<!--
 
-
-<div class="alert alert-info">
-  <div [ngSwitch]="view">
-    <span *ngSwitchCase="'month'">Click on a month label to change the view to that month.</span>
-    <span *ngSwitchCase="'week'">Click on a day header to change the view to that day.</span>
-    <span *ngSwitchCase="'day'">There is no other view to navigate to.</span>
-  </div>
-</div>
--->
 <div [ngSwitch]="view">
   <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" [locale]="locale" (dayClicked)="viewDate = $event.day.date; view = 'day'">
   </mwl-calendar-month-view>
   <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events"[refresh]="refresh"  [locale]="locale" (dayHeaderClicked)="viewDate = $event.day.date; view = 'day'" >
   </mwl-calendar-week-view>
-  <!--<mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [locale]="locale">
-  </mwl-calendar-day-view>-->
   <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
   </mwl-calendar-day-view>
 </div>
 
-
-
-
-
-
+<!--MODAL PARA HACER LA RESERVA-->
 <div class="modal fade" id="modalCrearReserva" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -185,7 +169,7 @@
               <div class="col-sm-10">
                 <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" value="Cerrar">
                   <i class="fa fa-times"></i> Cerrar</button>
-                <button type="submit" name="btnEnviar" class="btn btn-success" [disabled]="formReserva.invalid"  data-dismiss="modal" (click)="guardarReserva($event)" >Reservar Escenario</button>
+                <button type="submit" name="btnEnviar" class="btn btn-success" [disabled]="formReserva.invalid"  data-dismiss="modal" (click)="guardarReserva($event)" >Reservar</button>
 
               </div>
             </div>

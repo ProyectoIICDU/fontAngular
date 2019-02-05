@@ -1,73 +1,97 @@
 <!-- INICIA LA CABECERA DE LA PAGINA -->
 <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top " style="background: linear-gradient(to right, #003366 30%, #0099cc 100%)">
-  <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation" style="background: linear-gradient(to right, #003366 30%, #0099cc 100%);">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <!-- LOGO DE LA UNIVERSIDAD-->
-
-  <a class="navbar-brand">
-    <img class="img-res" src="../assets/img/banner.png" width="450" height="100" alt="">
-  </a>
-
-  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    <ul class="navbar-nav mr-auto">
-      <!-- BARRA HORIZONTAL DE CABECERA -->
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Escenarios
-          <span class="sr-only">(current)</span>
+    <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation" style="background: linear-gradient(to right, #003366 30%, #0099cc 100%);">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <!-- LOGO DE LA UNIVERSIDAD-->
+  
+    <a class="navbar-brand">
+      <img class="img-res" src="../assets/img/banner.png" width="450" height="100" alt="">
+    </a>
+  
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <div id="header">
+          <ul class="navbar-nav mr-auto nav">
+              <!-- BARRA HORIZONTAL DE CABECERA -->
+              <li class="nav-item active">
+                <a class="nav-link" href="/">Escenarios
+                  <span class="sr-only">(current)</span>
+                </a>
+                <ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/espaciosreservados">Reservas</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="/horariofijo">Reservar</a>
+                      </li>
+                </ul>
+                
+              </li>
+              <li class="nav-item active">
+                  <a class="nav-link" href="/elemento">Elementos
+                    <span class="sr-only">(current)</span>
+                  </a>
+                  <ul>
+                      <li class="nav-item">
+                          <a class="nav-link" href="/elemento">Nuevo</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="/reservaelemento">Reservas</a>
+                        </li>
+                  </ul>
+                  
+                </li>
+              
+          </ul>
+      </div>
+      
+        
+  
+  
+     
+          
+      <form class="form-inline mt-2 mt-md-0">
+        <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
+        <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cerrar Sesión</button>-->
+        <a class="btn btn-outline-warning" data-toggle="modal" data-target="#modalCerrarSesion">
+          <img src="../assets/img/apagar.svg" width="30" height="30" alt="">
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/espaciosreservados">Reservas</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/horariofijo">Realizar Reserva</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/elemento">Elementos</a>
-      </li>
-    </ul>
-    <form class="form-inline mt-2 mt-md-0">
-      <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
-      <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cerrar Sesión</button>-->
-      <a class="btn btn-outline-warning" data-toggle="modal" data-target="#modalCerrarSesion">
-        <img src="../assets/img/apagar.svg" width="30" height="30" alt="">
-      </a>
-      <!--<button class="btn btn-outline-warning" type="button" data-toggle="modal" data-target="#modalCerrarSesion">Cerrar Sesión</button>-->
-    </form>
-  </div>
-</nav>
-<!-- FIN DE LA CABECERA DE LA PAGINA -->
-
-<br>
-<br>
-<br>
-
-
-
-<!-- CUADRO DE DIALOGO CONFIRMAR CERRAR SESIÓN -->
-<div class="modal fade" id="modalCerrarSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-center" id="exampleModalLabel">Advertencia</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body text-center">
-        ¿Realmente desea salir del Sistema?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <a type="button" class="btn btn-primary" href="/login">Si, Cerrar Sesión</a>
+        <!--<button class="btn btn-outline-warning" type="button" data-toggle="modal" data-target="#modalCerrarSesion">Cerrar Sesión</button>-->
+      </form>
+    </div>
+  </nav>
+  <!-- FIN DE LA CABECERA DE LA PAGINA -->
+  
+  <br>
+  <br>
+  <br>
+  
+  
+  
+  <!-- CUADRO DE DIALOGO CONFIRMAR CERRAR SESIÓN -->
+  <div class="modal fade" id="modalCerrarSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-center" id="exampleModalLabel">Advertencia</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          ¿Realmente desea salir del Sistema?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <a type="button" class="btn btn-primary" href="/login">Si, Cerrar Sesión</a>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<router-outlet></router-outlet>
-<app-messages></app-messages>
-
+  <router-outlet></router-outlet>
+  <app-messages></app-messages>
+  
+    
   
