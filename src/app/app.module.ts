@@ -35,6 +35,8 @@ import { EspaciosReservadosComponent } from './espacios-reservados/espacios-rese
 import { EspaciosreservadosService } from './espaciosreservados.service';
 import { ElementoComponent } from './elemento/elemento.component';
 import { ElementoService } from './elemento.service';
+import { ReservaElementoComponent } from './reserva-elemento/reserva-elemento.component';
+
 
 
 registerLocaleData(localeEs);
@@ -55,7 +57,9 @@ registerLocaleData(localeEs);
     AlertComponent,
     ValidarusuariosComponent,
     EspaciosReservadosComponent,
-    ElementoComponent
+    ElementoComponent,
+    ReservaElementoComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -65,6 +69,7 @@ registerLocaleData(localeEs);
     AppRoutingModule,
     NgbModule.forRoot(),
     CalendarModule.forRoot(),
+    
     DemoUtilsModule,
     CommonModule
   ],

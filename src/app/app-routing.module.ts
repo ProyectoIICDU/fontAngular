@@ -12,6 +12,8 @@ import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/index';
 import { ValidarusuariosComponent } from './validarusuarios/validarusuarios.component';
 import { EspaciosReservadosComponent } from './espacios-reservados/espacios-reservados.component';
+import { ReservaElementoComponent } from './reserva-elemento/reserva-elemento.component';
+
 
 
 
@@ -20,12 +22,14 @@ const routes: Routes = [
   { path: 'espaciodeportivos', component: EspacioDeportivosComponent, canActivate: [Autenticacion]  },
   { path: 'agregarescenario', component: AgregarescenarioComponent },
   { path: 'horariofijo', component: HorarioFijoComponent , canActivate: [Autenticacion]},
+  { path: 'reservaelemento', component: ReservaElementoComponent , canActivate: [Autenticacion]},
   { path: 'elemento', component: ElementoComponent , canActivate: [Autenticacion]},
   { path: 'validarusuarios', component: ValidarusuariosComponent , canActivate: [Autenticacion]},
   { path: 'mostrarfoto', component: MostrarFotoComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'espaciosreservados', component: EspaciosReservadosComponent },
+  
 
 ];
 

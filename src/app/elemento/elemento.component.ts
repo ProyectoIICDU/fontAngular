@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { Elemento } from '../elemento'; 
 
 import { Deporte } from '../deporte'; 
 
 import { ElementoService } from '../elemento.service';
+import { CalendarComponent } from '../calendar/calendar.component'
 
 @Component({
   selector: 'app-elemento',
@@ -11,13 +12,14 @@ import { ElementoService } from '../elemento.service';
   styleUrls: ['./elemento.component.css']
 })
 export class ElementoComponent implements OnInit {
-
+    @ViewChild (CalendarComponent) calendario;
   option1 = true;
   option2 = false;
   option3 = false;
   control= false;
   elementoSelected: Elemento; // Objeto donde se almacena el espacio deportivo seleccionado para VER, EDITAR o ELIMINAR
   deporteSelected: Deporte; //
+  elementos: Elemento[]; // En este array se almacenan los espacios deportivos registrados en la BD.
   deportesSelect: Deporte[];
   arraydeportesSelected: Deporte[];
   // Esta variable permite determinar si los inputs del formulario son requeridos o no, en caso de no ser requeridos
@@ -35,14 +37,14 @@ export class ElementoComponent implements OnInit {
   
 
   ngOnInit() {
-    
+    this.getElementosDeportivos();
     
   }
-  getEspaciosDeportivos() {
-          
+  getElementosDeportivos() {
+    this.elementoService.getElementosDeportivos().subscribe(espacios => this.elementos = espacios);       
   }
   setNuevo() {      
-    this.elementoSelected = new Elemento(0, '', '', '',0,'', '',1,'');
+    this.elementoSelected = new Elemento(0, '', '', '',0,'', '',1,'','');
     this.accion = 'Registrar'; // se inicializa la accion en Registrar para que el formulario quede configurado para realizar registro de un espacio deportivo
     this.elementoService.getDeportes().subscribe(deportes => this.deportesSelect = deportes);
     this.required = true; // se inicializa en "true" ya que al hacer registros los campos deben ser requeridos
@@ -78,6 +80,7 @@ export class ElementoComponent implements OnInit {
                 else{this.elementoSelected.tipo="uniforme";}}
                 this.elementoSelected.deporte = this.deporteSelected.nombre; 
                 // Se consume el web service "guardarEspacioDeportivo", el nuevo espacio deportivo es anexado a la lista de esapacios deportivos "espacios".
+                this.elementos.push(this.elementoSelected);
                 this.elementoService.guardarElementoDeportivo(this.elementoSelected); 
                 break;
             case "Actualizar":

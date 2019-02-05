@@ -23,10 +23,10 @@
 						<option *ngFor="let espaciodeportivo of escenarios" [ngValue]="espaciodeportivo">{{espaciodeportivo.nombre}}</option>
 					</select>
 				
-						<div *ngIf="selectedEspacio">
-							<br>
-							<app-calendar [selectEspacio]="selectedEspacio" ></app-calendar>	
-						</div>
+					<div *ngIf="selectedEspacio">
+						<br>
+						<app-calendar [selectEspacio]="selectedEspacio" ></app-calendar>	
+					</div>
 					</div>
 				</div>
 				</div>

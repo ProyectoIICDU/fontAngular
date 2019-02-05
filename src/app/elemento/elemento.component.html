@@ -22,7 +22,31 @@
 <body>
    <div id="contenedor">
      <section id="contenido">
-
+            <h2>Elementos Deportivos</h2>
+            <div class="container">
+                <table id="tblEspaciosdeportivos" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Cantidad</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let espaciodeportivo of elementos">
+                            <td>{{espaciodeportivo.tipo}}</td>
+                            <td>{{espaciodeportivo.descripcion}}</td>
+                            <td>{{espaciodeportivo.cantidad}}</td>
+                            <td>
+                                <a href="" (click)="verEspacioDeportivo(espaciodeportivo, 'Detalle')" data-toggle="modal" data-target="#modalEspacioDeportivo"><i class="fa fa-eye"></i></a> &nbsp; 
+                                <a href="" (click)="verEspacioDeportivo(espaciodeportivo, 'Actualizar')" data-toggle="modal" data-target="#modalEspacioDeportivo"><i class="fa fa-edit"></i></a> &nbsp; 
+                                <a href="" (click)="verEspacioDeportivo(espaciodeportivo, 'Eliminar')" data-toggle="modal" data-target="#modalEspacioDeportivo"><i class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
+                </table>
+            </div>
+            	
      </section>
 
      <aside class="visible-lg"> 
@@ -46,34 +70,21 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Tipo de Elemento</label>
-                <div class="col-sm-9">
-                  <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                      <input class="form-check-input" type="radio"  (change)="onFilteroption1($event.target.checked)" name="inlineRadioOptions"
-                        id="inlineRadio1" value="option1" checked>Normal
-                    </label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                      <input class="form-check-input" type="radio" (change)="onFilteroption2($event.target.checked)" name="inlineRadioOptions"
-                        id="inlineRadio2" value="option2">Medicinal
-                    </label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                      <label class="form-check-label">
-                        <input class="form-check-input" type="radio" (change)="onFilteroption3($event.target.checked)" name="inlineRadioOptions"
-                          id="inlineRadio3" value="option3">Uniforme
-                      </label>
-                    </div>
-                </div>
-              </div>
+            
             <div class="modal-body">
                 <form id="frmEspaciodeportivo" (ngSubmit)="enviarFormulario()" class="form-label-left form-horizontal" #espacioDeportivoForm="ngForm">
                     <fieldset>
                         <legend>Informacion del Elemento Deportivo</legend>
                         <hr>
+                        <div *ngIf="accion == 'Registrar' || accion == 'Actualizar'" class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="tipo">Tipo De Elemento</label>
+                            <div class="col-sm-10">
+                                <select id="tipo" name="tipo" [(ngModel)]="deporteSelected" class="form-control" [required]="required" [disabled]="!required">
+                                    <option *ngFor="let opcion of deportesSelect" [ngValue]="opcion">{{opcion.nombre}}</option>
+                                </select>
+                                
+                            </div> 
+                        </div>
                         <div *ngIf="accion == 'Registrar' || accion == 'Actualizar'" class="form-group row">
                             <label class="col-sm-2 col-form-label" for="deporte">Deporte</label>
                             <div class="col-sm-10">
@@ -93,31 +104,30 @@
                         </div>
                         </div>
                         <!--INFO ESPECIFICA DE UN ELEMENTO NORMAL-->
-                        <div *ngIf="option1">
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="marca">Marca</label>
-                            <div class="col-sm-10">
-                                <input type="text" id="marca" name="marca" [(ngModel)]="elementoSelected.marca" maxlength="30" class="form-control" [required]="required" [readonly]="!required" #marca="ngModel">
-                                <div *ngIf="marca.invalid && (marca.dirty || marca.touched)" class="alert alert-danger">
-                                    <div *ngIf="marca.errors.required">La marca es requerida.</div>
-                                    <div *ngIf="marca.errors.maxlength">La marca supera la longitud maxima de caracteres (maximo 30 caracteres).</div>
+                        <div *ngIf="ngValue==Futbol">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="marca">Marca</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="marca" name="marca" [(ngModel)]="elementoSelected.marca" maxlength="30" class="form-control" [required]="required" [readonly]="!required" #marca="ngModel">
+                                    <div *ngIf="marca.invalid && (marca.dirty || marca.touched)" class="alert alert-danger">
+                                        <div *ngIf="marca.errors.required">La marca es requerida.</div>
+                                        <div *ngIf="marca.errors.maxlength">La marca supera la longitud maxima de caracteres (maximo 30 caracteres).</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="referencia">Referencia</label>
-                            <div class="col-sm-10">
-                                <input type="text" id="referencia" name="referencia" [(ngModel)]="elementoSelected.referencia" maxlength="30" class="form-control" [required]="required" [readonly]="!required" #referencia="ngModel">
-                                <div *ngIf="referencia.invalid && (referencia.dirty || referencia.touched)" class="alert alert-danger">
-                                    <div *ngIf="referencia.errors.required">La referencia es requerido.</div>
-                                    <div *ngIf="referencia.errors.maxlength">La referencia supera la longitud maxima de caracteres (maximo 30 caracteres).</div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="referencia">Referencia</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="referencia" name="referencia" [(ngModel)]="elementoSelected.referencia" maxlength="30" class="form-control" [required]="required" [readonly]="!required" #referencia="ngModel">
+                                    <div *ngIf="referencia.invalid && (referencia.dirty || referencia.touched)" class="alert alert-danger">
+                                        <div *ngIf="referencia.errors.required">La referencia es requerido.</div>
+                                        <div *ngIf="referencia.errors.maxlength">La referencia supera la longitud maxima de caracteres (maximo 30 caracteres).</div>
+                                    </div>
                                 </div>
-                            </div>
+                            </div>          
                         </div>
-                        
-                      </div>
                       <!--INFO ESPECIFICA DE UN ELEMENTO MEDICINAL-->
-                      <div *ngIf="option2">
+                      <div *ngIf="ngValue==Medicinal">
                           <div class="form-group row">
                               <label class="col-sm-2 col-form-label" for="marca">Marca</label>
                               <div class="col-sm-10">
@@ -151,7 +161,7 @@
                           </div>
                         </div>
                       <!--INFO ESPECIFICA DE UN ELEMENTO UNIFORME-->
-                      <div *ngIf="option3">
+                      <div *ngIf="ngValue==Uniforme">
                           <div class="form-group row">
                               <label class="col-sm-2 col-form-label" for="primario">Color Primario</label>
                               <div class="col-sm-10">

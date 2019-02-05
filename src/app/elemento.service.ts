@@ -24,8 +24,13 @@ export class ElementoService {
     constructor(private http: HttpClient, private messageService: MessageService) { }
 
     //------------------------------------------------------------------------------
+    
+    getElementosDeportivos(): Observable<Elemento[]> {
 
-
+       
+        return this.http.get<Elemento[]>(this.espaciosUrl).pipe(tap(espacios => this.log(`fetched heroes`)), catchError(this.handleError('getEspaciodeportivos', [])));
+        
+    }
     //------------------------------------------------------------------------------
 
     getDeportes(): Observable<Deporte[]> {
