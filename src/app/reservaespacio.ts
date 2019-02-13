@@ -5,6 +5,8 @@ export class ReservaEspacio {
         public idReserva:number,
         public fechaini:Date,
         public fechafin:Date,
+        public facultad:String,
+        public programa:String,
         public tipo:String,
         public descripcion:String,
         public nombre:String,
