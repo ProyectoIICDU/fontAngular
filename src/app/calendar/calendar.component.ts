@@ -98,6 +98,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 /** Importacion para la presentacion de alertas al usuario */
 import { AlertService } from '../servicios/index';
+import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -133,12 +134,12 @@ const colors: any = {
 export class CalendarComponent implements OnInit {
 
   // Estructuras usadas para la inicializcion del calendario
-  inicioDiarioStruct = {
+  /*inicioDiarioStruct = {
     hour: 2,
     minute: 23,
     second: 0
 
-  };
+  };*/
   finalDiarioStruct = {
     hour: 2,
     minute: 23,
@@ -159,6 +160,7 @@ export class CalendarComponent implements OnInit {
   option1 = false;
   option2 = false;
   control= false;
+  Error=false;
 
   // Variable para configuracion del idioma del calendario
   locale: string = 'es';
@@ -229,12 +231,12 @@ export class CalendarComponent implements OnInit {
   *
   */
   constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService, private cdr: ChangeDetectorRef,  private alertService: AlertService) {
-    this.inicioDiarioStruct = {
+    /*this.inicioDiarioStruct = {
       hour: 2,
       minute: 23,
       second: 0
 
-    };
+    };*/
     this.finalDiarioStruct = {
       hour: 2,
       minute: 23,
@@ -266,7 +268,7 @@ export class CalendarComponent implements OnInit {
       'descripcion': new FormControl(this.reservaAct.descripcion, Validators.maxLength(500)), // longitud maxima de caracteres permitidos 
 
       // Campo descripcion, ligado a variable: "this.reservaAct.descripcion"
-      'inicioDiarioStruct': new FormControl(this.inicioDiarioStruct),
+      //'inicioDiarioStruct': new FormControl(this.inicioDiarioStruct),
 
       // Campo descripcion, ligado a variable: "this.reservaAct.descripcion"
       'finalDiarioStruct': new FormControl(this.finalDiarioStruct),
@@ -349,7 +351,6 @@ export class CalendarComponent implements OnInit {
       }
     };
     
-    console.log("reserva:" + this.reservasActuales.length);
 
   }
 
@@ -379,13 +380,13 @@ export class CalendarComponent implements OnInit {
   onFilteroption2(ischecked: boolean) {
     this.option2 = true;
     this.option1 = false;
-
+    /*
     this.inicioDiarioStruct = {
       second: getSeconds(this.viewDate),
       minute: getMinutes(this.viewDate),
       hour: getHours(this.viewDate)
     };
-
+    */
     this.finalDiarioStruct = {
       second: getSeconds(this.viewDate),
       minute: getMinutes(this.viewDate),
@@ -406,19 +407,28 @@ export class CalendarComponent implements OnInit {
     reservaActual.nombre = this.formReserva.get('nombre').value;
     reservaActual.tipo = this.formReserva.get('tipo').value;
     reservaActual.descripcion=this.formReserva.get('descripcion').value;
+    const fechaAct = new Date(); //Fecha actual
+    console.log("Es "+ inicio + "<" + fechaAct+"?");
+    let horasMaxPermitidas: Boolean=false;
+    let HorarioPermitido: Boolean=false;
     if (this.option1) {
       reservaActual.esfija = this.option1;
 
-      console.log("inicio1" + inicio);
-      console.log("inicio2:" + final);
-      //inicio.setDate(inicio.getDate()+7);
-      console.log("inicio" + inicio);
-
-      const fechaAct = new Date(); //Fecha actual
-      console.log("Es "+ inicio + "<" + fechaAct+"?");
+      switch(this.eventAct.end.getHours()-this.eventAct.start.getHours()){
+        case 0:  horasMaxPermitidas=true;
+        break;
+        case 1: 
+          if(this.eventAct.end.getMinutes()-this.eventAct.start.getMinutes()<=30){ 
+            horasMaxPermitidas=true;
+          }else{horasMaxPermitidas=false;}
+        break;
+        default: horasMaxPermitidas=false;
       
-      //Revision que no sea menor que la fecha actual
+      }
+      if(horasMaxPermitidas){
+        //Revision que no sea menor que la fecha actual
       if(inicio < fechaAct){
+        this.Error=true;
         this.alertService.error("Error! La fecha de inicio no puede ser menor que la fecha actual.");
         console.log("Error! La fecha de inicio no puede ser menor que la fecha actual.");
       }
@@ -463,60 +473,114 @@ export class CalendarComponent implements OnInit {
           });
           inicio.setDate(inicio.getDate() + 7);
         }
-
+        
         console.log("Reserva adicionada correctamente");
         this.alertService.success("Ok! La reserva ha sido almacenada.");
 
       } else {
         //la reserva no puede ser fija
+        this.Error=true;
         this.alertService.error("Error! La fecha de finalizacion no puede ser menor que la de inicio.");
         console.log("Error, la fecha de fin es menor o igual que la fecha de inicio.");
       }
       
       this.refresh.next();
 
+
+      }else {
+        this.Error=true;
+        this.alertService.error("Error! La reserva no puede durar mas de 1.5 Horas.");
+        
+      }
+      
     }
     else {
-      reservaActual.esfija = this.option2;
+      reservaActual.esfija = false;
+      /*
       const InicioDate: Date = setHours(
         setMinutes(
           setSeconds(inicio, this.inicioDiarioStruct.second),
           this.inicioDiarioStruct.minute
         ),
         this.inicioDiarioStruct.hour
-      );
-
-      const FinalDate: Date = setHours(
+      );*/
+      const InicioDate:Date=this.eventAct.start;
+      console.log("Esta es la fecha"+InicioDate);
+      let FinalDate: Date=this.eventAct.start;
+      FinalDate=setHours(
         setMinutes(
-          setSeconds(final, this.finalDiarioStruct.second),
+          setSeconds(inicio, this.finalDiarioStruct.second),
           this.finalDiarioStruct.minute
         ),
         this.finalDiarioStruct.hour
       );
-      console.log("Inicio de Reserva" + InicioDate);
-      console.log("Final de Reserva" + FinalDate);
 
-      reservaActual.fechaini = InicioDate;
-      reservaActual.fechafin = FinalDate;
+      
+      //TODO
+      switch(1){
+        case 7-12:HorarioPermitido=true;
+        break;
+        case 2-5:HorarioPermitido=true;
+        break;
+        default:HorarioPermitido=false;
 
-      this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
-      this.reservasActuales.push(reservaActual);
-
-      this.events.push({
-        title: this.reservaAct.nombre.toString(),
-        start: InicioDate,
-        end: FinalDate,
-        color: colors.red,
-        actions: this.actions,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true
+      }
+      //FIN TODO
+      switch(this.finalDiarioStruct.hour-FinalDate.getHours()){
+        case 0:  horasMaxPermitidas=true;
+        break;
+        case 1: 
+          if(this.finalDiarioStruct.minute-FinalDate.getMinutes()<=30){ 
+            horasMaxPermitidas=true;
+          }else{horasMaxPermitidas=false;}
+        break;
+        default: horasMaxPermitidas=false;
+      
+      }
+      if(horasMaxPermitidas){
+        if(InicioDate < fechaAct){
+          this.Error=true;
+          this.alertService.error("Error! La fecha de inicio no puede ser menor que la fecha actual.");
+          console.log("Error! La fecha de inicio no puede ser menor que la fecha actual.");
         }
-      });
-
+        //Revision que sea menor la fecha fin que la fecha de inicio
+        else if (FinalDate > inicio) {
+        
+          reservaActual.fechaini = InicioDate;
+          reservaActual.fechafin = FinalDate;
+          
+          this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
+          this.reservasActuales.push(reservaActual);
+  
+          this.events.push({
+            title: this.reservaAct.nombre.toString(),
+            start: InicioDate,
+            end: FinalDate,
+            color: colors.red,
+            actions: this.actions,
+            draggable: true,
+            resizable: {
+              beforeStart: true,
+              afterEnd: true
+            }
+          });
+  
+        } else {
+          //la reserva no puede ser fija
+          this.Error=true;
+          this.alertService.error("Error! La fecha de finalizacion no puede ser menor que la de inicio.");
+          console.log("Error, la fecha de fin es menor o igual que la fecha de inicio.");
+        }
+  
+      }
+      else {
+        this.Error=true;
+        this.alertService.error("Error! una Reserva no puede duras mas de 1.5 Horas");
+        console.log("Error, la fecha de fin es menor o igual que la fecha de inicio.");
+      }
+      
     }
-    this.refresh.next();
+    //this.refresh.next();
   }
 
   eliminarReserva(event) {
