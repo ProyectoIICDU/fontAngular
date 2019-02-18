@@ -152,6 +152,8 @@ export class CalendarComponent implements OnInit {
   // Variable que indica en que vista (MESES, SEMANAS, DIAS) se muestra el calendario
   view: string = 'month';
   name = "final";
+  //Variable para manejar que se muestren los programas según la facultad
+  pFacultad:String="Hola";
 
   // Variable para gestionar los eventos del calendario
   eventActual: CalendarEvent[];
@@ -172,7 +174,7 @@ export class CalendarComponent implements OnInit {
   
   // Variables para gestionar la reserva
   reservaSave: ReservaEspacio;
-  reservaAct: ReservaEspacio = new ReservaEspacio(0, new Date(), new Date(), '', '', '', false, null);
+  reservaAct: ReservaEspacio = new ReservaEspacio(0, new Date(), new Date(),'','', '', '', '', false, null);
 
   // Lista de reservas registradas en BD
   reservasActuales: ReservaEspacio[];
@@ -183,6 +185,18 @@ export class CalendarComponent implements OnInit {
     { value: 'Normal', text: 'Normal' },
     { value: 'Evento', text: 'Evento' },
     { value: 'Seleccionados', text: 'Seleccionados' },
+  ];
+
+  facultadSelect = [
+    { value: 'Artes', text: 'Artes' },  
+    { value: 'Agrarias', text: 'Ciencias Agrarias' },
+    { value: 'Salud', text: 'Ciencia de la Salud' },
+    { value: 'Contables', text: 'Ciencias Contables, Económicas y Administrativas' },
+    { value: 'Humanas', text: 'Ciencias Humanas y Sociales' },
+    { value: 'Educacion', text: 'Ciencias Naturales, Exactas y de la Educación' },
+    { value: 'Derecho', text: 'Derecho, Ciencias Políticas y Sociales' },
+    { value: 'Civil', text: 'Ingeniería Civil' },
+    { value: 'Electronica', text: 'Ingeniería Electrónica y Telecomunicaciones' },
   ];
 
   viewDate: Date = new Date();
@@ -264,6 +278,14 @@ export class CalendarComponent implements OnInit {
       'tipo': new FormControl(this.reservaAct.tipo,
         Validators.required), // campo requerido
 
+        // Campo facultad, ligado a variable: "this.reservaAct.facultad"
+      'facultad': new FormControl(this.reservaAct.facultad,
+        Validators.required), // campo requerido
+
+        // Campo programa, ligado a variable: "this.reservaAct.programa"
+      'programa': new FormControl(this.reservaAct.programa,
+        Validators.required), // campo requerido
+
       // Campo descripcion, ligado a variable: "this.reservaAct.descripcion"
       'descripcion': new FormControl(this.reservaAct.descripcion, Validators.maxLength(500)), // longitud maxima de caracteres permitidos 
 
@@ -273,6 +295,10 @@ export class CalendarComponent implements OnInit {
       // Campo descripcion, ligado a variable: "this.reservaAct.descripcion"
       'finalDiarioStruct': new FormControl(this.finalDiarioStruct),
     });
+  }
+
+  cargarProgramas($event){
+    this.pFacultad = "Adiós";
   }
 
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -368,7 +394,7 @@ export class CalendarComponent implements OnInit {
       }
     };
 
-    console.log("reserva Eliminada:" + this.reservasActuales.length);
+    console.log("Reserva eliminada:" + this.reservasActuales.length);
 
   }
 
@@ -406,6 +432,8 @@ export class CalendarComponent implements OnInit {
     reservaActual.idEspacio = this.selectEspacio;
     reservaActual.nombre = this.formReserva.get('nombre').value;
     reservaActual.tipo = this.formReserva.get('tipo').value;
+    reservaActual.facultad = this.formReserva.get('facultad').value;
+    reservaActual.programa = this.formReserva.get('programa').value;
     reservaActual.descripcion=this.formReserva.get('descripcion').value;
     const fechaAct = new Date(); //Fecha actual
     console.log("Es "+ inicio + "<" + fechaAct+"?");

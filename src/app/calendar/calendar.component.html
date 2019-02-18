@@ -7,7 +7,6 @@
     </button>
 </div>
 <div class="bodyCalendar">
-  <alert></alert>
   <label class="horarioD">HORARIO DISPONIBLE</label>
 <div class="row text-center" id="BotonesCalendario">
   <div >
@@ -111,17 +110,16 @@
               </div>
 
               <div class="form-group row">
-                <label for="example-text-input" class="col-2 col-form-label">Tipo</label>
+                <label for="example-text-input" class="col-2 col-form-label">Finalidad</label>
                 <div class="col-sm-10">
                   <select id="tipo" name="tipo" formControlName="tipo"  class="form-control" [required]="true" #tipo>
-                    <option value="">Seleccione...</option>
+                    <option value="">Seleccione</option>
                     <option *ngFor="let opcion of tipoSelect" [value]="opcion.value">{{opcion.text}}</option>
                   </select>
                   <div *ngIf="formReserva.controls['tipo'].invalid && (formReserva.controls['tipo'].dirty || formReserva.controls['tipo'].touched)" class="alert alert-danger">
                     <div *ngIf="formReserva.controls['tipo'].errors.required">El tipo de Reserva es requerido.</div>
                   </div>
                 </div>
-
               </div>
 
               <div *ngIf="option1">
@@ -201,31 +199,30 @@
   </div>
       <ng-template #modalContent let-close="close" *ngIf="!ok">
           <div  class="modal-header">
-            <h5  class="modal-title">Informacion Reserva</h5>
+            <h5> Información de la Reserva</h5>
             <button type="button" class="close" (click)="close()">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <div>
-                <div class="form-group row">
-                  <!--<label for="example-text-input" class="col-1 col-form-label">Desea Eliminar Reserva de {{ modalData?.event.title }}</label>-->
-                  <legend *ngFor="let reservaespacio of reservasActuales">
-                    <div  *ngIf="reservaespacio.nombre == modalData?.event.title">
-                      <legend >Usuario: {{reservaespacio.nombre}}</legend>
-                      <legend >Descripcion: {{reservaespacio.descripcion}}</legend>
-                      <legend >Finalidad : {{reservaespacio.tipo}}</legend>
-                      </div>
-                  </legend>
-                 
-                
-                </div>        
-            </div>
+              <table class="table table-striped">
+                  <tr>
+                    <th>Usuario</th>
+                    <th>Finalidad</th>
+                    <th>Descripción</th>
+                  </tr>
+                  <ng-container *ngFor="let reservaespacio of reservasActuales">
+                      <tr *ngIf="reservaespacio.nombre == modalData?.event.title">
+                        <td>{{reservaespacio.nombre}}</td>
+                        <td>{{reservaespacio.tipo}}</td>
+                        <td>{{reservaespacio.descripcion}}</td>
+                      </tr>
+                    </ng-container>
+                  </table>       
           </div>
+
           <div class="modal-footer">
-            <button type="button" name="btnSalir" class="btn btn-success" (click)="close()">Salir</button>
-            <button type="submit" name="btnEliminar" (click)="eliminarReserva($event)" data-dismiss="modal" class="btn btn-success"><i class="fa fa-times-circle"></i>Eliminar</button>
-            
+            <button type="button" name="btnSalir" class="btn btn-success" (click)="close()">Aceptar</button>
           </div>
 
         </ng-template>
