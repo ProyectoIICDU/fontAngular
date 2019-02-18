@@ -5,11 +5,11 @@ export class ReservaEspacio {
         public idReserva:number,
         public fechaini:Date,
         public fechafin:Date,
+        public descripcion:String,
+        public nombre:String,
         public facultad:String,
         public programa:String,
         public tipo:String,
-        public descripcion:String,
-        public nombre:String,
         public esfija:boolean,
         public idEspacio:EspacioDeportivo
     ){
