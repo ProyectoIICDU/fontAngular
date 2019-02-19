@@ -407,6 +407,7 @@ export class CalendarComponent implements OnChanges {
   *
   */
   getReservasEspacio() {
+    this.limpiarReservas();
     this.espacioService.getReservasEspacio(this.selectEspacio.idEspacio).subscribe(reservas => {
       this.reservasActuales = reservas;
       this.cargarReservas();
@@ -436,6 +437,10 @@ export class CalendarComponent implements OnChanges {
 
     }
     this.refresh.next();
+  }
+
+  limpiarReservas() {
+    this.events.splice(0);
   }
 
   setFecha(fecha: Date): Date {
