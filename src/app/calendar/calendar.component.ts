@@ -537,8 +537,9 @@ export class CalendarComponent implements OnInit {
     let HorarioPermitido: Boolean=false;
     if (this.option1) {
       reservaActual.esfija = this.option1;
-
+      console.log('Estamos en opcion1    Inicio___: '+this.eventAct.start.getHours()+ 'Fin___: '+this.eventAct.end.getHours());
       switch(this.eventAct.end.getHours()-this.eventAct.start.getHours()){
+        
         case 0:  horasMaxPermitidas=true;
         break;
         case 1: 
@@ -607,18 +608,15 @@ export class CalendarComponent implements OnInit {
         this.alertService.error("Error! La fecha de finalizacion no puede ser menor que la de inicio.");
         console.log("Error, la fecha de fin es menor o igual que la fecha de inicio.");
       }
-      
-      this.refresh.next();
-
 
       }else {
         this.Error=true;
         this.alertService.error("Error! La reserva no puede durar mas de 1.5 Horas.");
         
-      }
-      
+      }      
     }
     else {
+      console.log('Estamos en opcion2    Inicio___: '+this.eventAct.start.getHours()+ 'Fin___: '+this.eventAct.end.getHours());
       reservaActual.esfija = false;
       /*
       const InicioDate: Date = setHours(
@@ -639,7 +637,7 @@ export class CalendarComponent implements OnInit {
         this.finalDiarioStruct.hour
       );
 
-      
+      this.refresh.next();
       //TODO
       switch(1){
         case 7-12:HorarioPermitido=true;
