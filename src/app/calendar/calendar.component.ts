@@ -152,9 +152,10 @@ export class CalendarComponent implements OnChanges {
   // Variable que indica en que vista (MESES, SEMANAS, DIAS) se muestra el calendario
   view: string = 'month';
   name = "final";
-  //Variable para manejar que se muestren los programas según la facultad
-  pFacultad:String="Hola";
 
+  opcionFacultad:String='0';
+  pFacultad:String='';
+  programaSelect = [];
   // Variable para gestionar los eventos del calendario
   eventActual: CalendarEvent[];
   eventAct: CalendarEvent;
@@ -188,17 +189,91 @@ export class CalendarComponent implements OnChanges {
     { value: 'Seleccionados', text: 'Seleccionados' },
   ];
 
-  facultadSelect = [
-    { value: 'Artes', text: 'Artes' },  
-    { value: 'Agrarias', text: 'Ciencias Agrarias' },
-    { value: 'Salud', text: 'Ciencia de la Salud' },
-    { value: 'Contables', text: 'Ciencias Contables, Económicas y Administrativas' },
-    { value: 'Humanas', text: 'Ciencias Humanas y Sociales' },
-    { value: 'Educacion', text: 'Ciencias Naturales, Exactas y de la Educación' },
-    { value: 'Derecho', text: 'Derecho, Ciencias Políticas y Sociales' },
-    { value: 'Civil', text: 'Ingeniería Civil' },
-    { value: 'Electronica', text: 'Ingeniería Electrónica y Telecomunicaciones' },
-  ];
+    // Lista de tipos de reserva
+    facultadSelect = [
+      { value: 'Artes', text: 'Artes' },  
+      { value: 'Agrarias', text: 'Ciencias Agrarias' },
+      { value: 'Salud', text: 'Ciencia de la Salud' },
+      { value: 'Contables', text: 'Ciencias Contables, Económicas y Administrativas' },
+      { value: 'Humanas', text: 'Ciencias Humanas y Sociales' },
+      { value: 'Educacion', text: 'Ciencias Naturales, Exactas y de la Educación' },
+      { value: 'Derecho', text: 'Derecho, Ciencias Políticas y Sociales' },
+      { value: 'Civil', text: 'Ingeniería Civil' },
+      { value: 'Electronica', text: 'Ingeniería Electrónica y Telecomunicaciones' },
+    ];
+
+    artesSelect = [
+      { value: 'ArtesPlasticas', text: 'Artes Plásticas' },  
+      { value: 'Diseño', text: 'Diseño Gráficos' },
+      { value: 'Banda', text: 'Dirección de Banda' },
+      { value: 'licMusica', text: 'Licenciatura en Música' },
+      { value: 'Musica', text: 'Música Instrumental' },
+    ];
+
+    agrariasSelect = [
+      { value: 'Agroindustrial', text: 'Ingeniería Agroindustrial' },  
+      { value: 'Agropecuaria', text: 'Ingeniería Agropecuaria' },
+      { value: 'Forestal', text: 'Ingeniería Forestal' },
+      { value: 'tAgroindustrial', text: 'Tecnología Agroindustrial' },
+    ];
+
+    saludSelect = [
+      { value: 'Enfermeria', text: 'Enfermería' },  
+      { value: 'Fisioterapia', text: 'Fisioterapia' },
+      { value: 'Fonoaudiologia', text: 'Fonoaudiología' },
+      { value: 'Medicina', text: 'Medicina' },
+    ];
+
+    contablesSelect = [
+      { value: 'Administracion', text: 'Administración de Empresas' },  
+      { value: 'Contaduria', text: 'Contaduría Pública' },
+      { value: 'Economia', text: 'Economía' },
+      { value: 'Turismo', text: 'Turismo' },
+    ];
+
+    humanasSelect = [
+      { value: 'Antopologia', text: 'Antopología' },  
+      { value: 'Filosofia', text: 'Filosofía' },
+      { value: 'Geografia', text: 'Geografía del Desarrollo Regional y Ambiental' },
+      { value: 'Historia', text: 'Historia' },
+      { value: 'Lenguas', text: 'Licenciatura en Lenguas Modernas con Énfasis en Inglés y Fracés' },
+      { value: 'Etnoeducacion', text: 'Licenciatura en Etnoeducación' },
+      { value: 'Semiotica', text: 'Licenciatura en Lingüística y Semiótica' },
+      { value: 'Castellana', text: 'Licenciatura en Literatura y Lengua Castellana' },
+    ];
+
+    educacionSelect = [
+      { value: 'Biologia', text: 'Biología' },  
+      { value: 'Fisica', text: 'Ingenieía Física' },
+      { value: 'licAmbiental', text: 'Licenciatura en Ciencias Naturales y Educación Ambiental' },
+      { value: 'Artistica', text: 'Licenciatura en Educación Artística' },
+      { value: 'basicaPrimaria', text: 'Licenciatura en Educación Básica Primaria' },
+      { value: 'licFisica', text: 'Licenciatura en Educación Física, Recreación y Deportes' },
+      { value: 'licMatematicas', text: 'Licenciatura en Matemáticas' },
+      { value: 'Matematicas', text: 'Matemáticas' },
+      { value: 'Quimica', text: 'Química' },
+      { value: 'tecGestionAmbiental', text: 'Tecnología en Gestión Ambiental' },
+    ];
+
+    derechoSelect = [
+      { value: 'Politica', text: 'Ciencia Política' },  
+      { value: 'comuniSocial', text: 'Comunicación Social' },
+      { value: 'Derecho', text: 'Derecho' },
+    ];
+
+    civilSelect = [
+      { value: 'Arquitectura', text: 'Arquitectura' },  
+      { value: 'Civil', text: 'Ingeniería Civil' },
+      { value: 'Ambiental', text: 'Ingeniería Ambiental' },
+      { value: 'Geotecnologia', text: 'Geotecnología' },
+    ];
+
+    ingenieriaSelect = [
+      { value: 'Electronica', text: 'Ingeniería Electrónica y Telecomunicaciones' },  
+      { value: 'Sistemas', text: 'Ingeniería de Sistemas' },
+      { value: 'Automatica', text: 'Ingeniería en Automática Industrial' },
+      { value: 'Telematica', text: 'Tecnología en Telemática' },
+    ];
 
   viewDate: Date = new Date();
 
@@ -263,6 +338,32 @@ export class CalendarComponent implements OnChanges {
 
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+  cargarProgramas(){
+    this.pFacultad = this.opcionFacultad;
+    console.log("Facu seleccionada" + this.pFacultad);
+    switch(this.pFacultad){
+      case "Artes":  this.programaSelect = this.artesSelect;
+      break;
+      case "Agrarias":  this.programaSelect = this.agrariasSelect;
+      break;
+      case "Salud":  this.programaSelect = this.saludSelect;
+      break;
+      case "Contables":  this.programaSelect = this.contablesSelect;
+      break;
+      case "Humanas":  this.programaSelect = this.humanasSelect;
+      break;
+      case "Educacion":  this.programaSelect = this.educacionSelect;
+      break;
+      case "Derecho":  this.programaSelect = this.derechoSelect;
+      break;
+      case "Civil":  this.programaSelect = this.civilSelect;
+      break;
+      case "Electronica":  this.programaSelect = this.ingenieriaSelect;
+      break;
+      default: false;
+    }
+  }
+
   /**
   * Funcion de inicializacion de la clase
   *
@@ -277,11 +378,10 @@ export class CalendarComponent implements OnChanges {
         Validators.required, // campo requerido
         Validators.maxLength(20)]), // longitud maxima de caracteres permitidos
 
-      // Campo tipo, ligado a variable: "this.reservaAct.tipo"
-      'tipo': new FormControl(this.reservaAct.tipo,
-        Validators.required), // campo requerido
+      // Campo descripcion, ligado a variable: "this.reservaAct.descripcion"
+      'descripcion': new FormControl(this.reservaAct.descripcion, Validators.maxLength(500)), // longitud maxima de caracteres permitidos 
 
-        // Campo facultad, ligado a variable: "this.reservaAct.facultad"
+      // Campo facultad, ligado a variable: "this.reservaAct.facultad"
       'facultad': new FormControl(this.reservaAct.facultad,
         Validators.required), // campo requerido
 
@@ -289,19 +389,15 @@ export class CalendarComponent implements OnChanges {
       'programa': new FormControl(this.reservaAct.programa,
         Validators.required), // campo requerido
 
-      // Campo descripcion, ligado a variable: "this.reservaAct.descripcion"
-      'descripcion': new FormControl(this.reservaAct.descripcion, Validators.maxLength(500)), // longitud maxima de caracteres permitidos 
-
+        // Campo tipo, ligado a variable: "this.reservaAct.tipo"
+      'tipo': new FormControl(this.reservaAct.tipo,
+        Validators.required), // campo requerido
       // Campo descripcion, ligado a variable: "this.reservaAct.descripcion"
       //'inicioDiarioStruct': new FormControl(this.inicioDiarioStruct),
 
       // Campo descripcion, ligado a variable: "this.reservaAct.descripcion"
       'finalDiarioStruct': new FormControl(this.finalDiarioStruct),
     });
-  }
-
-  cargarProgramas($event){
-    this.pFacultad = "Adiós";
   }
 
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -397,7 +493,7 @@ export class CalendarComponent implements OnChanges {
       }
     };
 
-    console.log("Reserva eliminada:" + this.reservasActuales.length);
+    console.log("reserva Eliminada:" + this.reservasActuales.length);
 
   }
 
@@ -434,17 +530,17 @@ export class CalendarComponent implements OnChanges {
     let reservaActual = this.reservaAct;
     reservaActual.idEspacio = this.selectEspacio;
     reservaActual.nombre = this.formReserva.get('nombre').value;
-    reservaActual.tipo = this.formReserva.get('tipo').value;
+    reservaActual.descripcion=this.formReserva.get('descripcion').value;
     reservaActual.facultad = this.formReserva.get('facultad').value;
     reservaActual.programa = this.formReserva.get('programa').value;
-    reservaActual.descripcion=this.formReserva.get('descripcion').value;
+    reservaActual.tipo = this.formReserva.get('tipo').value;
     const fechaAct = new Date(); //Fecha actual
     console.log("Es "+ inicio + "<" + fechaAct+"?");
     let horasMaxPermitidas: Boolean=false;
     let HorarioPermitido: Boolean=false;
     if (this.option1) {
       reservaActual.esfija = this.option1;
-
+      console.log('Estamos en opcion1    Inicio___: '+this.eventAct.start.getHours()+ 'Fin___: '+this.eventAct.end.getHours());
       switch(this.eventAct.end.getHours()-this.eventAct.start.getHours()){
         case 0:  horasMaxPermitidas=true;
         break;
@@ -514,18 +610,15 @@ export class CalendarComponent implements OnChanges {
         this.alertService.error("Error! La fecha de finalizacion no puede ser menor que la de inicio.");
         console.log("Error, la fecha de fin es menor o igual que la fecha de inicio.");
       }
-      
-      this.refresh.next();
-
 
       }else {
         this.Error=true;
         this.alertService.error("Error! La reserva no puede durar mas de 1.5 Horas.");
         
-      }
-      
+      }      
     }
     else {
+      
       reservaActual.esfija = false;
       /*
       const InicioDate: Date = setHours(
@@ -538,6 +631,7 @@ export class CalendarComponent implements OnChanges {
       const InicioDate:Date=this.eventAct.start;
       console.log("Esta es la fecha"+InicioDate);
       let FinalDate: Date=this.eventAct.start;
+      
       FinalDate=setHours(
         setMinutes(
           setSeconds(inicio, this.finalDiarioStruct.second),
@@ -546,7 +640,7 @@ export class CalendarComponent implements OnChanges {
         this.finalDiarioStruct.hour
       );
 
-      
+      this.refresh.next();
       //TODO
       switch(1){
         case 7-12:HorarioPermitido=true;
@@ -557,11 +651,12 @@ export class CalendarComponent implements OnChanges {
 
       }
       //FIN TODO
-      switch(this.finalDiarioStruct.hour-FinalDate.getHours()){
+      console.log('Estamos en opcion diaria    Inicio___: '+this.finalDiarioStruct.hour+" "+this.finalDiarioStruct.minute+ 'Fin___: '+FinalDate);
+      switch(this.finalDiarioStruct.hour-InicioDate.getHours()){
         case 0:  horasMaxPermitidas=true;
         break;
         case 1: 
-          if(this.finalDiarioStruct.minute-FinalDate.getMinutes()<=30){ 
+          if(this.finalDiarioStruct.minute-InicioDate.getMinutes()<=30){ 
             horasMaxPermitidas=true;
           }else{horasMaxPermitidas=false;}
         break;
@@ -611,7 +706,7 @@ export class CalendarComponent implements OnChanges {
       }
       
     }
-    //this.refresh.next();
+    this.refresh.next();
   }
 
   eliminarReserva(event) {
