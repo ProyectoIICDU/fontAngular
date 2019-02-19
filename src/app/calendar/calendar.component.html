@@ -7,6 +7,7 @@
     </button>
 </div>
 <div class="bodyCalendar">
+  <alert> </alert>
   <label class="horarioD">HORARIO DISPONIBLE</label>
 <div class="row text-center" id="BotonesCalendario">
   <div >
@@ -110,17 +111,44 @@
               </div>
 
               <div class="form-group row">
-                <label for="example-text-input" class="col-2 col-form-label">Finalidad</label>
+                <label for="example-text-input" class="col-2 col-form-label">Facultad</label>
                 <div class="col-sm-10">
-                  <select id="tipo" name="tipo" formControlName="tipo"  class="form-control" [required]="true" #tipo>
+                  <select id="facultad" name="facultad" [(ngModel)]="opcionFacultad" (change)="cargarProgramas()" formControlName="facultad"  class="form-control" [required]="true" #facultad>
                     <option value="">Seleccione</option>
-                    <option *ngFor="let opcion of tipoSelect" [value]="opcion.value">{{opcion.text}}</option>
+                    <option *ngFor="let opcion of facultadSelect" [value]="opcion.value">{{opcion.text}}
+                    </option>
                   </select>
-                  <div *ngIf="formReserva.controls['tipo'].invalid && (formReserva.controls['tipo'].dirty || formReserva.controls['tipo'].touched)" class="alert alert-danger">
-                    <div *ngIf="formReserva.controls['tipo'].errors.required">El tipo de Reserva es requerido.</div>
+                  <div *ngIf="formReserva.controls['facultad'].invalid && (formReserva.controls['facultad'].dirty || formReserva.controls['facultad'].touched)" class="alert alert-danger">
+                    <div *ngIf="formReserva.controls['facultad'].errors.required">La facultad es requerido.</div>
                   </div>
                 </div>
               </div>
+
+              <div class="form-group row">
+                  <label for="example-text-input" class="col-2 col-form-label">Programa</label>
+                  <div class="col-sm-10">
+                    <select id="programa" name="programa" formControlName="programa"  class="form-control" [required]="true" #programa>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let opcion of programaSelect" [value]="opcion.value">{{opcion.text}}</option>
+                    </select>
+                    <div *ngIf="formReserva.controls['programa'].invalid && (formReserva.controls['programa'].dirty || formReserva.controls['programa'].touched)" class="alert alert-danger">
+                      <div *ngIf="formReserva.controls['programa'].errors.required">El programa es requerido.</div>
+                    </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                  <label for="example-text-input" class="col-2 col-form-label">Finalidad</label>
+                  <div class="col-sm-10">
+                    <select id="tipo" name="tipo" formControlName="tipo"  class="form-control" [required]="true" #tipo>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let opcion of tipoSelect" [value]="opcion.value">{{opcion.text}}</option>
+                    </select>
+                    <div *ngIf="formReserva.controls['tipo'].invalid && (formReserva.controls['tipo'].dirty || formReserva.controls['tipo'].touched)" class="alert alert-danger">
+                      <div *ngIf="formReserva.controls['tipo'].errors.required">El tipo de Reserva es requerido.</div>
+                    </div>
+                  </div>
+                </div>
 
               <div *ngIf="option1">
                 <div class="form-group row">
