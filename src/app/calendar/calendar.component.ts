@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnChanges, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy, Input, ChangeDetectorRef, SimpleChanges } from '@angular/core';
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -131,7 +131,7 @@ const colors: any = {
 
 //************************************************************************************************************************************************************
 
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnChanges {
 
   // Estructuras usadas para la inicializcion del calendario
   /*inicioDiarioStruct = {
@@ -163,6 +163,7 @@ export class CalendarComponent implements OnInit {
   option2 = false;
   control= false;
   Error=false;
+  titulo: String = "Deporte";
 
   // Variable para configuracion del idioma del calendario
   locale: string = 'es';
@@ -266,8 +267,10 @@ export class CalendarComponent implements OnInit {
   * Funcion de inicializacion de la clase
   *
   */
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges) {
+    
     this.getReservasEspacio(); // Se obtienen las reservas del espacio deportivo registradas en BD
+    this.titulo = this.selectEspacio.nombre;
     this.formReserva = new FormGroup({ // Creacion del formulario de reserva
       // Campo nombre, ligado a variable: "this.reservaAct.nombre"
       'nombre': new FormControl(this.reservaAct.nombre, [
