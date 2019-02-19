@@ -539,7 +539,6 @@ export class CalendarComponent implements OnInit {
       reservaActual.esfija = this.option1;
       console.log('Estamos en opcion1    Inicio___: '+this.eventAct.start.getHours()+ 'Fin___: '+this.eventAct.end.getHours());
       switch(this.eventAct.end.getHours()-this.eventAct.start.getHours()){
-        
         case 0:  horasMaxPermitidas=true;
         break;
         case 1: 
@@ -616,7 +615,7 @@ export class CalendarComponent implements OnInit {
       }      
     }
     else {
-      console.log('Estamos en opcion2    Inicio___: '+this.eventAct.start.getHours()+ 'Fin___: '+this.eventAct.end.getHours());
+      
       reservaActual.esfija = false;
       /*
       const InicioDate: Date = setHours(
@@ -629,6 +628,7 @@ export class CalendarComponent implements OnInit {
       const InicioDate:Date=this.eventAct.start;
       console.log("Esta es la fecha"+InicioDate);
       let FinalDate: Date=this.eventAct.start;
+      
       FinalDate=setHours(
         setMinutes(
           setSeconds(inicio, this.finalDiarioStruct.second),
@@ -648,11 +648,12 @@ export class CalendarComponent implements OnInit {
 
       }
       //FIN TODO
-      switch(this.finalDiarioStruct.hour-FinalDate.getHours()){
+      console.log('Estamos en opcion diaria    Inicio___: '+this.finalDiarioStruct.hour+" "+this.finalDiarioStruct.minute+ 'Fin___: '+FinalDate);
+      switch(this.finalDiarioStruct.hour-InicioDate.getHours()){
         case 0:  horasMaxPermitidas=true;
         break;
         case 1: 
-          if(this.finalDiarioStruct.minute-FinalDate.getMinutes()<=30){ 
+          if(this.finalDiarioStruct.minute-InicioDate.getMinutes()<=30){ 
             horasMaxPermitidas=true;
           }else{horasMaxPermitidas=false;}
         break;
