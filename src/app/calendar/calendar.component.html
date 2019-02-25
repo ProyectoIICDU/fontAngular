@@ -82,7 +82,7 @@
               </div>
             </div>
           </div>
-          <ng-container *ngIf="this.verFormulario">
+          <div *ngIf="this.verFormulario">
             <form id="frmReservaEspac" [formGroup]="formReserva"  class="form-label-left form-horizontal" #FormReserva="ngForm" >
               <fieldset>
                 <legend>Informacion de la Reserva</legend>
@@ -158,16 +158,17 @@
                       </mwl-demo-utils-date-time-picker>
                     </div>
                   </div>
-                <div>Hora Final</div>
-                
-                <div class="form-group row">
-                  <label for="example-text-input" class="col-2 col-form-label"></label>
-                  <div class="col-sm-10">
-                    <ngb-timepicker [(ngModel)]="finalDiarioStruct" [ngModelOptions]="{standalone: true}" (ngModelChange)="updateTimeFinal()" [meridian]="true">
-                    </ngb-timepicker>
+                  <div>Hora Final</div>
+                  
+                  <div class="form-group row">
+                    <label for="example-text-input" class="col-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                      <ngb-timepicker [(ngModel)]="finalDiarioStruct" [ngModelOptions]="{standalone: true}" (ngModelChange)="updateTimeFinal()" [meridian]="true">
+                      </ngb-timepicker>
+                    </div>
                   </div>
                 </div>
-    
+                
                 <div *ngIf="option2">
                     <div class="form-group row">
                       <label for="example-text-input" class="col-2 col-form-label"> Fecha</label>
@@ -201,7 +202,7 @@
                 </div>
               </div>
             </form>
-          </ng-container>  
+          </div>  
         </div>
 
       </div>
