@@ -163,6 +163,7 @@ export class CalendarComponent implements OnChanges {
   option1 = false;
   option2 = false;
   control= false;
+  verFormulario = false;
   Error=false;
   titulo: String = "Deporte";
 
@@ -464,8 +465,6 @@ export class CalendarComponent implements OnChanges {
     this.getReservasEspacio();
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
-    
-  
   }
   addReserva(event) {
     this.formReserva.reset();
@@ -507,10 +506,12 @@ export class CalendarComponent implements OnChanges {
   onFilteroption1(ischecked: boolean) {
     this.option1 = true;
     this.option2 = false;
+    this.verFormulario = true;
   }
   onFilteroption2(ischecked: boolean) {
     this.option2 = true;
     this.option1 = false;
+    this.verFormulario = true;
     /*
     this.inicioDiarioStruct = {
       second: getSeconds(this.viewDate),
@@ -530,6 +531,7 @@ export class CalendarComponent implements OnChanges {
     // this.cdr.detectChanges();
   }
   guardarReserva(event) {
+    
     console.log("espacio seleccionado" + this.selectEspacio.nombre);
     const inicio = this.eventAct.start;
     const final = this.eventAct.end;
@@ -581,9 +583,7 @@ export class CalendarComponent implements OnChanges {
           inicioCopia2.setDate(inicio.getDate());
           inicioCopia2.setMonth(inicio.getMonth());
           inicioCopia2.setHours(inicio.getHours(), inicio.getMinutes(), inicio.getSeconds());
-          console.log("Inicio de hora" + inicio);
-          console.log("Final de Hora" + inicioCopia);
-          console.log("Inicio del evento" + inicioCopia2);
+          
           //aqui se reserva 
           reservaActual.fechaini = inicioCopia2;
           reservaActual.fechafin = inicioCopia;
@@ -605,10 +605,10 @@ export class CalendarComponent implements OnChanges {
             }
           });
           inicio.setDate(inicio.getDate() + 7);
+          this.alertService.success("Ok! La reserva ha sido almacenada.");
         }
         
-        console.log("Reserva adicionada correctamente");
-        this.alertService.success("Ok! La reserva ha sido almacenada.");
+        
 
       } else {
         //la reserva no puede ser fija
@@ -696,6 +696,9 @@ export class CalendarComponent implements OnChanges {
               afterEnd: true
             }
           });
+          
+          this.alertService.success("Ok! La reserva ha sido almacenada.");
+          
   
         } else {
           //la reserva no puede ser fija

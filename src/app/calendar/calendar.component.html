@@ -71,136 +71,138 @@
               <div class="form-check form-check-inline">
                 <label class="form-check-label">
                   <input class="form-check-input" type="radio"  (change)="onFilteroption1($event.target.checked)" name="inlineRadioOptions"
-                    id="inlineRadio1" value="option1" >Fija
+                    id="inlineRadio1" value="option1" >Repetitiva
                 </label>
               </div>
               <div class="form-check form-check-inline">
                 <label class="form-check-label">
                   <input class="form-check-input" type="radio" (change)="onFilteroption2($event.target.checked)" name="inlineRadioOptions"
-                    id="inlineRadio2" value="option2">Diaria
+                    id="inlineRadio2" value="option2">Una Vez
                 </label>
               </div>
             </div>
           </div>
+          <div *ngIf="this.verFormulario">
+            <form id="frmReservaEspac" [formGroup]="formReserva"  class="form-label-left form-horizontal" #FormReserva="ngForm" >
+              <fieldset>
+                <legend>Informacion de la Reserva</legend>
+              
 
-          <form id="frmReservaEspac" [formGroup]="formReserva"  class="form-label-left form-horizontal" #FormReserva="ngForm" >
-            <fieldset>
-              <legend>Informacion de la Reserva</legend>
-            
-
-              <div class="form-group row">
-                <label for="example-text-input" class="col-2 col-form-label">Usuario</label>
-                <div class="col-10">
-                  <input class="form-control" id="nombre" type="text" formControlName="nombre"  name="nombre" required
-                    id="nombre-text-input" #nombre>
-                  <div *ngIf="formReserva.controls['nombre'].invalid && (formReserva.controls['nombre'].dirty || formReserva.controls['nombre'].touched)" class="alert alert-danger">
-                    <div *ngIf="formReserva.controls['nombre'].errors.required">El nombre es requerido.</div>
-                    <div *ngIf="formReserva.controls['nombre'].errors.maxlength">El nombre supera la longitud maxima de caracteres (maximo 20 caracteres).</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label for="example-text-input" class="col-2 col-form-label">Descripcion</label>
-                <div class="col-10">
-                  <textarea id="descripcion"  name="descripcion" maxlength="500" formControlName="descripcion" class="form-control"></textarea>
-                  <div *ngIf="formReserva.controls['descripcion'].invalid && (formReserva.controls['descripcion'].dirty || formReserva.controls['descripcion'].touched)" class="alert alert-danger">
-                    <div *ngIf="formReserva.controls['descripcion'].errors.maxlength">La Descripcion supera la longitud maxima de caracteres (maximo 500 caracteres).</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label for="example-text-input" class="col-2 col-form-label">Facultad</label>
-                <div class="col-sm-10">
-                  <select id="facultad" name="facultad" [(ngModel)]="opcionFacultad" (change)="cargarProgramas()" formControlName="facultad"  class="form-control" [required]="true" #facultad>
-                    <option value="">Seleccione</option>
-                    <option *ngFor="let opcion of facultadSelect" [value]="opcion.value">{{opcion.text}}
-                    </option>
-                  </select>
-                  <div *ngIf="formReserva.controls['facultad'].invalid && (formReserva.controls['facultad'].dirty || formReserva.controls['facultad'].touched)" class="alert alert-danger">
-                    <div *ngIf="formReserva.controls['facultad'].errors.required">La facultad es requerido.</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                  <label for="example-text-input" class="col-2 col-form-label">Programa</label>
-                  <div class="col-sm-10">
-                    <select id="programa" name="programa" formControlName="programa"  class="form-control" [required]="true" #programa>
-                      <option value="">Seleccione</option>
-                      <option *ngFor="let opcion of programaSelect" [value]="opcion.value">{{opcion.text}}</option>
-                    </select>
-                    <div *ngIf="formReserva.controls['programa'].invalid && (formReserva.controls['programa'].dirty || formReserva.controls['programa'].touched)" class="alert alert-danger">
-                      <div *ngIf="formReserva.controls['programa'].errors.required">El programa es requerido.</div>
-                    </div>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                  <label for="example-text-input" class="col-2 col-form-label">Finalidad</label>
-                  <div class="col-sm-10">
-                    <select id="tipo" name="tipo" formControlName="tipo"  class="form-control" [required]="true" #tipo>
-                      <option value="">Seleccione</option>
-                      <option *ngFor="let opcion of tipoSelect" [value]="opcion.value">{{opcion.text}}</option>
-                    </select>
-                    <div *ngIf="formReserva.controls['tipo'].invalid && (formReserva.controls['tipo'].dirty || formReserva.controls['tipo'].touched)" class="alert alert-danger">
-                      <div *ngIf="formReserva.controls['tipo'].errors.required">El tipo de Reserva es requerido.</div>
+                <div class="form-group row">
+                  <label for="example-text-input" class="col-2 col-form-label">Usuario</label>
+                  <div class="col-10">
+                    <input class="form-control" id="nombre" type="text" formControlName="nombre"  name="nombre" required
+                      id="nombre-text-input" #nombre>
+                    <div *ngIf="formReserva.controls['nombre'].invalid && (formReserva.controls['nombre'].dirty || formReserva.controls['nombre'].touched)" class="alert alert-danger">
+                      <div *ngIf="formReserva.controls['nombre'].errors.required">El nombre es requerido.</div>
+                      <div *ngIf="formReserva.controls['nombre'].errors.maxlength">El nombre supera la longitud maxima de caracteres (maximo 20 caracteres).</div>
                     </div>
                   </div>
                 </div>
 
-              <div *ngIf="option1">
                 <div class="form-group row">
-                  <label for="example-text-input" class="col-2 col-form-label">Inicio</label>
-                  <div class="col-sm-10">
-                    <mwl-demo-utils-date-time-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="eventAct.start" (ngModelChange)="refresh.next()" placeholder="Not set">
-                    </mwl-demo-utils-date-time-picker>
+                  <label for="example-text-input" class="col-2 col-form-label">Descripcion</label>
+                  <div class="col-10">
+                    <textarea id="descripcion"  name="descripcion" maxlength="500" formControlName="descripcion" class="form-control"></textarea>
+                    <div *ngIf="formReserva.controls['descripcion'].invalid && (formReserva.controls['descripcion'].dirty || formReserva.controls['descripcion'].touched)" class="alert alert-danger">
+                      <div *ngIf="formReserva.controls['descripcion'].errors.maxlength">La Descripcion supera la longitud maxima de caracteres (maximo 500 caracteres).</div>
+                    </div>
                   </div>
                 </div>
 
                 <div class="form-group row">
-                  <label for="example-text-input" class="col-2 col-form-label">Final</label>
+                  <label for="example-text-input" class="col-2 col-form-label">Facultad</label>
                   <div class="col-sm-10">
-                    <mwl-demo-utils-date-time-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="eventAct.end"  (ngModelChange)="refresh.next()" placeholder="Not set">
-                    </mwl-demo-utils-date-time-picker>
+                    <select id="facultad" name="facultad" [(ngModel)]="opcionFacultad" (change)="cargarProgramas()" formControlName="facultad"  class="form-control" [required]="true" #facultad>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let opcion of facultadSelect" [value]="opcion.value">{{opcion.text}}
+                      </option>
+                    </select>
+                    <div *ngIf="formReserva.controls['facultad'].invalid && (formReserva.controls['facultad'].dirty || formReserva.controls['facultad'].touched)" class="alert alert-danger">
+                      <div *ngIf="formReserva.controls['facultad'].errors.required">La facultad es requerido.</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-  
-              <div *ngIf="option2">
-                  <div class="form-group row">
-                    <label for="example-text-input" class="col-2 col-form-label"> Fecha</label>
+
+                <div class="form-group row">
+                    <label for="example-text-input" class="col-2 col-form-label">Programa</label>
                     <div class="col-sm-10">
-                      <mwl-demo-utils-date-time-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="eventAct.start"  (ngModelChange)="refresh.next()" placeholder="Not set">
+                      <select id="programa" name="programa" formControlName="programa"  class="form-control" [required]="true" #programa>
+                        <option value="">Seleccione</option>
+                        <option *ngFor="let opcion of programaSelect" [value]="opcion.value">{{opcion.text}}</option>
+                      </select>
+                      <div *ngIf="formReserva.controls['programa'].invalid && (formReserva.controls['programa'].dirty || formReserva.controls['programa'].touched)" class="alert alert-danger">
+                        <div *ngIf="formReserva.controls['programa'].errors.required">El programa es requerido.</div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="example-text-input" class="col-2 col-form-label">Finalidad</label>
+                    <div class="col-sm-10">
+                      <select id="tipo" name="tipo" formControlName="tipo"  class="form-control" [required]="true" #tipo>
+                        <option value="">Seleccione</option>
+                        <option *ngFor="let opcion of tipoSelect" [value]="opcion.value">{{opcion.text}}</option>
+                      </select>
+                      <div *ngIf="formReserva.controls['tipo'].invalid && (formReserva.controls['tipo'].dirty || formReserva.controls['tipo'].touched)" class="alert alert-danger">
+                        <div *ngIf="formReserva.controls['tipo'].errors.required">El tipo de Reserva es requerido.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                <div *ngIf="option1">
+                  <div class="form-group row">
+                    <label for="example-text-input" class="col-2 col-form-label">Inicio</label>
+                    <div class="col-sm-10">
+                      <mwl-demo-utils-date-time-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="eventAct.start" (ngModelChange)="refresh.next()" placeholder="Not set">
                       </mwl-demo-utils-date-time-picker>
                     </div>
                   </div>
-  
-                
-                <div class="form-group row">
-                  <label for="example-text-input" class="col-2 col-form-label"></label>
-                  <div class="col-sm-10">
-                    <ngb-timepicker [(ngModel)]="finalDiarioStruct" [ngModelOptions]="{standalone: true}" (ngModelChange)="updateTimeFinal()" [meridian]="true">
-                    </ngb-timepicker>
+                  <div>Hora Final</div>
+                  
+                  <div class="form-group row">
+                    <label for="example-text-input" class="col-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                      <ngb-timepicker [(ngModel)]="finalDiarioStruct" [ngModelOptions]="{standalone: true}" (ngModelChange)="updateTimeFinal()" [meridian]="true">
+                      </ngb-timepicker>
+                    </div>
                   </div>
-  
+                </div>
+                
+                <div *ngIf="option2">
+                    <div class="form-group row">
+                      <label for="example-text-input" class="col-2 col-form-label"> Fecha</label>
+                      <div class="col-sm-10">
+                        <mwl-demo-utils-date-time-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="eventAct.start"  (ngModelChange)="refresh.next()" placeholder="Not set">
+                        </mwl-demo-utils-date-time-picker>
+                      </div>
+                    </div>
+    
+                  
+                  <div class="form-group row">
+                    <label for="example-text-input" class="col-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                      <ngb-timepicker [(ngModel)]="finalDiarioStruct" [ngModelOptions]="{standalone: true}" (ngModelChange)="updateTimeFinal()" [meridian]="true">
+                      </ngb-timepicker>
+                    </div>
+    
+                  </div>
+                </div>
+    
+              </fieldset>
+
+              <hr>
+              <div class="form-group row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                  <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" value="Cerrar">
+                    <i class="fa fa-times"></i> Cerrar</button>
+                  <button type="submit" name="btnEnviar" class="btn btn-success" [disabled]="formReserva.invalid"  data-dismiss="modal" (click)="guardarReserva($event)" >Reservar</button>
+
                 </div>
               </div>
-  
-            </fieldset>
-
-            <hr>
-            <div class="form-group row">
-              <div class="col-sm-2"></div>
-              <div class="col-sm-10">
-                <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" value="Cerrar">
-                  <i class="fa fa-times"></i> Cerrar</button>
-                <button type="submit" name="btnEnviar" class="btn btn-success" [disabled]="formReserva.invalid"  data-dismiss="modal" (click)="guardarReserva($event)" >Reservar</button>
-
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>  
         </div>
 
       </div>
