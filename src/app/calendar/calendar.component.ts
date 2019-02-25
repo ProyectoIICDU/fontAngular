@@ -163,6 +163,7 @@ export class CalendarComponent implements OnChanges {
   option1 = false;
   option2 = false;
   control= false;
+  verFormulario = false;
   Error=false;
   titulo: String = "Deporte";
 
@@ -463,8 +464,6 @@ export class CalendarComponent implements OnChanges {
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
-    
-  
   }
   addReserva(event) {
     this.formReserva.reset();
@@ -506,10 +505,12 @@ export class CalendarComponent implements OnChanges {
   onFilteroption1(ischecked: boolean) {
     this.option1 = true;
     this.option2 = false;
+    this.verFormulario = true;
   }
   onFilteroption2(ischecked: boolean) {
     this.option2 = true;
     this.option1 = false;
+    this.verFormulario = true;
     /*
     this.inicioDiarioStruct = {
       second: getSeconds(this.viewDate),
