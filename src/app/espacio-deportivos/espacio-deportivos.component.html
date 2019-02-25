@@ -41,6 +41,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                
                 <form id="frmEspaciodeportivo" (ngSubmit)="enviarFormulario()" class="form-label-left form-horizontal" #espacioDeportivoForm="ngForm">
                     <fieldset>
                         <legend>Informacion del Espacio Deportivo</legend>
@@ -136,7 +137,8 @@
                         <div class="col-sm-2"></div>
                         <div class="col-sm-10">
                             <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" value="Cerrar"><i class="fa fa-times"></i> Cerrar</button>
-                            <button *ngIf="accion != 'Detalle'" type="submit" name="btnEnviar"  class="btn btn-success" [disabled]="!espacioDeportivoForm.form.valid"><i class="{{iconBtnSubmit}}"></i> {{accion}}</button>
+                            <!----<button *ngIf="accion != 'Detalle'" type="submit" name="btnEnviar"  class="btn btn-success" [disabled]="espacioDeportivoForm.invalid"><i class="{{iconBtnSubmit}}"></i> {{accion}}</button>-->
+                            <button *ngIf ="accion != 'Detalle'" type="submit" name="btnEnviar" class="btn btn-success" [disabled]="!espacioDeportivoForm.form.valid || this.deportesAnexados.length == 0"  data-dismiss="modal" (click)="enviarFormulario()"><i class="{{iconBtnSubmit}}"></i> {{accion}}</button>
                         </div>
                     </div>
                 </form>
