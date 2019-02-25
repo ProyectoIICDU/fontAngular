@@ -160,7 +160,7 @@ export class CalendarComponent implements OnChanges {
   eventActual: CalendarEvent[];
   eventAct: CalendarEvent;
 
-  option1 = false;
+  option1 = true;
   option2 = false;
   control= false;
   verFormulario = false;
