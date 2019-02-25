@@ -461,6 +461,7 @@ export class CalendarComponent implements OnChanges {
     this.refresh.next();
   }
   handleEvent(action: string, event: CalendarEvent): void {
+    this.getReservasEspacio();
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
     
