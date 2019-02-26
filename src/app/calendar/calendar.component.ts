@@ -626,26 +626,39 @@ export class CalendarComponent implements OnChanges {
               reservaActual.fechafin = inicioCopia;
 
 
-              this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
+              for (let i = 0; i < this.reservasActuales.length; i++) 
+              {
+                let hor = new Date(this.reservasActuales[i].fechaini);
+                let horf = new Date(this.reservasActuales[i].fechafin);
+                console.log("Hora de reserva cris "+hor.getHours().toString());
+                if((inicio.getMonth() == hor.getMonth()) && (inicio.getDate() == hor.getDate()) && (inicio.getHours() == hor.getHours()))
+                {  
+                  if((inicio.getMinutes() >= hor.getMinutes()) || (inicio.getMinutes() < horf.getMinutes()))
+                  {
+                    console.log("Error, el espacio se encuentra ocupado en las horas marcadas, revise el calendario");
+                    this.alertService.error("Error! El espacio que se intenta reservar está ocupado desde la(s) "
+                    +hor.getHours()+":"+hor.getMinutes()+" hasta la(s) "+horf.getHours()+":"+horf.getMinutes());
+                  }                
+                }else{
+                  this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
 
+                  this.events.push({
+                    title: this.reservaAct.nombre.toString(),
+                    start: inicioCopia2,
+                    end: inicioCopia,
+                    color: colors.red,
+                    actions: this.actions,
+                    draggable: true,
+                    resizable: {
+                      beforeStart: true,
+                      afterEnd: true
+                    }});
 
-              this.events.push({
-                title: this.reservaAct.nombre.toString(),
-                start: inicioCopia2,
-                end: inicioCopia,
-                color: colors.red,
-                actions: this.actions,
-                draggable: true,
-                resizable: {
-                  beforeStart: true,
-                  afterEnd: true
+                  this.alertService.success("Ok! La reserva ha sido almacenada.");
                 }
-              });
-              inicio.setDate(inicio.getDate() + 7);
-              this.alertService.success("Ok! La reserva ha sido almacenada.");
-            }
-            
-            
+              }
+              inicio.setDate(inicio.getDate() + 7);              
+            }          
 
             } else {
               //la reserva no puede ser fija
@@ -726,24 +739,39 @@ export class CalendarComponent implements OnChanges {
             reservaActual.fechaini = InicioDate;
             reservaActual.fechafin = FinalDate;
             
-            this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
-            this.reservasActuales.push(reservaActual);
-    
-            this.events.push({
-              title: this.reservaAct.nombre.toString(),
-              start: InicioDate,
-              end: FinalDate,
-              color: colors.red,
-              actions: this.actions,
-              draggable: true,
-              resizable: {
-                beforeStart: true,
-                afterEnd: true
+            for (let i = 0; i < this.reservasActuales.length; i++) 
+            {
+              let hor = new Date(this.reservasActuales[i].fechaini);
+              let horf = new Date(this.reservasActuales[i].fechafin);
+              console.log("Hora de reserva cris "+hor.getHours().toString());
+              if((InicioDate.getMonth() == hor.getMonth()) && (InicioDate.getDate() == hor.getDate()) && (InicioDate.getHours() == hor.getHours()))
+              {  
+                if((InicioDate.getMinutes() >= hor.getMinutes()) || (InicioDate.getMinutes() < horf.getMinutes()))
+                {
+                  console.log("Error, el espacio se encuentra ocupado en las horas marcadas, revise el calendario");
+                  this.alertService.error("Error! El espacio que se intenta reservar está ocupado desde la(s) "
+                  +hor.getHours()+":"+hor.getMinutes()+" hasta la(s) "+horf.getHours()+":"+horf.getMinutes());
+                }                
+              }else{
+                this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
+                this.reservasActuales.push(reservaActual);
+  
+                this.events.push({
+                  title: this.reservaAct.nombre.toString(),
+                  start: InicioDate,
+                  end: FinalDate,
+                  color: colors.red,
+                  actions: this.actions,
+                  draggable: true,
+                  resizable: {
+                    beforeStart: true,
+                    afterEnd: true
+                  }
+                });
+
+                this.alertService.success("Ok! La reserva ha sido almacenada.");
               }
-            });
-            
-            this.alertService.success("Ok! La reserva ha sido almacenada.");
-            
+            }
     
           } else {
             //la reserva no puede ser fija
