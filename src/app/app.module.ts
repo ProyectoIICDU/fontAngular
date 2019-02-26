@@ -37,8 +37,6 @@ import { ElementoComponent } from './elemento/elemento.component';
 import { ElementoService } from './elemento.service';
 import { ReservaElementoComponent } from './reserva-elemento/reserva-elemento.component';
 
-
-
 registerLocaleData(localeEs);
 
 @NgModule({
