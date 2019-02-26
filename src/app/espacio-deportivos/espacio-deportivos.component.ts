@@ -229,7 +229,7 @@ export class EspacioDeportivosComponent implements OnInit {
             alert("DEBE ANEXAR AL MENOS UN DEPORTE");
             return false;
         }
-        if (confirm("¿ DESEA " + this.accion.toUpperCase() + " ESTE ESPACIO DEPORTIVO ?")) {
+        if (confirm("¿DESEA " + this.accion.toUpperCase() + " ESTE ESPACIO DEPORTIVO?")) {
             switch (this.accion) {
                 case "Registrar":
                     console.log("REGISTRANDO...");
@@ -238,6 +238,7 @@ export class EspacioDeportivosComponent implements OnInit {
 
                     // Se consume el web service "guardarEspacioDeportivo", el nuevo espacio deportivo es anexado a la lista de esapacios deportivos "espacios".
                     this.espacioService.guardarEspacioDeportivo(this.espacioSelected).subscribe(espacio => { this.espacios.push(espacio); }); 
+                    
                     break;
                 case "Actualizar":
                     console.log("ACTUALIZANDO...");
@@ -270,6 +271,7 @@ export class EspacioDeportivosComponent implements OnInit {
                 default:
                     break;
             }
+            return true;
     //            console.log('save: ' + newEspacio);
         }      
     }
