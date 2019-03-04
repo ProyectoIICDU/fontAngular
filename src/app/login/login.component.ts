@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { AuthService } from "angularx-social-login";
+import { FacebookLoginProvider, GoogleLoginProvider, LinkedInLoginProvider } from "angularx-social-login";
+import { SocialUser } from "angularx-social-login";
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /**
@@ -27,36 +29,48 @@ import { AlertService, AutenticacionService } from '../servicios/index';
 })
 
 
-export class LoginComponent implements OnInit {
+export class LoginComponent  {
 	model: any = {}; // variable con formato JSON donde se almacena el login y el password digitado por el usuario
     loading = false; 
     returnUrl: string;
- 
+    correo=""
+    private user: SocialUser;
+    private loggedIn: boolean;
+    
     constructor(
+    
         private route: ActivatedRoute,
+        private socialAuthService: AuthService, 
         private router: Router,
         private authenticationService: AutenticacionService,
         private alertService: AlertService) { }
  
-    ngOnInit() {
-        this.authenticationService.logout();
-        // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    }
- 
+        ngOnInit() {
+            this.socialAuthService.authState.subscribe((user) => {
+              this.user = user;
+              this.loggedIn = (user != null);
+              this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+            });
+        }
     iniciarSesion() {
         console.log('Iniciando Sesion');
         this.loading = true;
-        this.authenticationService.login(this.model.login, this.model.password) // llamado al metodo login del servicio de autenticacion "authenticationService"
-            .subscribe(
-                data => {
-                    this.router.navigate([this.returnUrl]); // si el login es exitoso lo redirecciona a la pagina principal o de inicio
-                },
-                error => {
-                    this.alertService.error(error); // se muestra una alerta al usuario con el mensaje de error proveniente del metodo login del servicio de autenticacion
-                    this.loading = false;
-                    console.log("LOGIN O PASSWORD INCORRECTOS");
-                });
+      
+        this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+        if (this.user!=null) {
+            var str = this.user.email; 
+            var partir = str.split("@"); 
+            console.log(partir[1])
+            this.correo=partir[1]    
+            console.log(this.user.name);
+        }
     }
+        redireccionar(){
+
+            this.router.navigate([this.returnUrl]);
+            
+        }
+        
+    
 
 }

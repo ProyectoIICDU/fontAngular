@@ -1,7 +1,7 @@
 <div class="col-md-6 col-md-offset-3">
     <h2>Login</h2>
-    <form name="form" (ngSubmit)="iniciarSesion()" #formLogin="ngForm" novalidate>
-        <div class="form-group row">
+  <form name="form" (ngSubmit)="iniciarSesion()" #formLogin="ngForm" novalidate>
+          <!--<div class="form-group row">
             <label class="col-sm-2 col-form-label" for="login">Login</label>
             <div class="col-sm-10">
 	            <input type="text" name="login" id="login" [(ngModel)]="model.login" #login="ngModel" class="form-control" required />
@@ -18,13 +18,15 @@
                     <div *ngIf="password.errors.required">El password es requerido.</div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <hr>
         <div class="form-group row">
             <div class="col-sm-2"></div>
             <div class="col-sm-10">
-                <button type="submit" name="btnEnviar" class="btn btn-success" [disabled]="!formLogin.form.valid"><i class="fa fa-play"></i> Iniciar Sesion</button>
-                <a [routerLink]="['/registro']" class="btn btn-link">Registrarse</a>
+                <button type="submit" name="btnEnviar" class="btn btn-success" ><i class="fa fa-play"></i> Iniciar Sesion</button>
+                <div *ngIf="correo === 'unicauca.edu.co'; else showLogin">{{redireccionar()}}</div>
+                <ng-template #showLogin ><div *ngIf=" correo != ''"><p>El correo debe ser institucional</p></div></ng-template>
+                <!--<a [routerLink]="['/registro']" class="btn btn-link">Registrarse</a>-->
             </div>
         </div>
     </form>
