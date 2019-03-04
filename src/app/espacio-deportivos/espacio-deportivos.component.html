@@ -14,6 +14,7 @@
         <thead>
             <tr>
                 <th>Nombre</th>
+                <th>Ubicación</th>
                 <th>Descripcion</th>
                 <th>Opciones</th>
             </tr>
@@ -21,6 +22,7 @@
         <tbody>
             <tr *ngFor="let espaciodeportivo of espacios">
                 <td>{{espaciodeportivo.nombre}}</td>
+                <td>{{espaciodeportivo.ubicacion}}</td>
                 <td>{{espaciodeportivo.descripcion}}</td>
                 <td>
                     <a href="" (click)="verEspacioDeportivo(espaciodeportivo, 'Detalle')" data-toggle="modal" data-target="#modalEspacioDeportivo"><i class="fa fa-eye"></i></a> &nbsp; 

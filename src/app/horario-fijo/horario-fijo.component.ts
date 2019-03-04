@@ -39,9 +39,9 @@ export class HorarioFijoComponent implements OnInit {
     
   }
   selectDeporte(event){
-  console.log(event.nombre);
-  this.getEscenarioDeportivos(event.idDeporte)    
-
+    this.selectedEspacio = null;
+    console.log(event.nombre);
+    this.getEscenarioDeportivos(event.idDeporte);
   }
  
   getEscenarioDeportivos(idDeporte):void{

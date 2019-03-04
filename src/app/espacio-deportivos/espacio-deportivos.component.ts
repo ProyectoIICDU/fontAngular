@@ -27,6 +27,7 @@ import { Deporte } from '../deporte';
 */
 import { EspaciodeportivoService } from '../espaciodeportivo.service';
 
+import { AlertService } from '../servicios/index';
 //************************************************************************************************************************************************************
 
 /**
@@ -85,10 +86,9 @@ export class EspacioDeportivosComponent implements OnInit {
 
     // Esta variable determina el icono a utilizar para el boton enviar (submit) del formulario
     iconBtnSubmit:string = '';
-
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    constructor(private espacioService:EspaciodeportivoService) { }
+    constructor(private espacioService:EspaciodeportivoService, private alertService: AlertService) { }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -189,7 +189,7 @@ export class EspacioDeportivosComponent implements OnInit {
         if (this.deporteSelected.idDeporte !== 0) {
             for (let x = 0; x < this.deportesAnexados.length; x++) {
                 if (this.deportesAnexados[x].idDeporte === this.deporteSelected.idDeporte) {
-                    alert("EL DEPORTE << " + this.deporteSelected.nombre.toUpperCase() + " >> YA SE ENCUENTRA SELECCIONADO");
+                    alert("EL DEPORTE " + this.deporteSelected.nombre.toUpperCase() + " YA SE ENCUENTRA SELECCIONADO");
                     return false;
                 }
             }
@@ -233,12 +233,18 @@ export class EspacioDeportivosComponent implements OnInit {
             switch (this.accion) {
                 case "Registrar":
                     console.log("REGISTRANDO...");
+                    for (let espa of this.espacios) {
+                        if(espa.nombre == this.espacioSelected.nombre && espa.ubicacion == this.espacioSelected.ubicacion){
+                            alert("EL ESCENARIO " + this.espacioSelected.nombre.toUpperCase() + ", UBICADO EN "+ this.espacioSelected.ubicacion.toUpperCase()+" YA SE ENCUENTRA REGISTRADO");
+                            this.alertService.error("El escenario deportivo no se pudo registrar");
+                            return false;
+                        }
+                    }
                     // Se carga la lista de deportes anexados en el espacio deportivo que se va a registrar
                     this.espacioSelected.deporteList = this.deportesAnexados; 
-
                     // Se consume el web service "guardarEspacioDeportivo", el nuevo espacio deportivo es anexado a la lista de esapacios deportivos "espacios".
                     this.espacioService.guardarEspacioDeportivo(this.espacioSelected).subscribe(espacio => { this.espacios.push(espacio); }); 
-                    
+                    this.alertService.success("El escenario deportivo se registro exitosamente");
                     break;
                 case "Actualizar":
                     console.log("ACTUALIZANDO...");
