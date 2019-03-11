@@ -16,6 +16,7 @@ const httpOptions = {
 export class UsuarioService {
 
     private usuariosUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario';
+    
     constructor(private http: HttpClient,private messageService: MessageService) { }
  
     getAll() {
@@ -39,6 +40,7 @@ export class UsuarioService {
     }
     getUsuariosNoValidos(): Observable<Usuario[]> {
         const url = `${this.usuariosUrl}/Usuarios`;
+        console.log("maaalo");
         return this.http.get<Usuario[]>(url).pipe(tap(usuarios => this.log(`fetched Usuarios`)), catchError(this.handleError('getUsuariosNoValidos', [])));
     }
     cambiarEstado(usuario:Usuario):Observable<Boolean>{
@@ -49,6 +51,7 @@ export class UsuarioService {
         );
 
     }
+    
 
     //Mensajes de error 
       //------------------------------------------------------------------------------

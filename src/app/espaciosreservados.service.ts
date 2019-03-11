@@ -8,6 +8,7 @@ import { ReservaUsuario } from './reservausuario';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { Usuario } from './modelos';
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -16,15 +17,21 @@ const httpOptions = {
 
 export class EspaciosreservadosService {
 
-private reservasUrl = 'http://localhost:8086/CRUD_Escenarios/proyectoCDU/Escenario/EspaciosReservados';
+private reservasUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario/EspaciosReservados';
+private usuariosUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario';
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
   
-  cargarEspaciosReservados(): Observable<ReservaUsuario[]>{
-
-        return this.http.get<ReservaUsuario[]>(this.reservasUrl).pipe(tap(reservas => this.log(`fetched heroes`)), catchError(this.handleError('getEspacioreservado', [])));   
+  cargarEspaciosReservados(id: String): Observable<ReservaUsuario[]>{
+    
+    const url = `${this.reservasUrl}/${id}`;
+        return this.http.get<ReservaUsuario[]>(url)
+        .pipe(
+            tap(reservas => this.log(`fetched heroes id=${id}`)), 
+            catchError(this.handleError('getEspacioreservado', [])));   
 
   }
+ 
 
   
     private handleError<T>(operation = 'operation', result?: T) {

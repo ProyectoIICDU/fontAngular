@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReservaUsuario } from '../reservausuario';
 import { EspaciosreservadosService} from '../espaciosreservados.service';
 
+
 @Component({
   selector: 'app-espacios-reservados',
   templateUrl: './espacios-reservados.component.html',
@@ -15,12 +16,16 @@ export class EspaciosReservadosComponent implements OnInit {
   constructor(private espacioReservas:EspaciosreservadosService) { }
 
  ngOnInit(): void {
+  
   this.getEspaciosReservados();
+  
 
   }
 
     getEspaciosReservados() {
-        this.espacioReservas.cargarEspaciosReservados().subscribe(reservados => this.reservados = reservados);       
+      //ME TOCA OBTENER EL USUARIO PARA ENVIARLO EN EL PARAMETRO
+        this.espacioReservas.cargarEspaciosReservados("admin").subscribe(reservados => this.reservados = reservados);       
+        this.reservados=[];
     }
 
 
