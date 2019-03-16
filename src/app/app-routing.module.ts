@@ -14,10 +14,12 @@ import { ValidarusuariosComponent } from './validarusuarios/validarusuarios.comp
 import { EspaciosReservadosComponent } from './espacios-reservados/espacios-reservados.component';
 import { ReservaElementoComponent } from './reserva-elemento/reserva-elemento.component';
 
+import { AppComponent } from './app.component';
 
 
 
 const routes: Routes = [
+  { path: 'app/:user', component: AppComponent },
   { path: '', component: EspacioDeportivosComponent, canActivate: [Autenticacion] },
   { path: 'espaciodeportivos', component: EspacioDeportivosComponent, canActivate: [Autenticacion]  },
   { path: 'agregarescenario', component: AgregarescenarioComponent },

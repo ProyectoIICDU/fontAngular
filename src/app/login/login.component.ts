@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , EventEmitter, Input, Output} from '@angular/core';
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -6,6 +6,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider, LinkedInLoginProvider } from "angularx-social-login";
 import { SocialUser } from "angularx-social-login";
+import {ServicioService} from '../servicio.service';
+
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /**
@@ -36,9 +38,12 @@ export class LoginComponent  {
     correo=""
     private user: SocialUser;
     private loggedIn: boolean;
+   
+   
+
     
     constructor(
-    
+        private _sharedService: ServicioService,
         private route: ActivatedRoute,
         private socialAuthService: AuthService, 
         private router: Router,
@@ -50,6 +55,7 @@ export class LoginComponent  {
               this.user = user;
               this.loggedIn = (user != null);
               this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+              
             });
         }
     iniciarSesion() {
@@ -57,20 +63,39 @@ export class LoginComponent  {
         this.loading = true;
       
         this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
-        if (this.user!=null) {
-            var str = this.user.email; 
-            var partir = str.split("@"); 
-            console.log(partir[1])
-            this.correo=partir[1]    
-            console.log(this.user.name);
-        }
+        console.log('PASO');
+        this.socialAuthService.authState.subscribe((user) => {
+            this.user = user;
+            if (this.user!=null) {
+            
+                var str = this.user.email; 
+                var partir = str.split("@"); 
+                console.log(partir[1])
+                this.correo=partir[1]  
+                if(this.correo!='unicauca.edu.co')
+                {
+
+                    this.signOut();
+                }
+                console.log(this.user.name);
+                
+            }
+            
+            this.loggedIn = (user != null);
+            });
+      
     }
         redireccionar(){
-
+            
             this.router.navigate([this.returnUrl]);
+            this._sharedService.emitChange(this.user.name+'/'+this.user.email);
+
             
         }
         
-    
+        
+        signOut(): void {
+            this.socialAuthService.signOut();
+          }
 
 }

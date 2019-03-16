@@ -40,6 +40,7 @@ import { EspaciosreservadosService } from './espaciosreservados.service';
 import { ElementoComponent } from './elemento/elemento.component';
 import { ElementoService } from './elemento.service';
 import { ReservaElementoComponent } from './reserva-elemento/reserva-elemento.component';
+import {ServicioService} from './servicio.service';
 
 registerLocaleData(localeEs);
 
@@ -98,6 +99,7 @@ let config = new AuthServiceConfig([
     EspaciosreservadosService,
     ElementoService,
     UsuarioService,
+    ServicioService,
     {
       
       
