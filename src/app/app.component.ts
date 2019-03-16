@@ -42,7 +42,8 @@ export class AppComponent {
         {
 
           this.email = this.users.email; 
-          this.user = this.users.name; 
+          this.user = this.users.name.toLocaleUpperCase(); 
+          console.log(this.user+" este es")
         }
       }
       
@@ -64,7 +65,7 @@ export class AppComponent {
         {
 
           this.email = this.users.email; 
-          this.user = this.users.name; 
+          this.user = this.users.name.toLocaleUpperCase(); 
         }
       }
       

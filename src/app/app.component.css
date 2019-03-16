@@ -54,7 +54,10 @@ ul, ol {
 .nav > li {
 	float:left;
 }
-
+#Usuario{
+	color: white;
+	margin-right: 8%;
+}
 .nav li a {
 	background-image: linear-gradient(#020d16, #3b94e2);
 	color:white;

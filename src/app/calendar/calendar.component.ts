@@ -1,6 +1,7 @@
 
 import { Component, OnChanges, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy, Input, ChangeDetectorRef, SimpleChanges } from '@angular/core';
-
+import { SocialUser } from "angularx-social-login";
+import { AuthService } from "angularx-social-login";
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /**
@@ -23,6 +24,7 @@ import {
   setHours,
   setSeconds,
   setMinutes,
+  compareAsc,
 } from 'date-fns';
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -165,7 +167,11 @@ export class CalendarComponent implements OnChanges {
   // Variable que indica en que vista (MESES, SEMANAS, DIAS) se muestra el calendario
   view: string = 'month';
   name = "final";
-
+  user=''
+  email=''
+  aux=''
+  private users: SocialUser;
+  private loggedIn: boolean;
   opcionFacultad:String='0';
   pFacultad:String='';
   programaSelect = [];
@@ -195,6 +201,7 @@ export class CalendarComponent implements OnChanges {
 
   // Lista de reservas registradas en BD
   reservasActuales: ReservaEspacio[];
+  reservasActualvista: ReservaEspacio[];
 
   // Lista de tipos de reserva
   tipoSelect = [
@@ -335,13 +342,8 @@ export class CalendarComponent implements OnChanges {
   * Constructor de la clase
   *
   */
-  constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService, private cdr: ChangeDetectorRef,  private alertService: AlertService) {
-    /*this.inicioDiarioStruct = {
-      hour: 2,
-      minute: 23,
-      second: 0
-
-    };*/
+  constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService, private cdr: ChangeDetectorRef,  private alertService: AlertService,private socialAuthService: AuthService ) {
+    this.reservasActualvista=[];
     this.finalDiarioStruct = {
       hour: 2,
       minute: 23,
@@ -432,9 +434,30 @@ export class CalendarComponent implements OnChanges {
   * Declaracion de constantes utilizadas para definir los colores a usar en las celdas del calendario
   *
   */
+ 
   getReservasEspacio() {
+
+    this.socialAuthService.authState.subscribe((user) => {
+      this.users = user;
+        if (this.user!=null) {
+        var str = this.users.email; 
+        var partir = str.split("@"); 
+        console.log(partir[1])
+        this.aux=partir[1]  
+      
+        if( this.aux=='unicauca.edu.co')
+        {
+
+          this.email = this.users.email; 
+          this.user = this.users.name; 
+        }
+      }
+      
+      this.loggedIn = (user != null);
+      });
     this.limpiarReservas();
-    this.espacioService.getReservasEspacio(this.selectEspacio.idEspacio,"admin").subscribe(reservas => {
+    console.log("este es mi usuario "+this.email);
+    this.espacioService.getReservasEspacio(this.selectEspacio.idEspacio,this.email.split("@")[0]).subscribe(reservas => {
       this.reservasActuales = reservas;
       this.cargarReservas();
     });
@@ -489,9 +512,26 @@ export class CalendarComponent implements OnChanges {
     this.refresh.next();
   }
   handleEvent(action: string, event: CalendarEvent): void {
-    this.getReservasEspacio();
+    
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
+    this.cargarParaVista(event);
+  }
+  cargarParaVista(event: CalendarEvent){
+    console.log("lon "+this.reservasActuales.length)
+    for (let i = 0; i < this.reservasActuales.length; i++) {
+      let hor = new Date(this.reservasActuales[i].fechaini);
+      console.log(event.title);
+      console.log(this.reservasActuales[i].nombre);
+      console.log(event.start);
+      console.log(hor)
+      if(compareAsc(event.start,hor)==0){
+        this.reservasActualvista.push(this.reservasActuales[i]);
+        console.log("long "+this.reservasActuales[i].nombre);
+      }
+    }
+    
+    
     
   }
   addReserva(event) {

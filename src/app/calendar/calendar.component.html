@@ -99,7 +99,7 @@
                     id="nombre" #nombre [ngModel]="reservaAct.nombre">
                     <span id="ayuda" class="input-group-addon">
                         <i class="fa fa-question-circle" aria-hidden="true" href=# title="Correo: correoInstitucional@unicauca.edu.co Usuario: correoInstitucional"></i>
-                      </span>
+                    </span>
                 </div>
                 
                   
@@ -254,7 +254,7 @@
                   <th>Finalidad</th>
                   <th>Descripción</th>
                 </tr>
-                <ng-container *ngFor="let reservaespacio of reservasActuales">
+                <ng-container *ngFor="let reservaespacio of reservasActualvista">
                     <tr *ngIf="reservaespacio.nombre == modalData?.event.title">
                       <td>{{reservaespacio.nombre}}</td>
                       <td>{{reservaespacio.tipo}}</td>
