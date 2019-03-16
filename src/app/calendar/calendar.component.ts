@@ -421,7 +421,7 @@ export class CalendarComponent implements OnChanges {
   */
   getReservasEspacio() {
     this.limpiarReservas();
-    this.espacioService.getReservasEspacio(this.selectEspacio.idEspacio).subscribe(reservas => {
+    this.espacioService.getReservasEspacio(this.selectEspacio.idEspacio,"admin").subscribe(reservas => {
       this.reservasActuales = reservas;
       this.cargarReservas();
     });

@@ -16,7 +16,7 @@ import {ServicioService} from '../servicio.service';
 * Permite la conexion con los web services implementados en el lado servidor
 *
 */
-import { AlertService, AutenticacionService } from '../servicios/index';
+import { AlertService, AutenticacionService,UsuarioService } from '../servicios/index';
 
 //************************************************************************************************************************************************************
 
@@ -48,7 +48,8 @@ export class LoginComponent  {
         private socialAuthService: AuthService, 
         private router: Router,
         private authenticationService: AutenticacionService,
-        private alertService: AlertService) { }
+        private alertService: AlertService,
+        private service: UsuarioService) { }
  
         ngOnInit() {
             this.socialAuthService.authState.subscribe((user) => {
@@ -61,7 +62,7 @@ export class LoginComponent  {
     iniciarSesion() {
         console.log('Iniciando Sesion');
         this.loading = true;
-      
+        
         this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
         console.log('PASO');
         this.socialAuthService.authState.subscribe((user) => {

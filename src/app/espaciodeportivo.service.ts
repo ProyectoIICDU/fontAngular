@@ -16,8 +16,8 @@ const httpOptions = {
 
 @Injectable()
 export class EspaciodeportivoService {
-    private espaciosUrl = 'http://localhost:8086/CRUD_Escenarios/proyectoCDU/Escenario';
-    private deportesUrl = 'http://localhost:8086/CRUD_Escenarios/proyectoCDU/Escenario/deportes';
+    private espaciosUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario';
+    private deportesUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario/deportes';
 
     //------------------------------------------------------------------------------
 
@@ -112,12 +112,12 @@ export class EspaciodeportivoService {
         );
 
     }
-    getReservasEspacio(idespacio: number): Observable<ReservaEspacio[]> {
+    getReservasEspacio(idespacio: number, usu: String): Observable<ReservaEspacio[]> {
         console.log(idespacio);
-        const url = `${this.espaciosUrl}/Reserva/${idespacio}`;
+        const url = `${this.espaciosUrl}/Reserva/${idespacio},${usu}`;
         return this.http.get<ReservaEspacio[]>(url)
             .pipe(
-                tap(reservas => this.log(`fetched reservas id=${idespacio}`)),
+                tap(reservas => this.log(`fetched reservas id=${idespacio},usu=${usu}`)),
                 catchError(this.handleError('getReservasEspacio', []))
             );
     }
