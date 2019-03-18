@@ -24,9 +24,11 @@
   </div>
 
 </div>
-<div class="col-md-4">
+
+<div class="col-md-4" >
   <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' }}</h3>
 </div>
+
 <div class="col-md-4">
   <div class="btn-group">
     <div class="btn btn-primary" (click)="view = 'month'" [class.active]="view === 'month'">
@@ -42,14 +44,15 @@
 </div>
 </div>
 
-
-<div [ngSwitch]="view">
+<div id="calendario" class="scroll"> 
+<div [ngSwitch]="view" >
 <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" [locale]="locale" (dayClicked)="viewDate = $event.day.date; view = 'day'">
 </mwl-calendar-month-view>
 <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events"[refresh]="refresh"  [locale]="locale" (dayHeaderClicked)="viewDate = $event.day.date; view = 'day'" >
 </mwl-calendar-week-view>
 <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
 </mwl-calendar-day-view>
+</div>
 </div>
 
 <!--MODAL PARA HACER LA RESERVA-->
@@ -69,12 +72,12 @@
           <label class="col-sm-3 col-form-label">Tipo de Reserva</label>
           <div class="col-sm-9">
             <div class="form-check form-check-inline">
-              <label class="form-check-label">
+              <label class="form-check-label" href=# title="Reserva que se repite en el rango de fechas cada ocho días en la hora dada">
                 <input class="form-check-input" type="radio"  (change)="onFilteroption1($event.target.checked)" name="inlineRadioOptions"
-                  id="inlineRadio1" checked="true" value="option1" >Repetitiva
+                  id="inlineRadio1" checked="true" value="option1" > Repetitiva
               </label>
             </div>
-            <div class="form-check form-check-inline">
+            <div class="form-check form-check-inline" href=# title="Reserva un espacio en una fecha y hora específica">
               <label class="form-check-label">
                 <input class="form-check-input" type="radio" (change)="onFilteroption2($event.target.checked)" name="inlineRadioOptions"
                   id="inlineRadio2" value="option2">Una Vez
@@ -91,19 +94,30 @@
             <div class="form-group row">
               <label for="example-text-input" class="col-2 col-form-label">Usuario</label>
               <div class="col-10">
-                <input class="form-control" id="nombre" type="text" formControlName="nombre"  name="nombre" required
-                  id="nombre-text-input" #nombre>
+                <div class="input-group" id="usuario">
+                    <input class="form-control" placeholder="calos@unicauca.edu.co Usuario: carlos"  type="text" formControlName="nombre"  name="nombre" required
+                    id="nombre" #nombre [ngModel]="reservaAct.nombre">
+                    <span id="ayuda" class="input-group-addon">
+                        <i class="fa fa-question-circle" aria-hidden="true" href=# title="Correo: correoInstitucional@unicauca.edu.co Usuario: correoInstitucional"></i>
+                    </span>
+                </div>
+                
+                  
+                
                 <div *ngIf="formReserva.controls['nombre'].invalid && (formReserva.controls['nombre'].dirty || formReserva.controls['nombre'].touched)" class="alert alert-danger">
                   <div *ngIf="formReserva.controls['nombre'].errors.required">El nombre es requerido.</div>
                   <div *ngIf="formReserva.controls['nombre'].errors.maxlength">El nombre supera la longitud maxima de caracteres (maximo 20 caracteres).</div>
                 </div>
+                
+                
+                
               </div>
             </div>
-
+            
             <div class="form-group row">
               <label for="example-text-input" class="col-2 col-form-label">Descripcion</label>
               <div class="col-10">
-                <textarea id="descripcion"  name="descripcion" maxlength="500" formControlName="descripcion" class="form-control"></textarea>
+                <textarea id="descripcion" [ngModel]="reservaAct.descripcion" name="descripcion" maxlength="500" formControlName="descripcion" class="form-control"></textarea>
                 <div *ngIf="formReserva.controls['descripcion'].invalid && (formReserva.controls['descripcion'].dirty || formReserva.controls['descripcion'].touched)" class="alert alert-danger">
                   <div *ngIf="formReserva.controls['descripcion'].errors.maxlength">La Descripcion supera la longitud maxima de caracteres (maximo 500 caracteres).</div>
                 </div>
@@ -111,9 +125,9 @@
             </div>
 
             <div class="form-group row">
-              <label for="example-text-input" class="col-2 col-form-label">Facultad</label>
+              <label for="example-text-input"  class="col-2 col-form-label">Facultad</label>
               <div class="col-sm-10">
-                <select id="facultad" name="facultad" [(ngModel)]="opcionFacultad" (change)="cargarProgramas()" formControlName="facultad"  class="form-control" [required]="true" #facultad>
+                <select id="facultad" [ngModel]="reservaAct.facultad" name="facultad" [(ngModel)]="opcionFacultad" (change)="cargarProgramas()" formControlName="facultad"  class="form-control" [required]="true" #facultad>
                   <option value="">Seleccione</option>
                   <option *ngFor="let opcion of facultadSelect" [value]="opcion.value">{{opcion.text}}
                   </option>
@@ -126,13 +140,13 @@
 
             <div class="form-group row">
                 <label for="example-text-input" class="col-2 col-form-label">Programa</label>
-                <div class="col-sm-10">
-                  <select id="programa" name="programa" formControlName="programa"  class="form-control" [required]="true" #programa>
+                <div  class="col-sm-10">
+                  <select id="programa" [ngModel]="reservaAct.programa" name="programa" formControlName="programa"  class="form-control" [required]="true" #programa>
                     <option value="">Seleccione</option>
                     <option *ngFor="let opcion of programaSelect" [value]="opcion.value">{{opcion.text}}</option>
                   </select>
                   <div *ngIf="formReserva.controls['programa'].invalid && (formReserva.controls['programa'].dirty || formReserva.controls['programa'].touched)" class="alert alert-danger">
-                    <div *ngIf="formReserva.controls['programa'].errors.required">El programa es requerido.</div>
+                  <div *ngIf="formReserva.controls['programa'].errors.required">El programa es requerido.</div>
                   </div>
               </div>
             </div>
@@ -140,7 +154,7 @@
             <div class="form-group row">
                 <label for="example-text-input" class="col-2 col-form-label">Finalidad</label>
                 <div class="col-sm-10">
-                  <select id="tipo" name="tipo" formControlName="tipo"  class="form-control" [required]="true" #tipo>
+                  <select id="tipo" name="tipo"  formControlName="tipo"  class="form-control" [required]="true" #tipo>
                     <option value="">Seleccione</option>
                     <option *ngFor="let opcion of tipoSelect" [value]="opcion.value">{{opcion.text}}</option>
                   </select>
@@ -152,13 +166,13 @@
 
             <div *ngIf="option1">
               <div class="form-group row">
-                <label for="example-text-input" class="col-2 col-form-label">Inicio</label>
-                <div class="col-sm-10">
+                <label id="malo" for="example-text-input" class="col-2 col-form-label">Inicio</label>
+                <div id="malo" class="col-sm-10">
                   <mwl-demo-utils-date-time-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="eventAct.start" (ngModelChange)="refresh.next()" placeholder="Not set">
                   </mwl-demo-utils-date-time-picker>
                 </div>
               </div>
-
+             
               <div class="form-group row">
                 <label for="example-text-input" class="col-2 col-form-label">Final</label>
                 <div class="col-sm-10">
@@ -169,13 +183,14 @@
             </div>
 
             <div *ngIf="option2">
-                <div class="form-group row">
+                <div class="form-group row" >
                   <label for="example-text-input" class="col-2 col-form-label"> Fecha</label>
                   <div class="col-sm-10">
                     <mwl-demo-utils-date-time-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="eventAct.start"  (ngModelChange)="refresh.next()" placeholder="Not set">
                     </mwl-demo-utils-date-time-picker>
                   </div>
                 </div>
+                
               <div>Hora Final</div>
               
               <div class="form-group row">
@@ -196,7 +211,7 @@
             <div class="col-sm-10">
               <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" value="Cerrar">
                 <i class="fa fa-times"></i> Cerrar</button>
-              <button type="submit" name="btnEnviar" class="btn btn-success" [disabled]="formReserva.invalid"  data-dismiss="modal" (click)="guardarReserva($event)" >Reservar</button>
+              <button type="submit" name="btnEnviar" class="btn btn-info" [disabled]="formReserva.invalid"  data-dismiss="modal" (click)="guardarReserva($event)" >Reservar</button>
 
             </div>
           </div>
@@ -239,7 +254,7 @@
                   <th>Finalidad</th>
                   <th>Descripción</th>
                 </tr>
-                <ng-container *ngFor="let reservaespacio of reservasActuales">
+                <ng-container *ngFor="let reservaespacio of reservasActualvista">
                     <tr *ngIf="reservaespacio.nombre == modalData?.event.title">
                       <td>{{reservaespacio.nombre}}</td>
                       <td>{{reservaespacio.tipo}}</td>
@@ -250,7 +265,7 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" name="btnSalir" class="btn btn-success" (click)="close()">Aceptar</button>
+          <button type="button" name="btnSalir" class="fas fa-question-circle" (click)="close()">Aceptar</button>
         </div>
 
       </ng-template>

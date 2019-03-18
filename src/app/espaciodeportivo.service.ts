@@ -112,12 +112,12 @@ export class EspaciodeportivoService {
         );
 
     }
-    getReservasEspacio(idespacio: number): Observable<ReservaEspacio[]> {
+    getReservasEspacio(idespacio: number, usu: String): Observable<ReservaEspacio[]> {
         console.log(idespacio);
-        const url = `${this.espaciosUrl}/Reserva/${idespacio}`;
+        const url = `${this.espaciosUrl}/Reserva/${idespacio},${usu}`;
         return this.http.get<ReservaEspacio[]>(url)
             .pipe(
-                tap(reservas => this.log(`fetched reservas id=${idespacio}`)),
+                tap(reservas => this.log(`fetched reservas id=${idespacio},usu=${usu}`)),
                 catchError(this.handleError('getReservasEspacio', []))
             );
     }

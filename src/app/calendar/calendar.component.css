@@ -7,16 +7,38 @@
     height: 45px;
     border: 3px solid #73AD21;
 }
+
 label.horarioD{
     position: relative;
     top: -60%;
-    left: 32%;
+    left: 25%;
     text-align: center;
     display: inline-block;
     font-size: 30px;
     
 }
+select{
+    width: 80%;
+}
+#calendario{
+    overflow:scroll;
+}
+#calendario{
+    right: 150px;
+}
+#usuario{
+    width: 80%;
+    
+}
+span{
+    right: 50px;
+    border: none;
+    background: transparent;
+}
 
+#descripcion{
+    width: 80%;
+}
 div.bodyCalendar{
     position: relative;
     left: 160%;

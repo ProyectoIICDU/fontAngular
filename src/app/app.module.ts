@@ -8,6 +8,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarModule } from 'angular-calendar';
 import localeEs from '@angular/common/locales/es';
 
+import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider} from "angularx-social-login";
+ 
+
 import { AppComponent } from './app.component';
 import { EspacioDeportivosComponent } from './espacio-deportivos/espacio-deportivos.component';
 import { MessagesComponent } from './messages/messages.component';
@@ -36,8 +40,22 @@ import { EspaciosreservadosService } from './espaciosreservados.service';
 import { ElementoComponent } from './elemento/elemento.component';
 import { ElementoService } from './elemento.service';
 import { ReservaElementoComponent } from './reserva-elemento/reserva-elemento.component';
+import {ServicioService} from './servicio.service';
 
 registerLocaleData(localeEs);
+
+
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider("943828172671-gd9g64150n4gt8u5sep7tg691phjilmr.apps.googleusercontent.com")
+  }]);
+
+  export function provideConfig() {
+    return config;
+  }
+   
+
 
 @NgModule({
   declarations: [
@@ -61,6 +79,7 @@ registerLocaleData(localeEs);
   ],
   imports: [
     BrowserModule,
+    SocialLoginModule,
     FormsModule, 
     ReactiveFormsModule,
     HttpClientModule,
@@ -80,10 +99,18 @@ registerLocaleData(localeEs);
     EspaciosreservadosService,
     ElementoService,
     UsuarioService,
+    ServicioService,
     {
-        provide: HTTP_INTERCEPTORS,
+      
+      
+        provide: HTTP_INTERCEPTORS,        
         useClass: JwtInterceptor,
         multi: true
+    },
+    {
+      
+      provide: AuthServiceConfig,
+       useFactory: provideConfig
     },
 
     // provider used to create fake backend

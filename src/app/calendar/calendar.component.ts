@@ -1,6 +1,7 @@
 
 import { Component, OnChanges, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy, Input, ChangeDetectorRef, SimpleChanges } from '@angular/core';
-
+import { SocialUser } from "angularx-social-login";
+import { AuthService } from "angularx-social-login";
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /**
@@ -23,6 +24,7 @@ import {
   setHours,
   setSeconds,
   setMinutes,
+  compareAsc,
 } from 'date-fns';
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -107,6 +109,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../servicios/index';
 import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { range } from 'rxjs/observable/range';
+import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
+import { Alert } from 'selenium-webdriver';
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -148,27 +152,35 @@ export class CalendarComponent implements OnChanges {
     second: 0
 
   };*/
+  
+  
   finalDiarioStruct = {
     hour: 2,
     minute: 23,
     second: 0
   };
 
+  
   // Variable que permite manejar el contenido del modal bootstrap
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
   // Variable que indica en que vista (MESES, SEMANAS, DIAS) se muestra el calendario
   view: string = 'month';
   name = "final";
-
+  user=''
+  email=''
+  aux=''
+  private users: SocialUser;
+  private loggedIn: boolean;
   opcionFacultad:String='0';
   pFacultad:String='';
   programaSelect = [];
   // Variable para gestionar los eventos del calendario
   eventActual: CalendarEvent[];
   eventAct: CalendarEvent;
-
+  HorarioPer=false;
   option1 = true;
+  showAlert=false;
   option2 = false;
   control= false;
   verFormulario = false;
@@ -185,10 +197,11 @@ export class CalendarComponent implements OnChanges {
   
   // Variables para gestionar la reserva
   reservaSave: ReservaEspacio;
-  reservaAct: ReservaEspacio = new ReservaEspacio(0, new Date(), new Date(),'','', '', '', '', false, null);
+  reservaAct: ReservaEspacio = new ReservaEspacio(0, new Date(), new Date(),"",'', '', '', '', false, null);
 
   // Lista de reservas registradas en BD
   reservasActuales: ReservaEspacio[];
+  reservasActualvista: ReservaEspacio[];
 
   // Lista de tipos de reserva
   tipoSelect = [
@@ -329,19 +342,15 @@ export class CalendarComponent implements OnChanges {
   * Constructor de la clase
   *
   */
-  constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService, private cdr: ChangeDetectorRef,  private alertService: AlertService) {
-    /*this.inicioDiarioStruct = {
-      hour: 2,
-      minute: 23,
-      second: 0
-
-    };*/
+  constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService, private cdr: ChangeDetectorRef,  private alertService: AlertService,private socialAuthService: AuthService ) {
+    this.reservasActualvista=[];
     this.finalDiarioStruct = {
       hour: 2,
       minute: 23,
       second: 0
 
     };
+    
   }  
   formReserva: FormGroup; // Formulario de reserva
 
@@ -350,9 +359,14 @@ export class CalendarComponent implements OnChanges {
 
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+  
   cargarProgramas(){
+    
     this.pFacultad = this.opcionFacultad;
     
+
+    
+
     //console.log("Facu seleccionada" + this.pFacultad);
     switch(this.pFacultad){
       case "Artes":  this.programaSelect = this.artesSelect;
@@ -385,12 +399,13 @@ export class CalendarComponent implements OnChanges {
     
     this.getReservasEspacio(); // Se obtienen las reservas del espacio deportivo registradas en BD
     this.titulo = this.selectEspacio.nombre;
+    console.log("pasa por el cambio");
     this.formReserva = new FormGroup({ // Creacion del formulario de reserva
       // Campo nombre, ligado a variable: "this.reservaAct.nombre"
       'nombre': new FormControl(this.reservaAct.nombre, [
         Validators.required, // campo requerido
         Validators.maxLength(20)]), // longitud maxima de caracteres permitidos
-
+        
       // Campo descripcion, ligado a variable: "this.reservaAct.descripcion"
       'descripcion': new FormControl(this.reservaAct.descripcion, Validators.maxLength(500)), // longitud maxima de caracteres permitidos 
 
@@ -420,10 +435,30 @@ export class CalendarComponent implements OnChanges {
   * Declaracion de constantes utilizadas para definir los colores a usar en las celdas del calendario
   *
   */
+ 
   getReservasEspacio() {
-    console.log("Entro a getReserva");
+
+    this.socialAuthService.authState.subscribe((user) => {
+      this.users = user;
+        if (this.user!=null) {
+        var str = this.users.email; 
+        var partir = str.split("@"); 
+        console.log(partir[1])
+        this.aux=partir[1]  
+      
+        if( this.aux=='unicauca.edu.co')
+        {
+
+          this.email = this.users.email; 
+          this.user = this.users.name; 
+        }
+      }
+      
+      this.loggedIn = (user != null);
+      });
     this.limpiarReservas();
-    this.espacioService.getReservasEspacio(this.selectEspacio.idEspacio).subscribe(reservas => {
+    console.log("este es mi usuario "+this.email);
+    this.espacioService.getReservasEspacio(this.selectEspacio.idEspacio,this.email.split("@")[0]).subscribe(reservas => {
       this.reservasActuales = reservas;
       this.cargarReservas();
     });
@@ -479,11 +514,30 @@ export class CalendarComponent implements OnChanges {
     this.refresh.next();
   }
   handleEvent(action: string, event: CalendarEvent): void {
-    this.getReservasEspacio();
+    
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
+    this.cargarParaVista(event);
+  }
+  cargarParaVista(event: CalendarEvent){
+    console.log("lon "+this.reservasActuales.length)
+    for (let i = 0; i < this.reservasActuales.length; i++) {
+      let hor = new Date(this.reservasActuales[i].fechaini);
+      console.log(event.title);
+      console.log(this.reservasActuales[i].nombre);
+      console.log(event.start);
+      console.log(hor)
+      if(compareAsc(event.start,hor)==0){
+        this.reservasActualvista.push(this.reservasActuales[i]);
+        console.log("long "+this.reservasActuales[i].nombre);
+      }
+    }
+    
+    
+    
   }
   addReserva(event) {
+    
     this.formReserva.reset();
     this.eventAct = {
       title: this.reservaAct.nombre.toString(),
@@ -497,6 +551,9 @@ export class CalendarComponent implements OnChanges {
         afterEnd: true
       }
     };
+    
+     
+     
     
 
   }
@@ -542,35 +599,29 @@ export class CalendarComponent implements OnChanges {
       hour: getHours(this.viewDate)
     };
 
-
-
-
-    // this.cdr.detectChanges();
   }
+  
   guardarReserva(event) {
     
-    console.log("espacio seleccionado" + this.selectEspacio.nombre);
     const inicio = this.eventAct.start;
     const final = this.eventAct.end;
-    console.log("este es el inicio>"+inicio+"<fin inicio")
-    console.log("este es el final>"+final+"<fin final")
+    
     let reservaActual = this.reservaAct;
+    
     reservaActual.idEspacio = this.selectEspacio;
     reservaActual.nombre = this.formReserva.get('nombre').value;
     reservaActual.descripcion=this.formReserva.get('descripcion').value;
     reservaActual.facultad = this.formReserva.get('facultad').value;
     reservaActual.programa = this.formReserva.get('programa').value;
     reservaActual.tipo = this.formReserva.get('tipo').value;
+    console.log("espacio seleccionado tipo " + document.getElementById("descripcion"));
     const fechaAct = new Date(); //Fecha actual
     //console.log("Es "+ inicio + "<" + fechaAct+"?");
 
     let horasMaxPermitidas: Boolean=false;
     let HorarioPermitido: Boolean=false;
 
-    /*for (let i = 0; i < this.reservasActuales.length; i++) {
-      let hor = new Date(this.reservasActuales[i].fechaini);
-      console.log("Hora de reserva cris "+hor.getHours().toString());
-    }*/
+    
 
     if (this.option1) 
     {
@@ -606,7 +657,9 @@ export class CalendarComponent implements OnChanges {
           //Revision que no sea menor que la fecha actual
           if(inicio < fechaAct){
             this.Error=true;
-            this.alertService.error("Error! La fecha de inicio no puede ser menor que la fecha actual.");
+            this.formReserva.reset();
+            window.alert("Error! La fecha de inicio no puede ser menor que la fecha actual.");
+
           }
           //Revision quesea menor la fecha fin que la fecha de inicio
           else if (final > inicio) {
@@ -640,7 +693,7 @@ export class CalendarComponent implements OnChanges {
                                
               }else{
                 this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
-
+                  
                   this.events.push({
                     title: this.reservaAct.nombre.toString(),
                     start: inicioCopia2,
@@ -662,17 +715,27 @@ export class CalendarComponent implements OnChanges {
             } else {
               //la reserva no puede ser fija
               this.Error=true;
-              this.alertService.error("Error! La fecha de finalizacion no puede ser menor que la de inicio.");
+              
+              this.formReserva.reset();
+              window.alert("Error! La fecha de finalizacion no puede ser menor que la de inicio.");
               console.log("Error, la fecha de fin es menor o igual que la fecha de inicio.");
             }
 
         }else {
           this.Error=true;
-          this.alertService.error("Error! La reserva no puede durar mas de 1.5 Horas.");
           
+          this.formReserva.reset();
+          window.alert("Error! La reserva no puede durar mas de 1.5 Horas.");
         } 
       }else{
-        this.alertService.error("Error! Reservas permitidas de 5 A.M a 10 P.M ");
+        this.formReserva.reset();
+        
+        window.alert("Error! Reservas permitidas de 5 A.M a 10 P.M");
+        this.HorarioPer=true;
+        
+        
+        
+        
       }     
     }
     else {      
@@ -731,6 +794,7 @@ export class CalendarComponent implements OnChanges {
         if(horasMaxPermitidas){
           if(InicioDate < fechaAct){
             this.Error=true;
+            this.formReserva.reset();
             this.alertService.error("Error! La fecha de inicio no puede ser menor que la fecha actual.");
             console.log("Error! La fecha de inicio no puede ser menor que la fecha actual.");
           }
@@ -788,19 +852,26 @@ export class CalendarComponent implements OnChanges {
           } else {
             //la reserva no puede ser fija
             this.Error=true;
-            this.alertService.error("Error! La fecha de finalizacion no puede ser menor que la de inicio.");
+            
+            this.formReserva.reset();
+            window.alert("Error! La fecha de finalizacion no puede ser menor que la de inicio.");
             console.log("Error, la fecha de fin es menor o igual que la fecha de inicio.");
           }
     
         }
         else {
           this.Error=true;
-          this.alertService.error("Error! una Reserva no puede duras mas de 1.5 Horas");
+          this.formReserva.reset();
+          window.alert("Error! una Reserva no puede duras mas de 1.5 Horas");
           console.log("Error, la fecha de fin es menor o igual que la fecha de inicio.");
         }
       
       }else{
-        this.alertService.error("Error! Reservas permitidas de 5 A.M a 10 P.M ");
+        
+        this.formReserva.reset();
+        window.alert("Error! Reservas permitidas de 5 A.M a 10 P.M ");
+        this.HorarioPer=true;
+        this.addReserva(event);
       }
       
     }

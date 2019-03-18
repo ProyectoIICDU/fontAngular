@@ -1,6 +1,8 @@
 <!-- INICIA LA CABECERA DE LA PAGINA -->
+
 <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top " style="background: linear-gradient(to right, #003366 30%, #0099cc 100%)">
-    <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+
+     <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
       aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation" style="background: linear-gradient(to right, #003366 30%, #0099cc 100%);">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -10,9 +12,11 @@
     <a class="navbar-brand">
       <img class="img-res" src="../assets/img/banner.png" width="450" height="100" alt="">
     </a>
+    
   
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-      <div id="header">
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault" *ngIf=" email != ''">
+      <div  id="header" >
+         
           <ul class="navbar-nav mr-auto nav">
               <!-- BARRA HORIZONTAL DE CABECERA -->
               <li class="nav-item active">
@@ -21,16 +25,16 @@
                 </a>
                 <ul>
                     <li class="nav-item">
-                        <a class="nav-link" href="/espaciosreservados">Reservas</a>
+                        <a class="nav-link" href="/espaciosreservados">Reservas{{usuario()}}</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="/horariofijo">Reservar</a>
+                        <a class="nav-link" href="/horariofijo">Reservar{{usuario()}}</a>
                       </li>
                 </ul>
                 
               </li>
               <li class="nav-item active">
-                  <a class="nav-link" href="/elemento">Elementos
+                  <a class="nav-link" href="/elemento">Elementos{{usuario()}}
                     <span class="sr-only">(current)</span>
                   </a>
                   <ul>
@@ -41,16 +45,22 @@
                           <a class="nav-link" href="/reservaelemento">Reservas</a>
                         </li>
                   </ul>
-                  
+                 
                 </li>
-              
+           
+               
+                
+                
           </ul>
+      
+         
       </div>
       
         
   
-  
-     
+      <div id="Usuario">
+      <p >{{user}}</p>
+    </div>
           
       <form class="form-inline mt-2 mt-md-0">
         <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
@@ -83,14 +93,14 @@
         <div class="modal-body text-center">
           ¿Realmente desea salir del Sistema?
         </div>
-        <div class="modal-footer">
+        <div >
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <a type="button" class="btn btn-primary" href="/login">Si, Cerrar Sesión</a>
+          <a id="cerrar" type="button" class="btn btn-primary" href="/login">Cerrar Sesión</a>
         </div>
       </div>
     </div>
   </div>
-  <router-outlet></router-outlet>
+  <router-outlet ></router-outlet>
   <app-messages></app-messages>
   
     
