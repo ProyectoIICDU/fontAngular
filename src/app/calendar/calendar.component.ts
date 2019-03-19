@@ -518,6 +518,7 @@ export class CalendarComponent implements OnChanges {
     this.cargarParaVista(event);
   }
   cargarParaVista(event: CalendarEvent){
+    this.reservasActualvista=[];
     console.log("lon "+this.reservasActuales.length)
     for (let i = 0; i < this.reservasActuales.length; i++) {
       let hor = new Date(this.reservasActuales[i].fechaini);
