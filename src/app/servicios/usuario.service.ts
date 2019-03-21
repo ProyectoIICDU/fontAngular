@@ -81,6 +81,17 @@ export class UsuarioService {
         this.messageService.add('HeroService: ' + message);
     }
 
-
+    /**
+     * Este método hace la petición de get al backend para validar el rol
+     * dado el nombre de usuario. El método del backend retorna true or false.
+     */
+    validarRolUsuario(nombreUsuario: string): Observable<boolean> {
+        const url = `${this.usuariosUrl}/ValidarAdmin/${nombreUsuario}`;
+        console.log('peticion a ' + url);
+        return this.http.get<boolean>(url, httpOptions).pipe(
+            tap(ok => this.log('consultado el usuario ${nombreUsuario}')),
+            catchError(this.handleError<boolean>('validarAdmin'))
+        );
+    }
 
 }

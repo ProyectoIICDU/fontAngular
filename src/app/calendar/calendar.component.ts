@@ -97,7 +97,7 @@ import { EspaciodeportivoService } from '../espaciodeportivo.service';
 * que permiten comunicacion con servidor web por medio de web service Rest
 *
 */
-import { UsuarioService } from '../servicios/usuario.service';
+//import { UsuarioService } from '../servicios/usuario.service';
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -116,7 +116,7 @@ import { HorarioOcupadoService } from '../servicios/horario-ocupado.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 /** Importacion para la presentacion de alertas al usuario */
-import { AlertService } from '../servicios/index';
+import { AlertService, UsuarioService } from '../servicios/index';
 import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { range } from 'rxjs/observable/range';
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
@@ -177,9 +177,12 @@ export class CalendarComponent implements OnChanges {
   // Variable que indica en que vista (MESES, SEMANAS, DIAS) se muestra el calendario
   view: string = 'month';
   name = "final";
-  user=''
-  email=''
-  aux=''
+  user='';
+  email='';
+  aux='';
+  admin=false; // variable que indica si se es admin o si se es usuario común
+  login='';
+  flagValidado: boolean = false; // flag actúa como una bandera para no validar más de una vez
   private users: SocialUser;
   private loggedIn: boolean;
   opcionFacultad:String='0';
@@ -361,7 +364,9 @@ export class CalendarComponent implements OnChanges {
   * Constructor de la clase
   *
   */
-  constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService, private usuarioService: UsuarioService, private cdr: ChangeDetectorRef,  private alertService: AlertService,private socialAuthService: AuthService ) {
+  constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService, 
+    private cdr: ChangeDetectorRef,  private alertService: AlertService,
+    private socialAuthService: AuthService, private usuarioService: UsuarioService ) {
     this.reservasActualvista=[];
     this.finalDiarioStruct = {
       hour: 2,
@@ -369,7 +374,34 @@ export class CalendarComponent implements OnChanges {
       second: 0
 
     };
-    
+  
+    this.socialAuthService.authState.subscribe((user) => {
+      this.users = user;
+        if (this.user!=null) {
+        var str = this.users.email; 
+        var partir = str.split("@"); 
+        //console.log(partir[1])
+        this.aux=partir[1]  
+      
+        if( this.aux=='unicauca.edu.co')
+        {
+
+          this.email = this.users.email; 
+          this.user = this.users.name.toLocaleUpperCase(); 
+          this.login = partir[0];
+          console.log("usuario en sesion:" + this.user);
+          
+        }
+      }
+      
+      this.loggedIn = (user != null);
+
+      if(!this.flagValidado) {
+        this.obtenerRol();
+      }
+
+    });
+
   }  
   formReserva: FormGroup; // Formulario de reserva
 
@@ -474,7 +506,12 @@ export class CalendarComponent implements OnChanges {
       }
       
       this.loggedIn = (user != null);
-      });
+    });
+
+    if(!this.flagValidado) {
+      this.obtenerRol();
+    }
+
     this.limpiarReservas();
     console.log("este es mi usuario prueba que sale "+this.user);
     let esAdmin;
@@ -543,6 +580,7 @@ export class CalendarComponent implements OnChanges {
     this.cargarParaVista(event);
   }
   cargarParaVista(event: CalendarEvent){
+    this.reservasActualvista=[];
     console.log("lon "+this.reservasActuales.length)
     for (let i = 0; i < this.reservasActuales.length; i++) {
       let hor = new Date(this.reservasActuales[i].fechaini);
@@ -676,6 +714,12 @@ export class CalendarComponent implements OnChanges {
       
       }
       if(HorarioPermitido){
+
+        //si es administrador no tiene restricciones de tiempo
+        if(this.admin) {
+          horasMaxPermitidas = true;
+        }
+
         if(horasMaxPermitidas){
           //Revision que no sea menor que la fecha actual
           if(inicio < fechaAct){
@@ -813,6 +857,11 @@ export class CalendarComponent implements OnChanges {
         default: horasMaxPermitidas=false;      
       }
       if(HorarioPermitido){
+
+        //si es administrador no tiene restricciones de tiempo
+        if(this.admin) {
+          horasMaxPermitidas = true;
+        }
 
         if(horasMaxPermitidas){
           if(InicioDate < fechaAct){
@@ -996,6 +1045,22 @@ export class CalendarComponent implements OnChanges {
   updateTimeFinal(): void {
 
 
+  }
+
+  /**
+   * Método que realiza una petición al servidor 
+   * y valida si el usuario en sesión es administrador
+   */
+  obtenerRol() {
+    console.log("Usuario validado: "+ this.flagValidado + " usuario a validar: " + this.login);
+    if (this.login != '') {
+      this.flagValidado = true;
+      this.usuarioService.validarRolUsuario(this.login).subscribe((esAdmin) => {
+        this.admin = esAdmin;
+        this.flagValidado = true;
+      });
+      console.log("Usuario validado: " + this.flagValidado);
+    }
   }
 
 }

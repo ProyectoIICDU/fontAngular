@@ -71,7 +71,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Tipo de Reserva</label>
           <div class="col-sm-9">
-            <div class="form-check form-check-inline">
+            <div *ngIf="admin" class="form-check form-check-inline">
               <label class="form-check-label" href=# title="Reserva que se repite en el rango de fechas cada ocho días en la hora dada">
                 <input class="form-check-input" type="radio"  (change)="onFilteroption1($event.target.checked)" name="inlineRadioOptions"
                   id="inlineRadio1" checked="true" value="option1" > Repetitiva
@@ -80,7 +80,7 @@
             <div class="form-check form-check-inline" href=# title="Reserva un espacio en una fecha y hora específica">
               <label class="form-check-label">
                 <input class="form-check-input" type="radio" (change)="onFilteroption2($event.target.checked)" name="inlineRadioOptions"
-                  id="inlineRadio2" value="option2">Una Vez
+                  id="inlineRadio2" value="option2" >Una Vez
               </label>
             </div>
           </div>
@@ -95,7 +95,7 @@
               <label for="example-text-input" class="col-2 col-form-label">Usuario</label>
               <div class="col-10">
                 <div class="input-group" id="usuario">
-                    <input class="form-control" placeholder="calos@unicauca.edu.co Usuario: carlos"  type="text" formControlName="nombre"  name="nombre" required
+                    <input class="form-control" placeholder="calos@unicauca.edu.co => carlos"  type="text" formControlName="nombre"  name="nombre" required
                     id="nombre" #nombre [ngModel]="reservaAct.nombre">
                     <span id="ayuda" class="input-group-addon">
                         <i class="fa fa-question-circle" aria-hidden="true" href=# title="Correo: correoInstitucional@unicauca.edu.co Usuario: correoInstitucional"></i>
@@ -164,7 +164,7 @@
                 </div>
               </div>
 
-            <div *ngIf="option1">
+            <div *ngIf="option1 && admin">
               <div class="form-group row">
                 <label id="malo" for="example-text-input" class="col-2 col-form-label">Inicio</label>
                 <div id="malo" class="col-sm-10">
