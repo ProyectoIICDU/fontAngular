@@ -93,9 +93,19 @@ import { EspaciodeportivoService } from '../espaciodeportivo.service';
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /**
+* Importacion para instanciar objetos tipo UsuarioService 
+* que permiten comunicacion con servidor web por medio de web service Rest
+*
+*/
+import { UsuarioService } from '../servicios/usuario.service';
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+/**
  * Importación para instanciar objetos tipo 
  */
 import { HorarioOcupadoService } from '../servicios/horario-ocupado.service';
+
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -189,6 +199,11 @@ export class CalendarComponent implements OnChanges {
 
   // Variable para configuracion del idioma del calendario
   locale: string = 'es';
+
+  //variable con rol de usuario
+  rolUs: String;
+  usuarioSistema: String; 
+
 
   espacio34: EspacioDeportivo;
   
@@ -312,8 +327,12 @@ export class CalendarComponent implements OnChanges {
       // Accion ELIMINAR reserva
       label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter(iEvent => iEvent !== event);
-        this.handleEvent('Deleted', event);
+        if(confirm('¿Está seguro de eliminar la reserva?'))
+        {
+          this.events = this.events.filter(iEvent => iEvent !== event);
+          this.handleEvent('Deleted', event);
+          this.eliminarReserva();
+        }        
       }
     }
   ];
@@ -342,7 +361,7 @@ export class CalendarComponent implements OnChanges {
   * Constructor de la clase
   *
   */
-  constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService, private cdr: ChangeDetectorRef,  private alertService: AlertService,private socialAuthService: AuthService ) {
+  constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService, private usuarioService: UsuarioService, private cdr: ChangeDetectorRef,  private alertService: AlertService,private socialAuthService: AuthService ) {
     this.reservasActualvista=[];
     this.finalDiarioStruct = {
       hour: 2,
@@ -457,7 +476,11 @@ export class CalendarComponent implements OnChanges {
       this.loggedIn = (user != null);
       });
     this.limpiarReservas();
-    console.log("este es mi usuario "+this.email);
+    console.log("este es mi usuario prueba que sale "+this.user);
+    let esAdmin;
+    esAdmin = this.usuarioService.identicarRol(this.user);
+    console.log("este user es admin o no "+esAdmin);
+    this.usuarioSistema = this.user;
     this.espacioService.getReservasEspacio(this.selectEspacio.idEspacio,this.email.split("@")[0]).subscribe(reservas => {
       this.reservasActuales = reservas;
       this.cargarReservas();
@@ -932,22 +955,27 @@ export class CalendarComponent implements OnChanges {
     return estaOcupado;
   }
   
+  //rolUsuario(): String
+  //{
+    //let usuarioDSRol;
+    //usuarioDSRol = this.reservaAct;
+  //}
 
-  eliminarReserva(event) {
+  eliminarReserva() {
     //console.log("title: " + this.modalData.event.title);
-
+    
     console.log("ELIMINANDO...");
-    let reservaActual;
+    let resActual;
     //console.log("nombre reserva: " + reservaActual.nombre.toString);
     //console.log("nombre reservaAct: " + this.reservaAct.nombre.toString);
     
     for (let i = 0; i < this.reservasActuales.length; i++) {
       if (this.reservasActuales[i].nombre == this.modalData.event.title) {
         console.log("Reserva encontrada para eliminar: ");
-        let reservaActual = this.reservasActuales[i];
-        console.log("id Reserva: " + reservaActual.idReserva);
+        resActual = this.reservasActuales[i];
+        console.log("id Reserva: " + resActual.idReserva);
 
-        this.espacioService.eliminarReservaEspacio(reservaActual.idReserva).subscribe(
+        this.espacioService.eliminarReservaEspacio(resActual.idReserva).subscribe(
           ok => { this.control= ok 
             console.log("valor retornado2"+ok);
           }
@@ -956,6 +984,7 @@ export class CalendarComponent implements OnChanges {
         break;  
       }
     }
+    //this.deleteReserva(event);
 
   }
 

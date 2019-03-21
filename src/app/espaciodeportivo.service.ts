@@ -125,7 +125,7 @@ export class EspaciodeportivoService {
 
     eliminarReservaEspacio(reservaActual: ReservaEspacio | number): Observable<boolean> {
         //        let json = JSON.stringify(newEspacio);
-        console.log(reservaActual);
+        console.log("id de reserva"+reservaActual);
         const id = typeof reservaActual === 'number' ? reservaActual : reservaActual.idEspacio;
         const url = `${this.espaciosUrl}/ReservaDelete/${id}`;
         //        const url= '${this.espaciosUrl}/Agregar';
