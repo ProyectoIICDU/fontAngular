@@ -27,8 +27,14 @@ import { Deporte } from '../deporte';
 */
 import { EspaciodeportivoService } from '../espaciodeportivo.service';
 
-import { AlertService } from '../servicios/index';
+import { AlertService, UsuarioService } from '../servicios/index';
 //************************************************************************************************************************************************************
+
+/**
+ * Importaciones para el manejo de sesion
+ */
+import { SocialUser } from "angularx-social-login";
+import { AuthService } from "angularx-social-login";
 
 /**
 * Este componente se encarga de gestionar las siguientes acciones:
@@ -63,6 +69,17 @@ export class EspacioDeportivosComponent implements OnInit {
     espacio:EspacioDeportivo;
     deportesSelect: Deporte[];
     deportesAnexados: Deporte[];
+    
+    // Variables para el manejo de inicio de sesion
+    user='';
+    email='';
+    aux='';
+    admin=false; // variable que indica si se es admin o si se es usuario común
+    login='';
+    private users: SocialUser;
+    private loggedIn: boolean;
+    flagValidado: boolean = false; // flag actúa como una bandera para no validar más de una vez
+    // -- fin variables inicio de sesión
 
     // Lista de opciones para el SELECT "ubicacion" del espacio deportivo
     ubicacionesSelect = [
@@ -88,7 +105,36 @@ export class EspacioDeportivosComponent implements OnInit {
     iconBtnSubmit:string = '';
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    constructor(private espacioService:EspaciodeportivoService, private alertService: AlertService) { }
+    constructor(private espacioService:EspaciodeportivoService, private alertService: AlertService,
+        private socialAuthService: AuthService, private usuarioService: UsuarioService) {
+
+        this.socialAuthService.authState.subscribe((user) => {
+            this.users = user;
+                if (this.user!=null) {
+                var str = this.users.email; 
+                var partir = str.split("@"); 
+                //console.log(partir[1])
+                this.aux=partir[1]  
+            
+                if( this.aux=='unicauca.edu.co')
+                {
+        
+                this.email = this.users.email; 
+                this.user = this.users.name.toLocaleUpperCase(); 
+                this.login = partir[0];
+                console.log("usuario en sesion:" + this.user);
+                
+                }
+            }
+            
+            this.loggedIn = (user != null);
+        
+            if(!this.flagValidado) {
+                this.obtenerRol();
+            }
+        
+            });
+    }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -103,6 +149,31 @@ export class EspacioDeportivosComponent implements OnInit {
         this.deporteSelected = new Deporte(0, '');
         this.getEspaciosDeportivos();
         this.deportesAnexados=[];
+
+        // Inicio de sesion y verificacion de inicio
+        this.socialAuthService.authState.subscribe((user) => {
+            this.users = user;
+                if (this.user!=null) {
+                var str = this.users.email; 
+                var partir = str.split("@"); 
+                //console.log(partir[1])
+                this.aux=partir[1]  
+            
+                if( this.aux=='unicauca.edu.co')
+                {
+        
+                this.email = this.users.email; 
+                this.user = this.users.name.toLocaleUpperCase(); 
+                this.login = partir[0];
+                }
+            }
+            
+            this.loggedIn = (user != null);
+        });
+        
+        if(!this.flagValidado) {
+            this.obtenerRol();
+        }
     }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -315,5 +386,21 @@ export class EspacioDeportivosComponent implements OnInit {
     }
     
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /**
+      * Método que realiza una petición al servidor 
+      * y valida si el usuario en sesión es administrador
+    */
+  obtenerRol() {
+    console.log("Usuario validado: "+ this.flagValidado + " usuario a validar: " + this.login);
+    if (this.login != '') {
+      this.flagValidado = true;
+      this.usuarioService.validarRolUsuario(this.login).subscribe((esAdmin) => {
+        this.admin = esAdmin;
+        this.flagValidado = true;
+      });
+      console.log("Usuario validado: " + this.flagValidado);
+    }
+  }
 
 }

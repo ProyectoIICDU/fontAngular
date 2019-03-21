@@ -20,16 +20,16 @@
           <ul class="navbar-nav mr-auto nav">
               <!-- BARRA HORIZONTAL DE CABECERA -->
               <li class="nav-item active">
-                <a class="nav-link" href="/">Escenarios
-                  <span class="sr-only">(current)</span>
-                </a>
+                  <a class="nav-link" href="/">Escenarios
+                    <span class="sr-only">(current)</span>
+                  </a>
                 <ul>
                     <li class="nav-item">
-                        <a class="nav-link" href="/espaciosreservados">Reservas{{usuario()}}</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/horariofijo">Reservar{{usuario()}}</a>
-                      </li>
+                      <a class="nav-link" href="/espaciosreservados">Reservas{{usuario()}}</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/horariofijo">Reservar{{usuario()}}</a>
+                    </li>
                 </ul>
                 
               </li>
@@ -59,8 +59,12 @@
         
   
       <div id="Usuario">
-      <p >{{user}}</p>
-    </div>
+        <p>
+          <label *ngIf="admin"><b>Administrador</b></label>
+          <label *ngIf="!admin"><b>Usuario:</b></label>
+          <label >{{user}}</label>
+        </p>
+      </div>
           
       <form class="form-inline mt-2 mt-md-0">
         <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->

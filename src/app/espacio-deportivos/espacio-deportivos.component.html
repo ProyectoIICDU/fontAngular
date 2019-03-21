@@ -3,7 +3,7 @@
 	<div class="container1">
         <main>
         <hr>
-        <button type="button" (click)="setNuevo()" data-toggle="modal" data-target="#modalEspacioDeportivo" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo Escenario</button>
+        <button *ngIf="admin" type="button" (click)="setNuevo()" data-toggle="modal" data-target="#modalEspacioDeportivo" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo Escenario</button>
         <hr>
     </main>
     </div>	
@@ -26,8 +26,8 @@
                 <td>{{espaciodeportivo.descripcion}}</td>
                 <td>
                     <a href="" (click)="verEspacioDeportivo(espaciodeportivo, 'Detalle')" data-toggle="modal" data-target="#modalEspacioDeportivo"><i class="fa fa-eye"></i></a> &nbsp; 
-                    <a href="" (click)="verEspacioDeportivo(espaciodeportivo, 'Actualizar')" data-toggle="modal" data-target="#modalEspacioDeportivo"><i class="fa fa-edit"></i></a> &nbsp; 
-                    <a href="" (click)="verEspacioDeportivo(espaciodeportivo, 'Eliminar')" data-toggle="modal" data-target="#modalEspacioDeportivo"><i class="fa fa-times"></i></a>
+                    <a *ngIf="admin" href="" (click)="verEspacioDeportivo(espaciodeportivo, 'Actualizar')" data-toggle="modal" data-target="#modalEspacioDeportivo"><i class="fa fa-edit"></i></a> &nbsp; 
+                    <a *ngIf="admin" href="" (click)="verEspacioDeportivo(espaciodeportivo, 'Eliminar')" data-toggle="modal" data-target="#modalEspacioDeportivo"><i class="fa fa-times"></i></a>
                 </td>
             </tr>
     </table>
