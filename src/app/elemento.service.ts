@@ -16,20 +16,20 @@ const httpOptions = {
 @Injectable()
 export class ElementoService {
 
-  private espaciosUrl = 'http://localhost:8086/CRUD_Escenarios/proyectoCDU/Escenario';
-    private deportesUrl = 'http://localhost:8086/CRUD_Escenarios/proyectoCDU/Escenario/deportes';
+  private espaciosUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario';
+    private deportesUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario/deportes';
 
     //------------------------------------------------------------------------------
 
     constructor(private http: HttpClient, private messageService: MessageService) { }
 
     //------------------------------------------------------------------------------
-    
+
     getElementosDeportivos(): Observable<Elemento[]> {
 
-       
+
         return this.http.get<Elemento[]>(this.espaciosUrl).pipe(tap(espacios => this.log(`fetched heroes`)), catchError(this.handleError('getEspaciodeportivos', [])));
-        
+
     }
     //------------------------------------------------------------------------------
 
