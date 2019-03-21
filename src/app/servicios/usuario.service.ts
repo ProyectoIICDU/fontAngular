@@ -51,8 +51,16 @@ export class UsuarioService {
         );
 
     }
-    
 
+    identicarRol(usu: String): Observable<boolean>
+    {
+        const url = `${this.usuariosUrl}/IdentificarUsuarios/${usu}`; 
+        return this.http.get<boolean>(url).pipe(
+            tap(ok => this.log(`updated usuario w/ id=${usu}`)),
+            catchError(this.handleError<boolean>('identificarRol'))
+        ); 
+    }
+    
     //Mensajes de error 
       //------------------------------------------------------------------------------
 
