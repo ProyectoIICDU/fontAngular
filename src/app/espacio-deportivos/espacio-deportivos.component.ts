@@ -91,6 +91,7 @@ export class EspacioDeportivosComponent implements OnInit {
     estadosSelect = [
         { value: 'En Servicio', text: 'En Servicio' },
         { value: 'Mantenimiento', text: 'Mantenimiento' },
+        { value: 'Desactivado', text: 'Desactivado' },
     ];
 
     // Esta variable permite determinar si los inputs del formulario son requeridos o no, en caso de no ser requeridos
