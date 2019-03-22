@@ -69,18 +69,18 @@
       <div *ngIf="eventAct">
         
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Tipo de Reserva</label>
+          <label *ngIf="admin" class="col-sm-3 col-form-label">Tipo de Reserva</label>
           <div class="col-sm-9">
             <div *ngIf="admin" class="form-check form-check-inline">
               <label class="form-check-label" href=# title="Reserva que se repite en el rango de fechas cada ocho días en la hora dada">
                 <input class="form-check-input" type="radio"  (change)="onFilteroption1($event.target.checked)" name="inlineRadioOptions"
-                  id="inlineRadio1" checked="true" value="option1" > Repetitiva
+                  id="inlineRadio1"  value="option1" > Repetitiva
               </label>
             </div>
-            <div class="form-check form-check-inline" href=# title="Reserva un espacio en una fecha y hora específica">
+            <div *ngIf="admin" class="form-check form-check-inline" href=# title="Reserva un espacio en una fecha y hora específica">
               <label class="form-check-label">
                 <input class="form-check-input" type="radio" (change)="onFilteroption2($event.target.checked)" name="inlineRadioOptions"
-                  id="inlineRadio2" value="option2" >Una Vez
+                  id="inlineRadio2" checked="true" value="option2" >Una Vez
               </label>
             </div>
           </div>
@@ -94,7 +94,7 @@
             <div class="form-group row">
               <label for="example-text-input" class="col-2 col-form-label">Usuario</label>
               <div class="col-10">
-                <div class="input-group" id="usuario">
+                <div *ngIf="admin" class="input-group" id="usuario">
                     <input class="form-control" placeholder="calos@unicauca.edu.co => carlos"  type="text" formControlName="nombre"  name="nombre" required
                     id="nombre" #nombre [ngModel]="reservaAct.nombre">
                     <span id="ayuda" class="input-group-addon">
@@ -102,6 +102,10 @@
                     </span>
                 </div>
                 
+                <div *ngIf="!admin" class="input-group" id="usuario">
+                  <input disabled class="form-control" placeholder="calos@unicauca.edu.co => carlos"  type="text" formControlName="nombre"  name="nombre" required
+                  id="nombre" #nombre [ngModel]="reservaAct.nombre">
+              </div>
                   
                 
                 <div *ngIf="formReserva.controls['nombre'].invalid && (formReserva.controls['nombre'].dirty || formReserva.controls['nombre'].touched)" class="alert alert-danger">
