@@ -84,7 +84,7 @@ import { EspacioDeportivo } from '../espaciodeportivo';
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /**
-* Importacion para instanciar objetos tipo EspaciodeportivoService 
+* Importacion para instanciar objetos tipo EspaciodeportivoService
 * que permiten comunicacion con servidor web por medio de web service Rest
 *
 */
@@ -93,7 +93,7 @@ import { EspaciodeportivoService } from '../espaciodeportivo.service';
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /**
-* Importacion para instanciar objetos tipo UsuarioService 
+* Importacion para instanciar objetos tipo UsuarioService
 * que permiten comunicacion con servidor web por medio de web service Rest
 *
 */
@@ -102,7 +102,7 @@ import { EspaciodeportivoService } from '../espaciodeportivo.service';
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /**
- * Importación para instanciar objetos tipo 
+ * Importación para instanciar objetos tipo
  */
 import { HorarioOcupadoService } from '../servicios/horario-ocupado.service';
 
@@ -162,15 +162,15 @@ export class CalendarComponent implements OnChanges {
     second: 0
 
   };*/
-  
-  
+
+
   finalDiarioStruct = {
     hour: 2,
     minute: 23,
     second: 0
   };
 
-  
+
   // Variable que permite manejar el contenido del modal bootstrap
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
@@ -205,14 +205,14 @@ export class CalendarComponent implements OnChanges {
 
   //variable con rol de usuario
   rolUs: String;
-  usuarioSistema: String; 
+  usuarioSistema: String;
 
 
   espacio34: EspacioDeportivo;
-  
+
   // Variable con el espacio deportivo seleccionado y sobre el cual se hara la reserva
   @Input() selectEspacio: EspacioDeportivo;
-  
+
   // Variables para gestionar la reserva
   reservaSave: ReservaEspacio;
   reservaAct: ReservaEspacio = new ReservaEspacio(0, new Date(), new Date(),"",'', '', '', '', false, null);
@@ -223,7 +223,7 @@ export class CalendarComponent implements OnChanges {
 
   // Lista de tipos de reserva
   tipoSelect = [
-    { value: 'Academico', text: 'Academico' },  
+    { value: 'Academico', text: 'Academico' },
     { value: 'Normal', text: 'Normal' },
     { value: 'Evento', text: 'Evento' },
     { value: 'Seleccionados', text: 'Seleccionados' },
@@ -231,7 +231,7 @@ export class CalendarComponent implements OnChanges {
 
     // Lista de tipos de reserva
     facultadSelect = [
-      { value: 'Artes', text: 'Artes' },  
+      { value: 'Artes', text: 'Artes' },
       { value: 'Agrarias', text: 'Ciencias Agrarias' },
       { value: 'Salud', text: 'Ciencia de la Salud' },
       { value: 'Contables', text: 'Ciencias Contables, Económicas y Administrativas' },
@@ -243,7 +243,7 @@ export class CalendarComponent implements OnChanges {
     ];
 
     artesSelect = [
-      { value: 'ArtesPlasticas', text: 'Artes Plásticas' },  
+      { value: 'ArtesPlasticas', text: 'Artes Plásticas' },
       { value: 'Diseño', text: 'Diseño Gráficos' },
       { value: 'Banda', text: 'Dirección de Banda' },
       { value: 'licMusica', text: 'Licenciatura en Música' },
@@ -251,28 +251,28 @@ export class CalendarComponent implements OnChanges {
     ];
 
     agrariasSelect = [
-      { value: 'Agroindustrial', text: 'Ingeniería Agroindustrial' },  
+      { value: 'Agroindustrial', text: 'Ingeniería Agroindustrial' },
       { value: 'Agropecuaria', text: 'Ingeniería Agropecuaria' },
       { value: 'Forestal', text: 'Ingeniería Forestal' },
       { value: 'tAgroindustrial', text: 'Tecnología Agroindustrial' },
     ];
 
     saludSelect = [
-      { value: 'Enfermeria', text: 'Enfermería' },  
+      { value: 'Enfermeria', text: 'Enfermería' },
       { value: 'Fisioterapia', text: 'Fisioterapia' },
       { value: 'Fonoaudiologia', text: 'Fonoaudiología' },
       { value: 'Medicina', text: 'Medicina' },
     ];
 
     contablesSelect = [
-      { value: 'Administracion', text: 'Administración de Empresas' },  
+      { value: 'Administracion', text: 'Administración de Empresas' },
       { value: 'Contaduria', text: 'Contaduría Pública' },
       { value: 'Economia', text: 'Economía' },
       { value: 'Turismo', text: 'Turismo' },
     ];
 
     humanasSelect = [
-      { value: 'Antopologia', text: 'Antopología' },  
+      { value: 'Antopologia', text: 'Antopología' },
       { value: 'Filosofia', text: 'Filosofía' },
       { value: 'Geografia', text: 'Geografía del Desarrollo Regional y Ambiental' },
       { value: 'Historia', text: 'Historia' },
@@ -283,7 +283,7 @@ export class CalendarComponent implements OnChanges {
     ];
 
     educacionSelect = [
-      { value: 'Biologia', text: 'Biología' },  
+      { value: 'Biologia', text: 'Biología' },
       { value: 'Fisica', text: 'Ingenieía Física' },
       { value: 'licAmbiental', text: 'Licenciatura en Ciencias Naturales y Educación Ambiental' },
       { value: 'Artistica', text: 'Licenciatura en Educación Artística' },
@@ -296,20 +296,20 @@ export class CalendarComponent implements OnChanges {
     ];
 
     derechoSelect = [
-      { value: 'Politica', text: 'Ciencia Política' },  
+      { value: 'Politica', text: 'Ciencia Política' },
       { value: 'comuniSocial', text: 'Comunicación Social' },
       { value: 'Derecho', text: 'Derecho' },
     ];
 
     civilSelect = [
-      { value: 'Arquitectura', text: 'Arquitectura' },  
+      { value: 'Arquitectura', text: 'Arquitectura' },
       { value: 'Civil', text: 'Ingeniería Civil' },
       { value: 'Ambiental', text: 'Ingeniería Ambiental' },
       { value: 'Geotecnologia', text: 'Geotecnología' },
     ];
 
     ingenieriaSelect = [
-      { value: 'Electronica', text: 'Ingeniería Electrónica y Telecomunicaciones' },  
+      { value: 'Electronica', text: 'Ingeniería Electrónica y Telecomunicaciones' },
       { value: 'Sistemas', text: 'Ingeniería de Sistemas' },
       { value: 'Automatica', text: 'Ingeniería en Automática Industrial' },
       { value: 'Telematica', text: 'Tecnología en Telemática' },
@@ -335,7 +335,7 @@ export class CalendarComponent implements OnChanges {
           this.events = this.events.filter(iEvent => iEvent !== event);
           this.handleEvent('Deleted', event);
           this.eliminarReserva();
-        }        
+        }
       }
     }
   ];
@@ -343,7 +343,7 @@ export class CalendarComponent implements OnChanges {
   modalData: {
     action: string;
     event: CalendarEvent;
-    
+
   };
 
 
@@ -352,10 +352,10 @@ export class CalendarComponent implements OnChanges {
   refresh: Subject<any> = new Subject();
 
   events: CalendarEvent[] = [];
-  
+
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
-  
+
 
 
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -364,7 +364,7 @@ export class CalendarComponent implements OnChanges {
   * Constructor de la clase
   *
   */
-  constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService, 
+  constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService,
     private cdr: ChangeDetectorRef,  private alertService: AlertService,
     private socialAuthService: AuthService, private usuarioService: UsuarioService ) {
     this.reservasActualvista=[];
@@ -374,26 +374,26 @@ export class CalendarComponent implements OnChanges {
       second: 0
 
     };
-  
+
     this.socialAuthService.authState.subscribe((user) => {
       this.users = user;
         if (this.user!=null) {
-        var str = this.users.email; 
-        var partir = str.split("@"); 
+        var str = this.users.email;
+        var partir = str.split("@");
         //console.log(partir[1])
-        this.aux=partir[1]  
-      
+        this.aux=partir[1]
+
         if( this.aux=='unicauca.edu.co')
         {
 
-          this.email = this.users.email; 
-          this.user = this.users.name.toLocaleUpperCase(); 
+          this.email = this.users.email;
+          this.user = this.users.name.toLocaleUpperCase();
           this.login = partir[0];
           console.log("usuario en sesion:" + this.user);
-          
+
         }
       }
-      
+
       this.loggedIn = (user != null);
 
       if(!this.flagValidado) {
@@ -402,21 +402,21 @@ export class CalendarComponent implements OnChanges {
 
     });
 
-  }  
+  }
   formReserva: FormGroup; // Formulario de reserva
 
   horarioOc: HorarioOcupadoService;
-  
+
 
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  
-  cargarProgramas(){
-    
-    this.pFacultad = this.opcionFacultad;
-    
 
-    
+  cargarProgramas(){
+
+    this.pFacultad = this.opcionFacultad;
+
+
+
 
     //console.log("Facu seleccionada" + this.pFacultad);
     switch(this.pFacultad){
@@ -447,7 +447,7 @@ export class CalendarComponent implements OnChanges {
   *
   */
   ngOnChanges(changes: SimpleChanges) {
-    
+
     this.getReservasEspacio(); // Se obtienen las reservas del espacio deportivo registradas en BD
     this.titulo = this.selectEspacio.nombre;
     console.log("pasa por el cambio");
@@ -456,9 +456,9 @@ export class CalendarComponent implements OnChanges {
       'nombre': new FormControl(this.reservaAct.nombre, [
         Validators.required, // campo requerido
         Validators.maxLength(20)]), // longitud maxima de caracteres permitidos
-        
+
       // Campo descripcion, ligado a variable: "this.reservaAct.descripcion"
-      'descripcion': new FormControl(this.reservaAct.descripcion, Validators.maxLength(500)), // longitud maxima de caracteres permitidos 
+      'descripcion': new FormControl(this.reservaAct.descripcion, Validators.maxLength(500)), // longitud maxima de caracteres permitidos
 
       // Campo facultad, ligado a variable: "this.reservaAct.facultad"
       'facultad': new FormControl(this.reservaAct.facultad,
@@ -486,25 +486,25 @@ export class CalendarComponent implements OnChanges {
   * Declaracion de constantes utilizadas para definir los colores a usar en las celdas del calendario
   *
   */
- 
+
   getReservasEspacio() {
 
     this.socialAuthService.authState.subscribe((user) => {
       this.users = user;
         if (this.user!=null) {
-        var str = this.users.email; 
-        var partir = str.split("@"); 
+        var str = this.users.email;
+        var partir = str.split("@");
         console.log(partir[1])
-        this.aux=partir[1]  
-      
+        this.aux=partir[1]
+
         if( this.aux=='unicauca.edu.co')
         {
 
-          this.email = this.users.email; 
-          this.user = this.users.name; 
+          this.email = this.users.email;
+          this.user = this.users.name;
         }
       }
-      
+
       this.loggedIn = (user != null);
     });
 
@@ -525,8 +525,8 @@ export class CalendarComponent implements OnChanges {
     this.reservasBDActuales= this.reservasActuales;
   }
 
- 
-  
+
+
   cargarReservas() {
     //console.log("lengt" + this.reservasActuales.length);
     for (let i = 0; i < this.reservasActuales.length; i++) {
@@ -574,7 +574,7 @@ export class CalendarComponent implements OnChanges {
     this.refresh.next();
   }
   handleEvent(action: string, event: CalendarEvent): void {
-    
+
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
     this.cargarParaVista(event);
@@ -593,33 +593,33 @@ export class CalendarComponent implements OnChanges {
         console.log("long "+this.reservasActuales[i].nombre);
       }
     }
-    
-    
-    
+
+
+
   }
   addReserva(event) {
     this.socialAuthService.authState.subscribe((user) => {
       this.users = user;
         if (this.user!=null) {
-        var str = this.users.email; 
-        var partir = str.split("@"); 
+        var str = this.users.email;
+        var partir = str.split("@");
         console.log(partir[1])
-        this.aux=partir[1]  
-      
+        this.aux=partir[1]
+
         if( this.aux=='unicauca.edu.co')
         {
 
-          this.email = this.users.email; 
-          this.user = this.users.name; 
+          this.email = this.users.email;
+          this.user = this.users.name;
         }
       }
-      
+
       this.loggedIn = (user != null);
     });
     this.reservaAct.nombre=this.email.split("@")[0];
-    
 
-    
+
+
     this.formReserva.reset();
     this.eventAct = {
       title: this.reservaAct.nombre.toString(),
@@ -633,10 +633,10 @@ export class CalendarComponent implements OnChanges {
         afterEnd: true
       }
     };
-    
-     
-     
-    
+
+
+
+
 
   }
 
@@ -682,31 +682,31 @@ export class CalendarComponent implements OnChanges {
     };
 
   }
-  
+
   guardarReserva(event) {
-    
+
     const inicio = this.eventAct.start;
     const final = this.eventAct.end;
-    
+
     let reservaActual = this.reservaAct;
-    
+
     reservaActual.idEspacio = this.selectEspacio;
     reservaActual.nombre = this.formReserva.get('nombre').value;
     reservaActual.descripcion=this.formReserva.get('descripcion').value;
     reservaActual.facultad = this.formReserva.get('facultad').value;
     reservaActual.programa = this.formReserva.get('programa').value;
     reservaActual.tipo = this.formReserva.get('tipo').value;
-    
-    
+
+
     console.log("espacio seleccionado tipo " + document.getElementById("descripcion"));
     const fechaAct = new Date(); //Fecha actual
     //console.log("Es "+ inicio + "<" + fechaAct+"?");
 
     let horasMaxPermitidas: Boolean=false;
     let HorarioPermitido: Boolean=false;
-   
 
-    if (this.option1) 
+
+    if (this.option1)
     {
       console.log("Entró a fija op1");
       reservaActual.esfija = this.option1;
@@ -726,13 +726,13 @@ export class CalendarComponent implements OnChanges {
       switch(this.eventAct.end.getHours()-this.eventAct.start.getHours()){
         case 0:  horasMaxPermitidas=true;
         break;
-        case 1: 
-          if(this.eventAct.end.getMinutes()-this.eventAct.start.getMinutes()<=30){ 
+        case 1:
+          if(this.eventAct.end.getMinutes()-this.eventAct.start.getMinutes()<=30){
             horasMaxPermitidas=true;
           }else{horasMaxPermitidas=false;}
         break;
         default: horasMaxPermitidas=false;
-      
+
       }
       if(HorarioPermitido){
 
@@ -752,9 +752,9 @@ export class CalendarComponent implements OnChanges {
           //Revision quesea menor la fecha fin que la fecha de inicio
           else if (final > inicio) {
             let horarioOcupadoFija: Boolean = false ;
-            
+
             while (inicio <= final) {
-              
+
               //aqui se crea una reserva cada 8 dias
               let inicioCopia = new Date();
               let inicioCopia2 = new Date();
@@ -766,22 +766,22 @@ export class CalendarComponent implements OnChanges {
               inicioCopia2.setDate(inicio.getDate());
               inicioCopia2.setMonth(inicio.getMonth());
               inicioCopia2.setHours(inicio.getHours(), inicio.getMinutes(), inicio.getSeconds());
-              
-              //aqui se reserva 
+
+              //aqui se reserva
               reservaActual.fechaini = inicioCopia2;
               reservaActual.fechafin = inicioCopia;
-              
-              this.getReservasEspacio(); 
+
+              this.getReservasEspacio();
               horarioOcupadoFija = this.horarioDisponible(inicio);
-         
+
               if(horarioOcupadoFija)
               {
                 console.log("Error, el espacio se encuentra ocupado en las horas marcadas, revise el calendario");
-                this.alertService.error("Error! El espacio que se intenta reservar está ocupado ");                
-                               
+                this.alertService.error("Error! El espacio que se intenta reservar está ocupado ");
+
               }else{
                 this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
-                  
+
                   this.events.push({
                     title: this.reservaAct.nombre.toString(),
                     start: inicioCopia2,
@@ -796,14 +796,14 @@ export class CalendarComponent implements OnChanges {
 
                   this.alertService.success("Ok! La reserva ha sido almacenada.");
                   //horarioOcupadoFija = false;
-              }              
-              inicio.setDate(inicio.getDate() + 7);            
-            }          
+              }
+              inicio.setDate(inicio.getDate() + 7);
+            }
 
             } else {
               //la reserva no puede ser fija
               this.Error=true;
-              
+
               this.formReserva.reset();
               window.alert("Error! La fecha de finalizacion no puede ser menor que la de inicio.");
               console.log("Error, la fecha de fin es menor o igual que la fecha de inicio.");
@@ -811,20 +811,20 @@ export class CalendarComponent implements OnChanges {
 
         }else {
           this.Error=true;
-          
+
           this.formReserva.reset();
           window.alert("Error! La reserva no puede durar mas de 1.5 Horas.");
-        } 
+        }
       }else{
         this.formReserva.reset();
-        
+
         window.alert("Error! Reservas permitidas de 5 A.M a 10 P.M");
         this.HorarioPer=true;
-        
-        
-        
-        
-      }     
+
+
+
+
+      }
     }
     else {
       reservaActual.esfija = false;
@@ -841,7 +841,7 @@ export class CalendarComponent implements OnChanges {
       const InicioDate:Date=this.eventAct.start;
       //console.log("Esta es la fecha"+InicioDate);
       let FinalDate: Date=this.eventAct.start;
-      
+
       FinalDate=setHours(
         setMinutes(
           setSeconds(inicio, this.finalDiarioStruct.second),
@@ -851,7 +851,7 @@ export class CalendarComponent implements OnChanges {
       );
 
       this.refresh.next();
-      
+
       //TODO
       if (this.finalDiarioStruct.hour>=5 && this.finalDiarioStruct.hour <=22 && InicioDate.getHours()>=5 && InicioDate.getHours()<=22){
         if(this.finalDiarioStruct.hour==22){
@@ -865,17 +865,17 @@ export class CalendarComponent implements OnChanges {
           }else{HorarioPermitido=false;}
         }else{HorarioPermitido=true;}
       }else{HorarioPermitido=false;}
-      
+
       //FIN TODO
       switch(this.finalDiarioStruct.hour-InicioDate.getHours()){
         case 0:  horasMaxPermitidas=true;
         break;
-        case 1: 
-          if(this.finalDiarioStruct.minute-InicioDate.getMinutes()<=30){ 
+        case 1:
+          if(this.finalDiarioStruct.minute-InicioDate.getMinutes()<=30){
             horasMaxPermitidas=true;
           }else{horasMaxPermitidas=false;}
         break;
-        default: horasMaxPermitidas=false;      
+        default: horasMaxPermitidas=false;
       }
       if(HorarioPermitido){
 
@@ -888,40 +888,41 @@ export class CalendarComponent implements OnChanges {
           if(InicioDate < fechaAct){
             this.Error=true;
             this.formReserva.reset();
-            this.alertService.error("Error! La fecha de inicio no puede ser menor que la fecha actual.");
+            //this.alertService.error("Error! La fecha de inicio no puede ser menor que la fecha actual.");
+            window.alert("Error! La fecha de inicio no puede ser menor que la fecha actual.");
             console.log("Error! La fecha de inicio no puede ser menor que la fecha actual.");
           }
-          
+
           //Revision que sea menor la fecha fin que la fecha de inicio
           else if (FinalDate > inicio) {
-          
+
             reservaActual.fechaini = InicioDate;
             reservaActual.fechafin = FinalDate;
-             
+
 
             console.log("fecha inicio reservaActual --> "+reservaActual.fechaini);
             console.log("fecha inicio inicioDate "+InicioDate);
             console.log("finalDate --> "+FinalDate);
-            console.log("inicio --> "+inicio);            
+            console.log("inicio --> "+inicio);
 
             console.log(this.reservasActuales.length + '<-<> tamanio array');
-            //this.reservasActuales = []; 
-            this.getReservasEspacio(); 
+            //this.reservasActuales = [];
+            this.getReservasEspacio();
             horarioOcupado = this.horarioDisponible(InicioDate);
-            
+
             console.log("Tamaño despues de cmparar "+this.reservasActuales.length);
 
             if(horarioOcupado)
             {
               console.log("Error, el espacio se encuentra ocupado en las horas marcadas, revise el calendario");
-              this.alertService.error("Error! El espacio que se intenta reservar está ocupado");                
+              this.alertService.error("Error! El espacio que se intenta reservar está ocupado");
             }else{
               console.log("guardando en bd");
-                  
+
               this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
-              this.reservasActuales.push(reservaActual);   
-                              
-              
+              this.reservasActuales.push(reservaActual);
+
+
               this.events.push({
                 title: reservaActual.nombre.toString(),
                 start: InicioDate,
@@ -935,22 +936,22 @@ export class CalendarComponent implements OnChanges {
                 }
               });
 
-              this.alertService.success("Ok! La reserva ha sido almacenada.");              
-              
+              this.alertService.success("Ok! La reserva ha sido almacenada.");
+
             }
             console.log("horarioOcupado estado --> "+horarioOcupado);
-            
-            
-    
+
+
+
           } else {
             //la reserva no puede ser fija
             this.Error=true;
-            
+
             this.formReserva.reset();
             window.alert("Error! La fecha de finalizacion no puede ser menor que la de inicio.");
             console.log("Error, la fecha de fin es menor o igual que la fecha de inicio.");
           }
-    
+
         }
         else {
           this.Error=true;
@@ -958,15 +959,15 @@ export class CalendarComponent implements OnChanges {
           window.alert("Error! una Reserva no puede duras mas de 1.5 Horas");
           console.log("Error, la fecha de fin es menor o igual que la fecha de inicio.");
         }
-      
+
       }else{
-        
+
         this.formReserva.reset();
         window.alert("Error! Reservas permitidas de 5 A.M a 10 P.M ");
         this.HorarioPer=true;
         this.addReserva(event);
       }
-      
+
     }
     this.refresh.next();
   }
@@ -982,8 +983,8 @@ export class CalendarComponent implements OnChanges {
   horarioDisponible(fechaAGuardar: Date): boolean
   {
     let estaOcupado: boolean = false;
-    for (let i = 0; i < this.reservasBDActuales.length; i++) 
-    {      
+    for (let i = 0; i < this.reservasBDActuales.length; i++)
+    {
       let hor = new Date(this.reservasBDActuales[i].fechaini);
       let horf = new Date(this.reservasBDActuales[i].fechafin);
 
@@ -1002,29 +1003,29 @@ export class CalendarComponent implements OnChanges {
             if(fechaAGuardar.getMinutes() >= hor.getMinutes() && fechaAGuardar.getMinutes() <= horf.getMinutes())
             {
               console.log("Si es mayor que hora inicio guardada --> "+fechaAGuardar.getMinutes()+"---"+horf.getMinutes());
-              estaOcupado = true;  
+              estaOcupado = true;
             }
           }
         }
       }
 
-              
+
       /*if(fechaAGuardar >= hor && fechaAGuardar <= horf)
-      {  
+      {
         //console.log("Mes -- > "+reservaActual.fechaini.getMonth()+" == "+hor.getMonth());
         //console.log("Día -- > "+reservaActual.fechaini.getDay()+" == "+hor.getDay());
         //console.log("Hora -- > "+reservaActual.fechaini.getHours()+" == "+hor.getHours());
         console.log("hay iguales --> ");
-                
+
         //if((InicioDate.getMinutes() >= hor.getMinutes()) || (InicioDate.getMinutes() < horf.getMinutes()))
         //{
-          estaOcupado = true;                
-        //}                
+          estaOcupado = true;
+        //}
       }*/
     }
     return estaOcupado;
   }
-  
+
   //rolUsuario(): String
   //{
     //let usuarioDSRol;
@@ -1033,12 +1034,12 @@ export class CalendarComponent implements OnChanges {
 
   eliminarReserva() {
     //console.log("title: " + this.modalData.event.title);
-    
+
     console.log("ELIMINANDO...");
     let resActual;
     //console.log("nombre reserva: " + reservaActual.nombre.toString);
     //console.log("nombre reservaAct: " + this.reservaAct.nombre.toString);
-    
+
     for (let i = 0; i < this.reservasActuales.length; i++) {
       if (this.reservasActuales[i].nombre == this.modalData.event.title) {
         console.log("Reserva encontrada para eliminar: ");
@@ -1046,12 +1047,12 @@ export class CalendarComponent implements OnChanges {
         console.log("id Reserva: " + resActual.idReserva);
 
         this.espacioService.eliminarReservaEspacio(resActual.idReserva).subscribe(
-          ok => { this.control= ok 
+          ok => { this.control= ok
             console.log("valor retornado2"+ok);
           }
           );
         console.log("valor retornado"+this.control);
-        break;  
+        break;
       }
     }
     //this.deleteReserva(event);
@@ -1060,7 +1061,7 @@ export class CalendarComponent implements OnChanges {
 
   updateTimeInicio(): void {
     //AQUI DEBO HACER EL UPDATE A EL VIEWDATE
-    
+
 
   }
   updateTimeFinal(): void {
@@ -1069,7 +1070,7 @@ export class CalendarComponent implements OnChanges {
   }
 
   /**
-   * Método que realiza una petición al servidor 
+   * Método que realiza una petición al servidor
    * y valida si el usuario en sesión es administrador
    */
   obtenerRol() {

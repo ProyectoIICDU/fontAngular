@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 * Importacion para instanciar objetos tipo EspacioDeportivo
 *
 */
-import { EspacioDeportivo } from '../espaciodeportivo'; 
+import { EspacioDeportivo } from '../espaciodeportivo';
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ import { EspacioDeportivo } from '../espaciodeportivo';
 * Importacion para instanciar objetos tipo Deporte
 *
 */
-import { Deporte } from '../deporte'; 
+import { Deporte } from '../deporte';
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ import { AuthService } from "angularx-social-login";
 /**
 * Este componente se encarga de gestionar las siguientes acciones:
 *
-* Registro 
+* Registro
 *
 * Consulta
 *
@@ -69,7 +69,7 @@ export class EspacioDeportivosComponent implements OnInit {
     espacio:EspacioDeportivo;
     deportesSelect: Deporte[];
     deportesAnexados: Deporte[];
-    
+
     // Variables para el manejo de inicio de sesion
     user='';
     email='';
@@ -86,7 +86,7 @@ export class EspacioDeportivosComponent implements OnInit {
         { value: 'CDU', text: 'CDU' },
         { value: 'Diamante', text: 'Diamante' },
     ];
- 
+
     // Lista de opciones para el SELECT "estado" del espacio deportivo
     estadosSelect = [
         { value: 'En Servicio', text: 'En Servicio' },
@@ -96,7 +96,7 @@ export class EspacioDeportivosComponent implements OnInit {
 
     // Esta variable permite determinar si los inputs del formulario son requeridos o no, en caso de no ser requeridos
     // se establece que son de solo lectura.
-    required:boolean = true; 
+    required:boolean = true;
 
     // Esta variable permite determinar la accion del formulario, la cual corresponde con la opcion seleccionada por el usuario:
     // Ver, Editar, Elimnar, Registrar
@@ -112,28 +112,28 @@ export class EspacioDeportivosComponent implements OnInit {
         this.socialAuthService.authState.subscribe((user) => {
             this.users = user;
                 if (this.user!=null) {
-                var str = this.users.email; 
-                var partir = str.split("@"); 
+                var str = this.users.email;
+                var partir = str.split("@");
                 //console.log(partir[1])
-                this.aux=partir[1]  
-            
+                this.aux=partir[1]
+
                 if( this.aux=='unicauca.edu.co')
                 {
-        
-                this.email = this.users.email; 
-                this.user = this.users.name.toLocaleUpperCase(); 
+
+                this.email = this.users.email;
+                this.user = this.users.name.toLocaleUpperCase();
                 this.login = partir[0];
                 console.log("usuario en sesion:" + this.user);
-                
+
                 }
             }
-            
+
             this.loggedIn = (user != null);
-        
+
             if(!this.flagValidado) {
                 this.obtenerRol();
             }
-        
+
             });
     }
 
@@ -155,42 +155,42 @@ export class EspacioDeportivosComponent implements OnInit {
         this.socialAuthService.authState.subscribe((user) => {
             this.users = user;
                 if (this.user!=null) {
-                var str = this.users.email; 
-                var partir = str.split("@"); 
+                var str = this.users.email;
+                var partir = str.split("@");
                 //console.log(partir[1])
-                this.aux=partir[1]  
-            
+                this.aux=partir[1]
+
                 if( this.aux=='unicauca.edu.co')
                 {
-        
-                this.email = this.users.email; 
-                this.user = this.users.name.toLocaleUpperCase(); 
+
+                this.email = this.users.email;
+                this.user = this.users.name.toLocaleUpperCase();
                 this.login = partir[0];
                 }
             }
-            
+
             this.loggedIn = (user != null);
         });
-        
+
         if(!this.flagValidado) {
             this.obtenerRol();
         }
     }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
-    
+
     /**
     * Funcion encargada de obtener los espacios deportivos registrados en la BD.
     *
-    * Hace uso del objeto "espacioService" suministrado en el constructor de la clase. 
-    * El objeto "espacioService" permite la conexion con el servidor por medio de web services REST. 
+    * Hace uso del objeto "espacioService" suministrado en el constructor de la clase.
+    * El objeto "espacioService" permite la conexion con el servidor por medio de web services REST.
     *
     * Se invoca a la funcion getEspaciosDeportivos() del objeto "espacioService", la cual retorna un array de espacios deportivos
     * que es almacenado en la variable "espacios".
     *
     */
     getEspaciosDeportivos() {
-        this.espacioService.getEspaciosDeportivos().subscribe(espacios => this.espacios = espacios);       
+        this.espacioService.getEspaciosDeportivos().subscribe(espacios => this.espacios = espacios);
     }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -198,14 +198,14 @@ export class EspacioDeportivosComponent implements OnInit {
     /**
     * Funcion encargada de configurar el formulario en modo de REGISTRO.
     *
-    * Hace uso del objeto "espacioService" suministrado en el constructor de la clase. 
-    * El objeto "espacioService" permite la conexion con el servidor por medio de web services REST. 
+    * Hace uso del objeto "espacioService" suministrado en el constructor de la clase.
+    * El objeto "espacioService" permite la conexion con el servidor por medio de web services REST.
     *
     * Se invoca a la funcion getDeportes() del objeto "espacioService", la cual retorna un array de deportes
     * que es almacenado en la variable "deportesSelect", estos son los deportes registrados en la BD.
     *
     */
-    setNuevo() {      
+    setNuevo() {
         this.espacioSelected = new EspacioDeportivo(0, '', '', '',[],[],'');
         this.deporteSelected = new Deporte(0, '');
         this.deportesAnexados = [];
@@ -220,14 +220,14 @@ export class EspacioDeportivosComponent implements OnInit {
     /**
     * Funcion encargada de configurar el formulario en modo ACTUALIZAR, VER DETALLE o ELIMINAR.
     *
-    * Hace uso del objeto "espacioService" suministrado en el constructor de la clase. 
-    * El objeto "espacioService" permite la conexion con el servidor por medio de web services REST. 
+    * Hace uso del objeto "espacioService" suministrado en el constructor de la clase.
+    * El objeto "espacioService" permite la conexion con el servidor por medio de web services REST.
     *
     * Se invoca a la funcion getDeportes() del objeto "espacioService", la cual retorna un array de deportes
     * que es almacenado en la variable "deportesSelect", estos son los deportes registrados en la BD.
     *
     */
-    verEspacioDeportivo(espaciodeportivo, accion) {        
+    verEspacioDeportivo(espaciodeportivo, accion) {
         this.espacioSelected = new EspacioDeportivo(espaciodeportivo.idEspacio, espaciodeportivo.nombre, espaciodeportivo.estado, espaciodeportivo.ubicacion,espaciodeportivo.deporteList,[], espaciodeportivo.descripcion); // Se crea una instancia de la clase EspacioDeportivo con la informacion del espacio deportivo seleccionado por el usuario
         this.espacioService.getDeportes().subscribe(deportes => this.deportesSelect = deportes); // se carga lista de deportes
         this.deporteSelected = new Deporte(0, ''); // El deporte seleccionado es creado por defecto
@@ -254,7 +254,7 @@ export class EspacioDeportivosComponent implements OnInit {
     * Funcion encargada de anexar un deporte a la lista de deportes anexados del espacio deportivo.
     *
     * El deporte seleccionado por el usuario es guardado en la variable "deporteSelected"
-    * Se valida si dicho deporte ya esta en la lista de deportes anexados. 
+    * Se valida si dicho deporte ya esta en la lista de deportes anexados.
     *
     */
     anexarDeporte() {
@@ -269,9 +269,9 @@ export class EspacioDeportivosComponent implements OnInit {
         }
         return false;
     }
-    
+
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
-    
+
     /**
     * Funcion encargada de quitar un deporte de la lista de deportes anexados del espacio deportivo.
     *
@@ -286,14 +286,14 @@ export class EspacioDeportivosComponent implements OnInit {
             }
         }
     }
-    
+
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
-    
+
     /**
     * Funcion encargada de procesar el envio (submit) del formulario segun la accion solicitada (REGISTRAR, ACTUALIZAR o ELIMINAR).
     *
-    * Hace uso del objeto "espacioService" suministrado en el constructor de la clase. 
-    * El objeto "espacioService" permite la conexion con el servidor por medio de web services REST. 
+    * Hace uso del objeto "espacioService" suministrado en el constructor de la clase.
+    * El objeto "espacioService" permite la conexion con el servidor por medio de web services REST.
     *
     */
     enviarFormulario(): boolean {
@@ -318,23 +318,23 @@ export class EspacioDeportivosComponent implements OnInit {
                             this.required = true; // se inicializa en "true" ya que al hacer registros los campos deben ser requeridos
                             this.iconBtnSubmit = 'fa fa-save';
                             resultado=false;
-                            
+
                         }
                     }
                     if(resultado){
                         // Se carga la lista de deportes anexados en el espacio deportivo que se va a registrar
-                        this.espacioSelected.deporteList = this.deportesAnexados; 
+                        this.espacioSelected.deporteList = this.deportesAnexados;
                         // Se consume el web service "guardarEspacioDeportivo", el nuevo espacio deportivo es anexado a la lista de esapacios deportivos "espacios".
-                        this.espacioService.guardarEspacioDeportivo(this.espacioSelected).subscribe(espacio => { this.espacios.push(espacio); }); 
+                        this.espacioService.guardarEspacioDeportivo(this.espacioSelected).subscribe(espacio => { this.espacios.push(espacio); });
                         this.alertService.success("El escenario deportivo se registro exitosamente");
                     }
-                    
+
                     break;
                 case "Actualizar":
                     console.log("ACTUALIZANDO...");
                     // Se carga la lista de deportes anexados en el espacio deportivo que se va a registrar
                     for (let espa of this.espacios) {
-                        if(espa.nombre == this.espacioSelected.nombre && espa.ubicacion == this.espacioSelected.ubicacion){
+                        if(espa.nombre == this.espacioSelected.nombre && espa.ubicacion == this.espacioSelected.ubicacion && espa.idEspacio!= this.espacioSelected.idEspacio){
                             resultado=false;
                         }
                     }
@@ -352,7 +352,7 @@ export class EspacioDeportivosComponent implements OnInit {
                     }else{
                         alert("Error! Ya existe un Escenario con ese Nombre y ubicación")
                     }
-                    
+
                     break;
                 case "Eliminar":
                     console.log("ELIMINANDO...");
@@ -373,7 +373,7 @@ export class EspacioDeportivosComponent implements OnInit {
             }
             return resultado;
     //            console.log('save: ' + newEspacio);
-        }      
+        }
     }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -385,11 +385,11 @@ export class EspacioDeportivosComponent implements OnInit {
             return false;
         }
     }
-    
+
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     /**
-      * Método que realiza una petición al servidor 
+      * Método que realiza una petición al servidor
       * y valida si el usuario en sesión es administrador
     */
   obtenerRol() {
