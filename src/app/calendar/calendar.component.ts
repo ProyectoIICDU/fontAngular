@@ -192,9 +192,9 @@ export class CalendarComponent implements OnChanges {
   eventActual: CalendarEvent[];
   eventAct: CalendarEvent;
   HorarioPer=false;
-  option1 = true;
+  option1 = false;
   showAlert=false;
-  option2 = false;
+  option2 = true;
   control= false;
   verFormulario = false;
   Error=false;
@@ -598,6 +598,27 @@ export class CalendarComponent implements OnChanges {
     
   }
   addReserva(event) {
+    this.socialAuthService.authState.subscribe((user) => {
+      this.users = user;
+        if (this.user!=null) {
+        var str = this.users.email; 
+        var partir = str.split("@"); 
+        console.log(partir[1])
+        this.aux=partir[1]  
+      
+        if( this.aux=='unicauca.edu.co')
+        {
+
+          this.email = this.users.email; 
+          this.user = this.users.name; 
+        }
+      }
+      
+      this.loggedIn = (user != null);
+    });
+    this.reservaAct.nombre=this.email.split("@")[0];
+    
+
     
     this.formReserva.reset();
     this.eventAct = {
@@ -675,20 +696,20 @@ export class CalendarComponent implements OnChanges {
     reservaActual.facultad = this.formReserva.get('facultad').value;
     reservaActual.programa = this.formReserva.get('programa').value;
     reservaActual.tipo = this.formReserva.get('tipo').value;
+    
+    
     console.log("espacio seleccionado tipo " + document.getElementById("descripcion"));
     const fechaAct = new Date(); //Fecha actual
     //console.log("Es "+ inicio + "<" + fechaAct+"?");
 
     let horasMaxPermitidas: Boolean=false;
     let HorarioPermitido: Boolean=false;
-
-    
+   
 
     if (this.option1) 
     {
       console.log("Entró a fija op1");
       reservaActual.esfija = this.option1;
-
       if (inicio.getHours()>=5 && inicio.getHours() <=22 && final.getHours()>=5 && final.getHours()<=22){
         if(inicio.getHours()==22){
           if(inicio.getMinutes()==0){
@@ -805,7 +826,7 @@ export class CalendarComponent implements OnChanges {
         
       }     
     }
-    else {      
+    else {
       reservaActual.esfija = false;
       let horarioOcupado: Boolean=false;
       console.log(this.reservasActuales.length + '<-<> tamanio array');
