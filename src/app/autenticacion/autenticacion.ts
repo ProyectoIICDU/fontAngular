@@ -14,7 +14,10 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 export class Autenticacion implements CanActivate {
  
     constructor(private router: Router) { }
- 
+    /**
+    * Metodo que  Verifica que el usuario se encuentre activo
+    *
+    */
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         if (localStorage.getItem('currentUser')) { // Verifica que el usuario se encuentre activo
             return true;

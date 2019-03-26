@@ -12,24 +12,43 @@ import { AuthService } from "angularx-social-login";
 
 export class EspaciosReservadosComponent implements OnInit {
 
+  /**
+    * variables para el manejo de login
+    *
+    *
+    */
   reservados: ReservaUsuario[];
   user=''
   email=''
   aux=''
   private users: SocialUser;
   private loggedIn: boolean;
+  /**
+    * Metodo contructor de la clase
+    *
+    *
+    */
   constructor(private espacioReservas:EspaciosreservadosService,private socialAuthService: AuthService) { 
     
 
   }
-
+  /**
+    * Metodo para inicializacion del componente.
+    *
+    * Se inicializa la lista de espacios reservado con los registros de la BD por medio del llamado a la funcion: getEspaciosReservados
+    *
+    */
  ngOnInit(): void {
   
   this.getEspaciosReservados();
   
 
   }
-
+   /**
+    *
+    * Metodo que obtiene todos las reservas asociadas a un usuario que se encuentran en la BD por medio del llamado a la funcion: cargarEspaciosReservados
+    *
+    */
   getEspaciosReservados() {
     this.socialAuthService.authState.subscribe((user) => {
       this.users = user;
@@ -54,7 +73,7 @@ export class EspaciosReservadosComponent implements OnInit {
       this.loggedIn = (user != null);
       });
       
-    //ME TOCA OBTENER EL USUARIO PARA ENVIARLO EN EL PARAMETRO
+    
     
   }
 

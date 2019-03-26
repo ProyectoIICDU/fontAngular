@@ -63,21 +63,26 @@ import { AuthService } from "angularx-social-login";
 export class EspacioDeportivosComponent implements OnInit {
     espacios: EspacioDeportivo[]; // En este array se almacenan los espacios deportivos registrados en la BD.
     espacioSelected: EspacioDeportivo; // Objeto donde se almacena el espacio deportivo seleccionado para VER, EDITAR o ELIMINAR
-    deporteSelected: Deporte; //
-    obj: Deporte;
+    // variables para almacenar el deporte seleccionado
+    deporteSelected: Deporte; 
+    obj: Deporte; 
+    //variable para almacenar el espacio a guardar
     espaciosave: EspacioDeportivo;
+    //variable que almacena un espacio deportivo
     espacio:EspacioDeportivo;
+    //variable que almacena el deporte a seleccionar
     deportesSelect: Deporte[];
+    //array que almacena todos los deportes que se han agregado a un espacio
     deportesAnexados: Deporte[];
 
     // Variables para el manejo de inicio de sesion
+    private users: SocialUser;
+    private loggedIn: boolean;
     user='';
     email='';
     aux='';
-    admin=false; // variable que indica si se es admin o si se es usuario común
     login='';
-    private users: SocialUser;
-    private loggedIn: boolean;
+    admin=false; // variable que indica si se es admin o si se es usuario común
     flagValidado: boolean = false; // flag actúa como una bandera para no validar más de una vez
     // -- fin variables inicio de sesión
 
@@ -145,6 +150,7 @@ export class EspacioDeportivosComponent implements OnInit {
     * Se inicializa la lista de espacios deportivos con los registros de la BD por medio del llamado a la funcion: getEspaciosDeportivos
     *
     */
+   
     ngOnInit() {
         this.espacioSelected = new EspacioDeportivo(0, '', '', '', [],[],'');
         this.deporteSelected = new Deporte(0, '');

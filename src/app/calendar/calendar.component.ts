@@ -155,15 +155,9 @@ const colors: any = {
 
 export class CalendarComponent implements OnChanges {
 
-  // Estructuras usadas para la inicializcion del calendario
-  /*inicioDiarioStruct = {
-    hour: 2,
-    minute: 23,
-    second: 0
+  
 
-  };*/
-
-
+  //estructura para crear la fecha final de una reserva
   finalDiarioStruct = {
     hour: 2,
     minute: 23,
@@ -177,26 +171,38 @@ export class CalendarComponent implements OnChanges {
   // Variable que indica en que vista (MESES, SEMANAS, DIAS) se muestra el calendario
   view: string = 'month';
   name = "final";
+  //usuario logueado
   user='';
+  //correo del usuario logueado
   email='';
+  //variable auxiliar para el correo
   aux='';
   admin=false; // variable que indica si se es admin o si se es usuario común
-  login='';
+  login=''; //variable que indica que si esta logueado
   flagValidado: boolean = false; // flag actúa como una bandera para no validar más de una vez
+  //variables para adinistrar el usuario logueado
   private users: SocialUser;
   private loggedIn: boolean;
+  //variable que almacena la facultad seleccionada en una reserva
   opcionFacultad:String='0';
+  //variables que almacena la facultad seleccionada en una reserva
   pFacultad:String='';
   programaSelect = [];
   // Variable para gestionar los eventos del calendario
   eventActual: CalendarEvent[];
   eventAct: CalendarEvent;
+  //variable para gestionar el horario permitido de una reserva
   HorarioPer=false;
+  //variable para saber si una reserva es repetitiva
   option1 = false;
+  //variable para mostrar alertas
   showAlert=false;
+  //variable para saber si una reserva es una vez
   option2 = true;
   control= false;
+  //variable para mostrar formulrio
   verFormulario = false;
+  //variable para gestionar los errores
   Error=false;
   titulo: String = "Deporte";
 
@@ -205,6 +211,7 @@ export class CalendarComponent implements OnChanges {
 
   //variable con rol de usuario
   rolUs: String;
+  //variable que almacena el usuraio del sistema
   usuarioSistema: String;
 
 
@@ -339,20 +346,15 @@ export class CalendarComponent implements OnChanges {
       }
     }
   ];
-
+  //administrar los eventos del calendar
   modalData: {
     action: string;
     event: CalendarEvent;
 
   };
-
-
   activeDayIsOpen: boolean = true;
-
   refresh: Subject<any> = new Subject();
-
   events: CalendarEvent[] = [];
-
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
 
@@ -380,7 +382,6 @@ export class CalendarComponent implements OnChanges {
         if (this.user!=null) {
         var str = this.users.email;
         var partir = str.split("@");
-        //console.log(partir[1])
         this.aux=partir[1]
 
         if( this.aux=='unicauca.edu.co')
@@ -404,13 +405,14 @@ export class CalendarComponent implements OnChanges {
 
   }
   formReserva: FormGroup; // Formulario de reserva
-
+  // variable del servicio
   horarioOc: HorarioOcupadoService;
 
 
-  //------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
+  /**
+  * Cargar los programas a el formulario
+  *
+  */
   cargarProgramas(){
 
     this.pFacultad = this.opcionFacultad;
@@ -483,10 +485,9 @@ export class CalendarComponent implements OnChanges {
   //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   /**
-  * Declaracion de constantes utilizadas para definir los colores a usar en las celdas del calendario
+  * obtener las reservas asociadas al espacio seleccionado
   *
   */
-
   getReservasEspacio() {
 
     this.socialAuthService.authState.subscribe((user) => {
@@ -526,7 +527,10 @@ export class CalendarComponent implements OnChanges {
   }
 
 
-
+  /**
+  * metodo para cargar las reservas en el calendario
+  *
+  */
   cargarReservas() {
     //console.log("lengt" + this.reservasActuales.length);
     for (let i = 0; i < this.reservasActuales.length; i++) {
@@ -552,10 +556,18 @@ export class CalendarComponent implements OnChanges {
     this.refresh.next();
   }
 
+  /**
+  * metodo para quitar las reservas
+  *
+  */
   limpiarReservas() {
     this.events.splice(0);
   }
 
+  /**
+  * metodo para modificar la fecha de la reserva
+  *
+  */
   setFecha(fecha: Date): Date {
     let fecha2 = new Date();
     fecha2.setMonth(fecha.getMonth());
@@ -579,6 +591,10 @@ export class CalendarComponent implements OnChanges {
     this.modal.open(this.modalContent, { size: 'lg' });
     this.cargarParaVista(event);
   }
+  /**
+  * metodo para cargar las reservas a la vista de reservas
+  *
+  */
   cargarParaVista(event: CalendarEvent){
     this.reservasActualvista=[];
     console.log("lon "+this.reservasActuales.length)
@@ -597,6 +613,10 @@ export class CalendarComponent implements OnChanges {
 
 
   }
+  /**
+  * metodo para agregar una nueva reserva
+  *
+  */
   addReserva(event) {
     this.socialAuthService.authState.subscribe((user) => {
       this.users = user;
@@ -639,6 +659,10 @@ export class CalendarComponent implements OnChanges {
 
 
   }
+  /**
+  * metodo que se invoca para eliminar una reserva
+  *
+  */
 
   deleteReserva(event) {
     this.eventAct = {
@@ -659,22 +683,24 @@ export class CalendarComponent implements OnChanges {
   }
 
 
+  /**
+  * metodo que se llama mostrar los campos de agregar una nueva reserva como tipo repetitiva
+  *
+  */
   onFilteroption1(ischecked: boolean) {
     this.option1 = true;
     this.option2 = false;
     this.verFormulario = true;
   }
+  /**
+  * metodo que se llama mostrar los campos de agregar una nueva reserva como tipo una Vez
+  *
+  */
   onFilteroption2(ischecked: boolean) {
     this.option2 = true;
     this.option1 = false;
     this.verFormulario = true;
-    /*
-    this.inicioDiarioStruct = {
-      second: getSeconds(this.viewDate),
-      minute: getMinutes(this.viewDate),
-      hour: getHours(this.viewDate)
-    };
-    */
+  
     this.finalDiarioStruct = {
       second: getSeconds(this.viewDate),
       minute: getMinutes(this.viewDate),
@@ -683,6 +709,10 @@ export class CalendarComponent implements OnChanges {
 
   }
 
+  /**
+  * metodo desde el html para guardar una nueva reserva
+  *
+  */
   guardarReserva(event) {
 
     const inicio = this.eventAct.start;
@@ -830,14 +860,7 @@ export class CalendarComponent implements OnChanges {
       reservaActual.esfija = false;
       let horarioOcupado: Boolean=false;
       console.log(this.reservasActuales.length + '<-<> tamanio array');
-      /*
-      const InicioDate: Date = setHours(
-        setMinutes(
-          setSeconds(inicio, this.inicioDiarioStruct.second),
-          this.inicioDiarioStruct.minute
-        ),
-        this.inicioDiarioStruct.hour
-      );*/
+     
       const InicioDate:Date=this.eventAct.start;
       //console.log("Esta es la fecha"+InicioDate);
       let FinalDate: Date=this.eventAct.start;
@@ -972,14 +995,12 @@ export class CalendarComponent implements OnChanges {
     this.refresh.next();
   }
 
-  /*recargarReservas() {
-    this.limpiarReservas();
-    this.espacioService.recargarReservas(this.selectEspacio.idEspacio).subscribe(reservas => {
-      this.reservasActuales = reservas;
-      this.cargarReservas();
-    });
-  }*/
 
+
+  /**
+  * metodo que valida si el horario ya esta reservado
+  *
+  */
   horarioDisponible(fechaAGuardar: Date): boolean
   {
     let estaOcupado: boolean = false;
@@ -988,10 +1009,6 @@ export class CalendarComponent implements OnChanges {
       let hor = new Date(this.reservasBDActuales[i].fechaini);
       let horf = new Date(this.reservasBDActuales[i].fechafin);
 
-      console.log("<------------------------------> ");
-      console.log("Hora reservada cris in Mes: "+(hor.getMonth()+1)+" - Día: "+hor.getDate()+" - Hora: "+hor.getHours()+":"+hor.getMinutes());
-      console.log("Hora reservada cris fin Mes: "+(horf.getMonth()+1)+" - Día: "+horf.getDate()+" - Hora: "+horf.getHours()+":"+horf.getMinutes());
-      console.log("<------------------------------> ");
       if((fechaAGuardar.getMonth()+1) == (hor.getMonth()+1))
       {
         console.log("Si es igual que mes inicio guardada --> "+(fechaAGuardar.getMonth()+1)+"---"+(hor.getMonth()+1));
@@ -1009,37 +1026,21 @@ export class CalendarComponent implements OnChanges {
         }
       }
 
-
-      /*if(fechaAGuardar >= hor && fechaAGuardar <= horf)
-      {
-        //console.log("Mes -- > "+reservaActual.fechaini.getMonth()+" == "+hor.getMonth());
-        //console.log("Día -- > "+reservaActual.fechaini.getDay()+" == "+hor.getDay());
-        //console.log("Hora -- > "+reservaActual.fechaini.getHours()+" == "+hor.getHours());
-        console.log("hay iguales --> ");
-
-        //if((InicioDate.getMinutes() >= hor.getMinutes()) || (InicioDate.getMinutes() < horf.getMinutes()))
-        //{
-          estaOcupado = true;
-        //}
-      }*/
     }
     return estaOcupado;
   }
 
-  //rolUsuario(): String
-  //{
-    //let usuarioDSRol;
-    //usuarioDSRol = this.reservaAct;
-  //}
 
+  
+  /**
+  * metodo para enviar al backend que elimine una reserva con id de la reserva seleccionada
+  *
+  */
   eliminarReserva() {
-    //console.log("title: " + this.modalData.event.title);
-
+    
     console.log("ELIMINANDO...");
     let resActual;
-    //console.log("nombre reserva: " + reservaActual.nombre.toString);
-    //console.log("nombre reservaAct: " + this.reservaAct.nombre.toString);
-
+    
     for (let i = 0; i < this.reservasActuales.length; i++) {
       if (this.reservasActuales[i].nombre == this.modalData.event.title) {
         console.log("Reserva encontrada para eliminar: ");
