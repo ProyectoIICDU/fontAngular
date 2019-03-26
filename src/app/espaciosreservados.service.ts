@@ -13,6 +13,10 @@ const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+/**
+ * Servicio para manejar peticiones al servidor relacionadas con los espacios reservados
+ */
+
 @Injectable()
 
 export class EspaciosreservadosService {
@@ -22,6 +26,10 @@ private usuariosUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenar
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
   
+  /**
+   * Metodo que carga los espacios reservados por un usuario
+   * @param id id del usuario que reservó
+   */
   cargarEspaciosReservados(id: String): Observable<ReservaUsuario[]>{
     
     const url = `${this.reservasUrl}/${id}`;
@@ -33,7 +41,9 @@ private usuariosUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenar
   }
  
 
-  
+    /**
+     * Método para el manejo de errores
+     */
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
             // TODO: send the error to remote logging infrastructure
@@ -47,6 +57,10 @@ private usuariosUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenar
         };
     }
 
+    /**
+     * Método para el manejo de debug/log
+     * @param message mensaje a presentar
+     */
     private log(message: string) {
         this.messageService.add('HeroService: ' + message);
     }

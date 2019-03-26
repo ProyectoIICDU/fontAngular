@@ -17,6 +17,9 @@ export class RegistroComponent {
         private userService: UsuarioService,
         private alertService: AlertService) { }
  
+    /**
+     * Método para realizar un registro en la aplicacion usando fake-login
+     */
     register() {
         this.loading = true;
         this.userService.create(this.model)

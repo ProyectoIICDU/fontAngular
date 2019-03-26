@@ -14,6 +14,10 @@ const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+/**
+ * Este servicio se encarga de brindar peticiones al servidor relacionados a los espacios deportivos
+ */
+
 @Injectable()
 export class EspaciodeportivoService {
     private espaciosUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario';
@@ -25,12 +29,18 @@ export class EspaciodeportivoService {
 
     //------------------------------------------------------------------------------
 
+    /**
+     * Este método obtiene por petición get todos los espacios deportivos
+     */
     getEspaciosDeportivos(): Observable<EspacioDeportivo[]> {
         return this.http.get<EspacioDeportivo[]>(this.espaciosUrl).pipe(tap(espacios => this.log(`fetched heroes`)), catchError(this.handleError('getEspaciodeportivos', [])));
     }
 
     //------------------------------------------------------------------------------
 
+    /**
+     * Este método obtiene por petición get todos los deportes
+     */
     getDeportes(): Observable<Deporte[]> {
         return this.http.get<Deporte[]>(this.deportesUrl).pipe(tap(deportes => this.log(`fetched deportes`)), catchError(this.handleError('getDeportes', [])));
     }
@@ -38,7 +48,10 @@ export class EspaciodeportivoService {
     //------------------------------------------------------------------------------
 
     //------------------------------------------------------------------------------
-
+    /**
+     * Este metodo guarda por peticion post un nuevo espacio deportivo
+     * @param newEspacio Espacio deportivo del tipo espaciodeportivo.ts
+     */
     guardarEspacioDeportivo(newEspacio: EspacioDeportivo): Observable<EspacioDeportivo> {
         //        let json = JSON.stringify(newEspacio);
         console.log(newEspacio);
@@ -51,6 +64,10 @@ export class EspaciodeportivoService {
 
     //------------------------------------------------------------------------------
 
+    /**
+     * Este método actualiza el espacio deportivo por medio de peticion put al servidor
+     * @param newEspacio objeto espaciodeportivo.ts con las modificaciones
+     */
     actualizarEspacioDeportivo(newEspacio: EspacioDeportivo): Observable<Boolean> {
         //        let json = JSON.stringify(newEspacio);
         console.log(newEspacio);
@@ -63,6 +80,10 @@ export class EspaciodeportivoService {
 
     //------------------------------------------------------------------------------
 
+    /**
+     * Método que elimina un espacio deportivo por medio de una peticion de delete al servidor
+     * @param newEspacio espacio deportivo a eliminar
+     */
     eliminarEspacioDeportivo(newEspacio: EspacioDeportivo | number): Observable<Boolean> {
         //        let json = JSON.stringify(newEspacio);
         console.log(newEspacio);
@@ -78,7 +99,11 @@ export class EspaciodeportivoService {
 
 
     //------------------------------------------------------------------------------
-
+    /**
+     * Manejador de errores de peticiones al servidor
+     * @param operation operacion que se realiza en el servidor
+     * @param result error que se ha presentado en el servidor
+     */
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
             // TODO: send the error to remote logging infrastructure
@@ -92,9 +117,18 @@ export class EspaciodeportivoService {
         };
     }
 
+    /**
+     * Método para manejar un log debug
+     * @param message mensaje a presentar
+     */
     private log(message: string) {
         this.messageService.add('HeroService: ' + message);
     }
+
+    /**
+     * Obtiene un espacio deportivo asociado a un id
+     * @param id id del escenario a buscar
+     */
     getEscenariosforid(id: number): Observable<EspacioDeportivo[]> {
         const url = `${this.espaciosUrl}/EspacioDeporte/${id}`;
         return this.http.get<EspacioDeportivo[]>(url)
@@ -103,6 +137,11 @@ export class EspaciodeportivoService {
                 catchError(this.handleError('getEscenariosforid', []))
             );
     }
+
+    /**
+     * Metodo que hace una peticion post al servidor para almacenar una reserva
+     * @param reservaActual reserva a reservar
+     */
     guardarReservaEspacio(reservaActual: ReservaEspacio): Observable<ReservaEspacio> {
         console.log(reservaActual);
         const url = `${this.espaciosUrl}/AgregarReserva`;
@@ -112,6 +151,12 @@ export class EspaciodeportivoService {
         );
 
     }
+
+    /**
+     * Método que obtiene las reservar que ha realizado un usuario en un espacio
+     * @param idespacio id del espacio a consultar
+     * @param usu usuario a consultar sus reservas
+     */
     getReservasEspacio(idespacio: number, usu: String): Observable<ReservaEspacio[]> {
         console.log(idespacio);
         const url = `${this.espaciosUrl}/Reserva/${idespacio},${usu}`;
@@ -122,7 +167,10 @@ export class EspaciodeportivoService {
             );
     }
 
-
+    /**
+     * Método que hace una peticion delete para eliminar una reserva del servidor
+     * @param reservaActual reserva a eliminar
+     */
     eliminarReservaEspacio(reservaActual: ReservaEspacio | number): Observable<boolean> {
         //        let json = JSON.stringify(newEspacio);
         console.log("id de reserva"+reservaActual);
