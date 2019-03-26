@@ -1,3 +1,6 @@
+//Todos los import que se hacen al RouterModule de Angular, el cual contiene toda la lógica 
+//necesaria para enrutar en el navegador. 
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -17,7 +20,7 @@ import { ReservaElementoComponent } from './reserva-elemento/reserva-elemento.co
 import { AppComponent } from './app.component';
 
 
-
+//Permite la definición de rutas en el array Routes[], que seran usadas en el sistema, por distintos modulos.
 const routes: Routes = [
   { path: 'app/:user', component: AppComponent },
   { path: '', component: EspacioDeportivosComponent, canActivate: [Autenticacion] },

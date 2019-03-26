@@ -1,3 +1,6 @@
+//Aqui se registran todos los modulos a ser usados en el sistema, si estos no se declaran aqui, es
+//posible que ocurran errores porque no encuentra el modulo que se intenta usar. Es el enrutamiento de 
+//los componentes necesarios 
 import { registerLocaleData, CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -44,7 +47,7 @@ import {ServicioService} from './servicio.service';
 
 registerLocaleData(localeEs);
 
-
+//Configuracion para poder usar la API de google
 let config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
@@ -58,7 +61,7 @@ let config = new AuthServiceConfig([
 
 
 @NgModule({
-  declarations: [
+  declarations: [//Declaracion de los modulos importados
     AppComponent,
     EspacioDeportivosComponent,
     MessagesComponent,
@@ -90,7 +93,7 @@ let config = new AuthServiceConfig([
     DemoUtilsModule,
     CommonModule
   ],
-  providers: [
+  providers: [//Se agregan los servicios, esta es una unica instancia por modulo, un Singleton
     MessageService,
     EspaciodeportivoService,
     Autenticacion,

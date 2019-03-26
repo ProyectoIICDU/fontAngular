@@ -6,13 +6,15 @@ import 'rxjs/add/operator/map'
 @Injectable()
 export class AutenticacionService {
     constructor(private http: HttpClient) { }
- 
+    //Este servicio tiene el método para verificar si hay una sesión iniciada 
     login(login: string, password: string) {
         return this.http.post<any>('/api/authenticate', { login: login, password: password })
             .map(usuario => {
-                // login successful if there's a jwt token in the response
+                // Inicio de sesión exitoso si hay un token jwt en la respuesta
                 if (usuario && usuario.token) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    // Almacena los detalles del usuario y el token jwt en el 
+                    //almacenamiento local para mantener al usuario conectado
+                    //entre las actualizaciones de página
                     localStorage.setItem('currentUser', JSON.stringify(usuario));
                 }
  

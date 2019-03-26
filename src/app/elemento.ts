@@ -1,6 +1,7 @@
 import { Deporte } from './deporte';
 import { ReservaEspacio } from './reservaespacio';
-export class Elemento {
+export class Elemento {//Esta clase contiene los elementos que se deben tener en cuenta a la hora de agregar un
+    //elemento o si se va a hacer una actualizaci´-on, estos corresponden con la base de datos
     constructor(
     public idEspacio: number,
     public deporte: string,

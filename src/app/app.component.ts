@@ -1,3 +1,4 @@
+//Se importan los distintos componentes que se han creado para que queden registrados y puedan ser usados
 import { Component, ViewChild } from '@angular/core';
 import { LoginComponent } from './login/login.component';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -20,8 +21,8 @@ import { EspacioDeportivosComponent } from './espacio-deportivos/espacio-deporti
 export class AppComponent {
  
   title = 'app';
-  user='';
-  email='';
+  user=''; //usuario que se identifica
+  email=''; //correo electronico de la persona que se identifica en el sistema
   aux='';
   admin=false; // variable que indica si se es admin o si se es usuario común
   login='';
@@ -36,6 +37,8 @@ export class AppComponent {
      private _sharedService: ServicioService
   ) {
 
+    //Identifica el usuario a ingresar y valida que este tenga el dominio valido
+    //que es el de la universidad --> unicauca.edu.co 
     this.socialAuthService.authState.subscribe((user) => {
       this.users = user;
         if (this.user!=null) {
@@ -65,6 +68,8 @@ export class AppComponent {
       
   }  
 
+  //Identifica el usuario a ingresar y valida que este tenga el dominio valido
+    //que es el de la universidad --> unicauca.edu.co 
   usuario(){   
     this.socialAuthService.authState.subscribe((user) => {
       this.users = user;
@@ -92,6 +97,8 @@ export class AppComponent {
 
    }
 
+   //este metodo cierra sesion del sistema y redirige el sistema a la direccion de login para que vuelva 
+   //a iniciar sesion y acceda a las funcionalidades
    public signOuts(): void {
     this.socialAuthService.signOut();
     this.router.navigate(['/login']);

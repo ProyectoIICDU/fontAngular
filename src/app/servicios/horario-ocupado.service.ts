@@ -15,10 +15,13 @@ const httpOptions = {
 @Injectable()
 export class HorarioOcupadoService {
 
+  //Url para consumir el servicio en el back
   private url_hor = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario/HorarioReservado';
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
+  //Este método obtiene desde el backend, todos los horarios que estén ocupados 
+  //para comparar con el nuevo horario a ingresar 
   getAllHorarios(): Observable<HorarioOcupado[]>{
 
     return this.http.get<HorarioOcupado[]>(this.url_hor).pipe(tap(reservas => this.log(`fetched heroes`)), catchError(this.handleError('getHorarioOcupado', [])));

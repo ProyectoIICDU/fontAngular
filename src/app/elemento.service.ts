@@ -16,7 +16,8 @@ const httpOptions = {
 @Injectable()
 export class ElementoService {
 
-  private espaciosUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario';
+    //Urls que se necesitan para consumir los servicios que estan en el backend
+    private espaciosUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario';
     private deportesUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario/deportes';
 
     //------------------------------------------------------------------------------
@@ -25,6 +26,7 @@ export class ElementoService {
 
     //------------------------------------------------------------------------------
 
+    //Se obtienen los elementos deportivos que estan registrados, una lista de todos ellos
     getElementosDeportivos(): Observable<Elemento[]> {
 
 
@@ -33,6 +35,8 @@ export class ElementoService {
     }
     //------------------------------------------------------------------------------
 
+    //En este metodo se obtienen todos los deportes que se encuentran registrados, estos se reciben en una lista
+    //con los datos creados en la clase Deporte.ts
     getDeportes(): Observable<Deporte[]> {
         return this.http.get<Deporte[]>(this.deportesUrl).pipe(tap(deportes => this.log(`fetched deportes`)), catchError(this.handleError('getDeportes', [])));
     }
@@ -41,6 +45,8 @@ export class ElementoService {
 
     //------------------------------------------------------------------------------
 
+    //Para guardar un nuevo elemento o elementos, se debe usar un metodo post que acceda al servicio 
+    //y lo consuma en el backend
     guardarElementoDeportivo(newEspacio: Elemento): Observable<Elemento> {
         //        let json = JSON.stringify(newEspacio);
         console.log(newEspacio);
@@ -53,6 +59,7 @@ export class ElementoService {
 
     //------------------------------------------------------------------------------
 
+    //Este metodo put, se usa para poder actualizar los espacios deportivos  
     actualizarEspacioDeportivo(newEspacio: Elemento): Observable<Boolean> {
         //        let json = JSON.stringify(newEspacio);
         console.log(newEspacio);
@@ -65,6 +72,8 @@ export class ElementoService {
 
     //------------------------------------------------------------------------------
 
+    //El metodo eliminar espacio deportivo usa una peticion delete y elimina el espacio
+    //conociendo el id de ese espacio deportivo. Se accede al servicio por la url
     eliminarEspacioDeportivo(newEspacio: Elemento | number): Observable<Boolean> {
         //        let json = JSON.stringify(newEspacio);
         console.log(newEspacio);
@@ -97,6 +106,9 @@ export class ElementoService {
     private log(message: string) {
         this.messageService.add('HeroService: ' + message);
     }
+
+    //Se obtienen los escenarios por el id que se proporcione, este es una peticion get, que accede al 
+    //servicio en el back a traves de la url correspondiente
     getEscenariosforid(id: number): Observable<Elemento[]> {
         const url = `${this.espaciosUrl}/EspacioDeporte/${id}`;
         return this.http.get<Elemento[]>(url)
@@ -105,6 +117,9 @@ export class ElementoService {
                 catchError(this.handleError('getEscenariosforid', []))
             );
     }
+
+    //Este metodo guarda la reserva del espacio, a traves de una peticion post, se envia un conjunto
+    //de datos que se pueden ver en ReservaEspacio.ts, este conjunto de datos esta encapsulado en un json 
     guardarReservaEspacio(reservaActual: ReservaEspacio): Observable<ReservaEspacio> {
         console.log(reservaActual);
         const url = `${this.espaciosUrl}/AgregarReserva`;
@@ -114,6 +129,9 @@ export class ElementoService {
         );
 
     }
+
+    //A traves de una peticion get, se obtienen los espacios reservados hasta la fecha, esto para que no se puedan 
+    //agregar mas reservas en las que ya estan y el usuario sepa cuales estan disponibles
     getReservasEspacio(idespacio: number): Observable<ReservaEspacio[]> {
         console.log(idespacio);
         const url = `${this.espaciosUrl}/Reserva/${idespacio}`;
@@ -125,6 +143,9 @@ export class ElementoService {
     }
 
 
+    //Este metodo elimina una reserva, a traves de una peticion delete, para ello se le envia
+    //el id de la reserva a ser eliminada y estos datos se envian al backend a traves de la url
+    //y devuelve una confirmacion a traves de un booleano
     eliminarReservaEspacio(reservaActual: ReservaEspacio | number): Observable<boolean> {
         //        let json = JSON.stringify(newEspacio);
         console.log(reservaActual);

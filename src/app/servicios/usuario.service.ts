@@ -13,36 +13,46 @@ const httpOptions = {
 };
  
 @Injectable()
-export class UsuarioService {
+export class UsuarioService {//Servicio para validar los usuarios que esten haciendo alguna operación en el front
 
+    //url para consumir el servicio referente a usarios en el back
     private usuariosUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario';
     
     constructor(private http: HttpClient,private messageService: MessageService) { }
  
+    //Método para obtener los usuarios registrados en el back, a través del método get  
     getAll() {
         return this.http.get<Usuario[]>('/api/usuarios');
     }
  
+    //Método para obtener un usuario registrado en el back, a través del método get, con su Id
     getById(id: number) {
         return this.http.get('/api/usuarios/' + id);
     }
  
+    //Método post para crear un nuevo usuario, se accede al servicio en el back a través de la url
     create(Usuario: Usuario) {
         return this.http.post('/api/usuarios', Usuario);
     }
  
+    //Método put para actualizar un usuario, se accede al servicio en el back a través de la url
     update(Usuario: Usuario) {
         return this.http.put('/api/usuarios/' + Usuario.idUsuario, Usuario);
     }
  
+    //Método delete para eliminar un usuario, se accede al servicio en el back a través de la url
     delete(id: number) {
         return this.http.delete('/api/usuarios/' + id);
     }
+
+    //El método obtiene una lista de los usuarios que son validos para realizar operaciones
     getUsuariosNoValidos(): Observable<Usuario[]> {
         const url = `${this.usuariosUrl}/Usuarios`;
         console.log("maaalo");
         return this.http.get<Usuario[]>(url).pipe(tap(usuarios => this.log(`fetched Usuarios`)), catchError(this.handleError('getUsuariosNoValidos', [])));
     }
+
+    //Con este método put, actualiza el estado del usuario en el back, a traves de la url 
     cambiarEstado(usuario:Usuario):Observable<Boolean>{
         const url = `${this.usuariosUrl}/CambiarUsuario`;
         return this.http.put<Boolean>(url, usuario, httpOptions).pipe(

@@ -8,6 +8,7 @@ import { Usuario } from '../modelos';
   styleUrls: ['./validarusuarios.component.css']
 })
 export class ValidarusuariosComponent implements OnInit {
+  //Se usa el servicio de usuarios para validar los que esten en el sistema y en que estado se encuentran
 
   usuarios: Usuario[];
   accion:string = 'Activo';
@@ -23,6 +24,8 @@ export class ValidarusuariosComponent implements OnInit {
 
  //------------------------------------------------------------------------------
  
+     //llamado después del constructor y después del primer ngOnChanges(), 
+     //Se utiliza para las inicializaciones de las variables, evitando hacerlas en el constructor.
      ngOnInit() {
          
          this.usuarioSelected = new Usuario(0, '', '', '', '','','','',new Date("0000-00-00"),'',[]);
@@ -31,12 +34,14 @@ export class ValidarusuariosComponent implements OnInit {
      }
  
  //------------------------------------------------------------------------------
+     //Se usa el servicio para identificar cuales son los usuarios que son validos
      getUsuariosNoValidados() {
         this.usuarioService.getUsuariosNoValidos().subscribe(usuarios => this.usuarios = usuarios);
       
      }
 
 
+     //Se identifica el usuario y dependiendo de la accion se muestra un mensaje y realiza una accion
     verUsuario(usuario, accion, index) {
       this.accion = accion;
       this.usuarioSelected= usuario;
@@ -54,7 +59,7 @@ export class ValidarusuariosComponent implements OnInit {
          
       }
     }
-    //Cambio el estado del usuario
+    //Cambio el estado del usuario de activo a inactivo
     cambiarEstado(){
 
       switch(this.accion) {

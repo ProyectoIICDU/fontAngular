@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
-export class EdicionReservaService {
+export class EdicionReservaService {//Servicio en construccion para poder editar la hora 
+  //en la que se tiene asignada una hora por otra. Se debe mejorar esta parte para
+  //usar el servicio
 
   constructor() { }
 
